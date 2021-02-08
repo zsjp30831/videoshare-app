@@ -24,7 +24,7 @@ class App extends Component {
         <p className={styles['App-intro']}>
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Button type="primary">This is a button</Button>
+        <Button >This is a button</Button>
       </div>
     );
   }
