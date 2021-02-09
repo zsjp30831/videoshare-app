@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "amazon-cognito-identity-js": "^4.5.10",
     "antd-mobile": "^2.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

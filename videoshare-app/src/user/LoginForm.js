@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styles from './LoginForm.css';
+import {signin} from '../common/cognito-auth'
 
 class LoginForm extends Component {
     constructor(props) {
@@ -24,33 +25,43 @@ class LoginForm extends Component {
     }
 
     handleSubmit(event) {
-        alert('input email: ' + this.state.email);
+        // alert('input email: ' + this.state.email);
+        // alert('input pass: ' + this.state.password);
         event.preventDefault();
+
+        let email = this.state.email;
+        let password = this.state.password;
+
+        signin(email, password, function signinSuccess(result) {
+                alert("success");
+            },
+            function signinError(err) {
+                alert("login failed:"+err);
+            });
     }
 
     render() {
         return (
-            <form class={styles.vertical} onSubmit={this.handleSubmit}>
-                <label class={styles.label}>
-                    Email:
-                    <input
-                        class={styles.field}
-                        name="email"
-                        type="text"
-                        value={this.state.email}
-                        onChange={this.handleInputChange}/>
-                </label>
-                <br/>
-                <label class={styles.label}>
-                    Password:
-                    <input
-                        class={styles.field}
-                        name="password"
-                        type="text"
-                        value={this.state.password}
-                        onChange={this.handleInputChange}/>
-                </label>
-                <input class="submit" type="submit" value="Login"/>
+            <form onSubmit={this.handleSubmit}>
+                <div className={styles.block}>
+                    <label>Email:</label>
+                    <input className={styles.input}
+                           name="email"
+                           type="text"
+                           value={this.state.email}
+                           onChange={this.handleInputChange}/>
+                </div>
+                <div className={styles.block}>
+                    <label> Password:</label>
+                    <input className={styles.input}
+                           name="password"
+                           type="password"
+                           value={this.state.password}
+                           onChange={this.handleInputChange}/>
+                </div>
+                <div className={styles.btn_submit}>
+                    <input className={styles.submit} type="submit" value="Login"/>
+                </div>
             </form>
         );
     }
