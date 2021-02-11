@@ -3,7 +3,7 @@ import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
 import logo from "../image/people.png";
-import {fwInitAuth,fwCallServiceByKeyDirect,fwErrorMessage,fwPush,fwUnLoading} from "../common/common";
+import {fwInitAuth,fwCallServiceByKeyDirect,fwErrorMessage,fwPush} from "../common/common";
 
 class NameInput extends Component {
 
