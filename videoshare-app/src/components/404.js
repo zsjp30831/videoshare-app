@@ -5,7 +5,6 @@ import Style from '../App.css';
 import logo from "../image/404.png";
 
 const Error = ()=>{
-
     return(
         <div className={Style.App_header}>
             <img src={logo} className={Style.App_logo} alt="logo"/>
