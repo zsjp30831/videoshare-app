@@ -1,0 +1,42 @@
+
+.submit {
+    width: 160px;
+    height: 40px;
+    background: #2cabe3;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+.nameInput{
+    height: 100%;
+    /*background: aliceblue;*/
+    background: url("../image/login-register.png") center no-repeat;
+}
+.center {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "lato", "Noto Sans JP", -apple-system, "ヒラギノ角ゴ ProN W3",
+    "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
+}
+
+.logo {
+    height: 180px;
+}
+
+.inputItem{
+    width: 300px;
+    margin-top: 150px;
+}
+.footer {
+    bottom: 0;
+    color: #58666e;
+    left: 0;
+    padding: 20px 30px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    /*background: aliceblue;*/
+}

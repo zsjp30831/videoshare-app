@@ -1,0 +1,53 @@
+
+.block{
+    display: block;
+    margin: 12px 0;;
+}
+
+.btn_submit{
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+}
+.submit {
+    width: 160px;
+    height: 40px;
+    background: #2cabe3;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+.login{
+    height: 100%;
+background: url("../image/login-register.png") center no-repeat;
+}
+.center {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "lato", "Noto Sans JP", -apple-system, "ヒラギノ角ゴ ProN W3",
+    "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
+}
+
+.title{
+    font-size: 20px
+}
+
+.logo {
+    height: 50px;
+}
+
+.inputItem{
+    width: 300px;
+}
+.footer {
+    bottom: 0;
+    color: #58666e;
+    left: 0;
+    padding: 20px 30px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+}

@@ -1,28 +1,23 @@
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 import AWSConfig from '../config';
 
-function createCognitoUser(email) {
-    const poolData = {
-        UserPoolId: AWSConfig.UserPoolId,
-        ClientId: AWSConfig.ClientId,
-    };
-
-    const userPool = new CognitoUserPool(poolData);
-
-    return new CognitoUser({
-        Username: email,
-        Pool: userPool
-    });
-}
-
-
 export function signin(email, password, onSuccess, onFailure) {
     var authenticationDetails = new AuthenticationDetails({
         Username: email,
         Password: password
     });
 
-    var cognitoUser = createCognitoUser(email);
+    const poolData = {
+        UserPoolId: AWSConfig.UserPoolId,
+        ClientId: AWSConfig.ClientId,
+    };
+
+    const userPool = new CognitoUserPool(poolData);
+    var cognitoUser = new CognitoUser({
+        Username: email,
+        Pool: userPool
+    });
+
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: onSuccess,
         onFailure: onFailure,
@@ -31,3 +26,45 @@ export function signin(email, password, onSuccess, onFailure) {
         }
     });
 }
+
+
+export  const getAWSToken = () => {
+    return new Promise(function fetchCurrentAuthToken(resolve, reject) {
+        const poolData = {
+            UserPoolId: AWSConfig.UserPoolId,
+            ClientId: AWSConfig.ClientId,
+        };
+
+        const userPool = new CognitoUserPool(poolData);
+        const cognitoUser = userPool.getCurrentUser();
+        if (cognitoUser) {
+            cognitoUser.getSession(function sessionCallback(err , session ) {
+                if (err) {
+                    reject(err);
+                } else if (!session.isValid()) {
+                    resolve(null);
+                } else {
+                    cognitoUser.getUserAttributes(
+                        function(err, result ) {
+                            if (!err) {
+                                // var vrcId = cognitoUser?.getUsername();
+                                // console.log("VrcId=" + vrcId);
+                                // for (var i = 0; i < result.length; i++) {
+                                //   console.log(result[i].getName() + "=" + result[i].getValue());
+                                // }
+                                const jwtToken = session.getIdToken().getJwtToken();
+                                // console.log("jwtToken=" + jwtToken);
+                                resolve(jwtToken);
+                            } else {
+                                resolve(null);
+                            }
+                        }
+                    );
+                }
+            });
+        } else {
+            resolve(null);
+        }
+    });
+};
+
