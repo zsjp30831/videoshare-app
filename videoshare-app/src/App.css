@@ -4,7 +4,7 @@
 }
 
 .App_logo {
-  height: 40px;
+  height: 200px;
   /*height: 40vmin;*/
   /*pointer-events: none;*/
 }
@@ -25,4 +25,15 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.footer {
+  bottom: 0;
+  color: #58666e;
+  left: 0;
+  padding: 20px 30px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  /*background: aliceblue;*/
 }
