@@ -19,8 +19,11 @@ export function fwErrorMessage(msg) {
     Toast.fail(msg, 1);
 }
 
-export function fwError() {
-    Toast.fail("エラーが発生しました", 1, () => {
+export function fwError(msg) {
+    if (!msg) {
+        msg = "エラーが発生しました";
+    }
+    Toast.fail(msg, 1, () => {
         let history = createBrowserHistory();
         history.push({pathname: "/login"});
         history.go();
@@ -34,17 +37,22 @@ export function fwInitAuth(onSuccess) {
         if (token) {
             onSuccess();
         } else {
-            fwError();
+            fwError('認証失敗しました。');
         }
     }).catch(() => {
-        fwError();
+        fwError('認証失敗しました。');
         // fwUnLoading();
     })
 }
 
-export function fwPush(path) {
+export function fwPush(path, data) {
     let history = createBrowserHistory();
-    history.push({pathname: path});
+    history.push({
+        pathname: path,
+        state: {
+            msg: data
+        }
+    });
     history.go();
 }
 

@@ -5,6 +5,7 @@ import Styles from './NameInput.css'
 import logo from "../image/people.png";
 import {fwInitAuth,fwCallServiceByKeyDirect,fwErrorMessage,fwPush} from "../common/common";
 
+
 class NameInput extends Component {
 
     componentDidMount() {
@@ -18,15 +19,16 @@ class NameInput extends Component {
         let name = this.props.form.getFieldsValue().name;
         if (name) {
             fwCallServiceByKeyDirect(name, "","", function onSuccess(result) {
-                    // alert("success");
-                    fwPush("/home");
+                   // alert("success");
+
+                    fwPush("/home","");
                 },
                 function onError(err) {
                     // console.log(err);
                     fwErrorMessage("エラーが発生しました。");
                 });
         } else {
-            fwErrorMessage("エラーが発生しました。");
+            fwErrorMessage("名前を入力してください。");
         }
     }
 

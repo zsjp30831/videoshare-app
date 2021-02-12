@@ -1,44 +1,37 @@
 import React, {Component} from 'react';
 import VrcPlayerEx from "./VrcPlayerEx";
 import Styles from './Home.css'
+import {fwInitAuth} from "../common/common";
 
-// var urlInfoList =
-// {
-//     videoUrl:"https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-//     postUrl:"https://video-react.js.org/assets/poster.png"
-//
-//
-// }
-
-
-
-
+var urlInfoList = {};
 
 class Home extends Component {
 
-    componentDidMount() {
-
+    constructor(props) {
+        super(props);
+        var obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('msg')) {
+            urlInfoList = this.props.location.state.msg;
+        }
+        // console.log(urlInfoList);
     }
 
-
-    // data = urlInfoList.map(item => {
-    //     console.log(item);
-    //     <VrcPlayerEx srcUrl={item.videoUrl}
-    //                  poster={item.postUrl}/>
-    // });
+    componentDidMount() {
+        fwInitAuth(() => {});
+    }
 
     render() {
-
+        let players = [];
+        if (urlInfoList && urlInfoList.length > 0) {
+            urlInfoList.forEach((item, index) => {
+                players.push(<VrcPlayerEx srcUrl={item.videoUrl} key={index}
+                                          poster={item.postUrl}/>);
+            });
+        }
 
         return (
             <div className={Styles.center}>
-                <VrcPlayerEx srcUrl="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
-                             poster="https://video-react.js.org/assets/poster.png"/>
-                <VrcPlayerEx srcUrl="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"/>
-                <VrcPlayerEx srcUrl="http://media.w3.org/2010/05/bunny/movie.mp4"/>
-                <VrcPlayerEx srcUrl="http://media.w3.org/2010/05/bunny/movie.mp4"/>
-                <VrcPlayerEx srcUrl="http://peach.themazzone.com/durian/movies/sintel-1024-surround.mp4"
-                             poster="https://video-react.js.org/assets/poster.png"/>
+                {players}
             </div>
         );
     }
