@@ -3,8 +3,12 @@ import {createBrowserHistory} from "history";
 import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 
-export function fwLoading() {
-    Toast.loading("Loading...", 0);
+export function fwLoading(msg) {
+    if (!msg) {
+        Toast.loading("Loading...", 0);
+    } else {
+        Toast.loading(msg, 0);
+    }
 }
 
 export function fwUnLoading() {

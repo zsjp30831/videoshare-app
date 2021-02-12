@@ -3,6 +3,7 @@ import NameInput from "./components/NameInput";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import VrcPlayer from "./components/VrcPlayer";
+import VrcPlayerEx from "./components/VrcPlayerEx";
 import Error from "./components/404";
 import Privacy from "./components/Privacy";
 import Terms from "./components/Terms";
@@ -17,6 +18,7 @@ class App extends Component {
                     <Route exact path='/' component={Login}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/player' component={VrcPlayer}/>
+                    <Route path='/playerex' component={VrcPlayerEx}/>
                     <Route path='/nameinput' component={NameInput}/>
                     <Route path='/home' component={Home}/>
                     <Route path='/privacy' component={Privacy}/>
