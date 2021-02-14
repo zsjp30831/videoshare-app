@@ -2,3 +2,12 @@
 .NavBar{
     background: transparent;
 }
+
+.logo{
+    height: 30px;
+}
+
+.share{
+    width: 36px;
+    height: 36px;
+}
