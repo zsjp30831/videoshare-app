@@ -23,7 +23,7 @@ import "../../../videoshare-app/node_modules/video-react/dist/video-react.css";
 // import  "./video-react.css";
 
 
-class VrcPlayerEx extends Component {
+class VrcPlayer extends Component {
 
     constructor() {
         super();
@@ -102,4 +102,4 @@ class VrcPlayerEx extends Component {
 }
 
 
-export default VrcPlayerEx;
+export default VrcPlayer;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import VrcPlayerEx from "./VrcPlayerEx";
+import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
 import {fwInitAuth} from "../common/common";
 
@@ -24,7 +24,7 @@ class Home extends Component {
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {
-                players.push(<VrcPlayerEx srcUrl={item.videoUrl} key={index}
+                players.push(<VrcPlayer srcUrl={item.videoUrl} key={index}
                                           poster={item.postUrl}/>);
             });
         }
