@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import Styles from './VrcPlayerEx.css'
+import Styles from './VrcPlayer.css'
 import {WhiteSpace, NavBar, ActionSheet} from 'antd-mobile';
 import Share from "../image/share.png";
 import Line from "../image/line.png";
