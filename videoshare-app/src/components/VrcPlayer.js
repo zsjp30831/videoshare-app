@@ -44,7 +44,7 @@ class VrcPlayer extends Component {
             // alert(this.state.authLevel);
             // alert(this.props.srcUrl);
             if (index > 0) {
-                fwCallApp(index);
+                fwCallApp(index,this.props.srcUrl);
             } else {
                 // url copy
 
