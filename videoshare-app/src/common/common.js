@@ -108,10 +108,10 @@ const twitterOpt = {
         package: 'com.zhihu.android',
         scheme: 'Twitter',
     },
-    // universal: {
-    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
-    //     pathKey: 'action',
-    // },
+    universal: {
+        host: 'twitter.com/compose/tweet',
+        pathKey: 'action',
+    },
     appstore: 'https://apps.apple.com/jp/app/twitter-%E3%83%84%E3%82%A4%E3%83%83%E3%82%BF%E3%83%BC/id333903271',
     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
     fallback: 'https://twitter.com/',
@@ -127,7 +127,7 @@ const youtubeOpt = {
         scheme: 'youtube',
     },
     universal: {
-        host: 'youtube.com/watch?v=1DMKv53VCJs',
+        host: 'studio.youtube.com/channel/UCcE30wIraQxEahva6OCGKlg/videos/upload?d=ud&filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D',
         pathKey: 'action',
     },
     appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',
@@ -145,10 +145,10 @@ const facebookOpt = {
         package: 'com.zhihu.android',
         scheme: 'fb',
     },
-    // universal: {
-    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
-    //     pathKey: 'action',
-    // },
+    universal: {
+        host: 'facebook.com/?sk=welcome',
+        pathKey: 'action',
+    },
     appstore: 'https://apps.apple.com/jp/app/facebook/id284882215',
     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
     fallback: 'https://www.facebook.com/',
