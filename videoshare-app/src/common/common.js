@@ -2,6 +2,7 @@ import {Toast} from 'antd-mobile'
 import {createBrowserHistory} from "history";
 import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
+import CallApp from 'callapp-lib';
 
 export function fwLoading(msg) {
     if (!msg) {
@@ -80,4 +81,125 @@ export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncEr
         });
 }
 
+
+const lineOpt = {
+    scheme: {
+        protocol: 'line',
+    },
+    intent: {
+        package: 'com.zhihu.android',
+        scheme: 'line',
+    },
+    // universal: {
+    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
+    //     pathKey: 'action',
+    // },
+    appstore: 'https://apps.apple.com/jp/app/line/id443904275',
+    yingyongbao: 'https://chrome.google.com/webstore/detail/line/ophjlpahpchlmihnnnihgmmeilfjmjjc',
+    fallback: 'https://line.me/ja/',
+    timeout: 2000,
+};
+
+const twitterOpt = {
+    scheme: {
+        protocol: 'Twitter',
+    },
+    intent: {
+        package: 'com.zhihu.android',
+        scheme: 'Twitter',
+    },
+    // universal: {
+    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
+    //     pathKey: 'action',
+    // },
+    appstore: 'https://apps.apple.com/jp/app/twitter-%E3%83%84%E3%82%A4%E3%83%83%E3%82%BF%E3%83%BC/id333903271',
+    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+    fallback: 'https://twitter.com/',
+    timeout: 2000,
+};
+
+const youtubeOpt = {
+    scheme: {
+        protocol: 'youtube',
+    },
+    intent: {
+        package: 'com.zhihu.android',
+        scheme: 'youtube',
+    },
+    universal: {
+        host: 'youtube.com/watch?v=1DMKv53VCJs',
+        pathKey: 'action',
+    },
+    appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',
+    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+    fallback: 'https://www.youtube.com/',
+    timeout: 2000,
+};
+
+
+const facebookOpt = {
+    scheme: {
+        protocol: 'fb',
+    },
+    intent: {
+        package: 'com.zhihu.android',
+        scheme: 'fb',
+    },
+    // universal: {
+    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
+    //     pathKey: 'action',
+    // },
+    appstore: 'https://apps.apple.com/jp/app/facebook/id284882215',
+    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+    fallback: 'https://www.facebook.com/',
+    timeout: 2000,
+};
+
+const wechatOpt = {
+    scheme: {
+        protocol: 'weixin',
+    },
+    intent: {
+        package: 'com.weixin.android',
+        scheme: 'weixin',
+    },
+    // universal: {
+    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
+    //     pathKey: 'action',
+    // },
+    appstore: 'https://apps.apple.com/jp/app/wechat/id414478124',
+    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+    fallback: 'https://wx.qq.com/',
+    timeout: 2000,
+};
+
+export function fwCallApp(index) {
+
+    let option;
+    switch (index) {
+        case 0:
+            break;
+        case 1:
+            option = lineOpt;
+            break;
+        case 2:
+            option = twitterOpt;
+            break;
+        case 3:
+            option = youtubeOpt;
+            break;
+        case 4:
+            option = facebookOpt;
+            break;
+        case 5:
+            option = wechatOpt;
+            break;
+        default:
+            break;
+    }
+
+    const lib = new CallApp(option);
+    lib.open({path: ''});
+
+}
 

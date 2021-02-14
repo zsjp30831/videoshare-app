@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import Styles from './VrcPlayer.css'
 import {WhiteSpace, NavBar, ActionSheet} from 'antd-mobile';
+import {fwCallApp} from '../common/common'
 import Share from "../image/share.png";
 import Line from "../image/line.png";
 import Twitter from "../image/twitter.png";
@@ -29,11 +30,11 @@ class VrcPlayer extends Component {
         super();
         this.state = {
             clicked: 'none',
-            authLevel:'Unlock',
+            authLevel: 'Unlock',
         };
     }
 
-    handleAuthChange= (item) =>{
+    handleAuthChange = (item) => {
         this.setState({authLevel: item});
     }
 
@@ -41,18 +42,23 @@ class VrcPlayer extends Component {
         if (index > -1) {
             // alert(this.dataList[index].title);
             // alert(this.state.authLevel);
+            // alert(this.props.srcUrl);
+            if (index > 0) {
+                fwCallApp(index);
+            } else {
+                // url copy
 
-
+            }
         }
     }
 
     dataList = [
-        {url: 'OpHiXAcYzmPQHcdlLFrc', title: 'Copy', icon: Copy},
-        {url: 'OpHiXAcYzmPQHcdlLFrc', title: 'Line', icon: Line},
-        {url: 'OpHiXAcYzmPQHcdlLFrc', title: 'Twitter', icon: Twitter},
-        {url: 'wvEzCMiDZjthhAOcwTOu', title: 'YouTube', icon: YouTube},
-        {url: 'cTTayShKtEIdQVEMuiWt', title: 'Facebook', icon: Facebook},
-        {url: 'umnHwvEgSyQtXlZjNJTt', title: 'Wechat', icon: Wechat},
+        {title: 'Copy', icon: Copy},
+        {title: 'Line', icon: Line},
+        {title: 'Twitter', icon: Twitter},
+        {title: 'YouTube', icon: YouTube},
+        {title: 'Facebook', icon: Facebook},
+        {title: 'Wechat', icon: Wechat},
     ].map(obj => ({
         icon: <img src={obj.icon} alt={obj.title}
                    style={{width: 40}}/>,
@@ -63,8 +69,8 @@ class VrcPlayer extends Component {
     showShareActionSheet = () => {
         ActionSheet.showShareActionSheetWithOptions({
                 options: this.dataList,
-                title:'共有',
-                message: <AuthPicker handleAuthChange={this.handleAuthChange.bind(this)} />,
+                title: '共有',
+                message: <AuthPicker handleAuthChange={this.handleAuthChange.bind(this)}/>,
                 cancelButtonText: 'キャンセル',
             },
             (buttonIndex, rowIndex) => {

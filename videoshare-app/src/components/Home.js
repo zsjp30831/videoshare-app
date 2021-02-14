@@ -16,6 +16,10 @@ class Home extends Component {
         // console.log(urlInfoList);
     }
 
+    componentWillMount(){
+
+    }
+
     componentDidMount() {
         fwInitAuth(() => {});
     }
