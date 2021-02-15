@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import NameInput from "./components/NameInput";
+import AutoLogin from "./components/AutoLogin";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import VrcPlayer from "./components/VrcPlayer";
@@ -15,6 +16,7 @@ class App extends Component {
             <div className={Styles.App}>
                 <Switch>
                     <Route exact path='/' component={Login}/>
+                    <Route path='/autologin' component={AutoLogin}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/player' component={VrcPlayer}/>
                     <Route path='/nameinput' component={NameInput}/>

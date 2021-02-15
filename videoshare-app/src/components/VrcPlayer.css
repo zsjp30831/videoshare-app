@@ -4,10 +4,13 @@
 }
 
 .logo{
-    height: 30px;
+    width: 60px;
+    height: 32px;
 }
 
 .share{
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 30px;
+    margin-bottom: 8px;
+    margin-right: -1px;
 }

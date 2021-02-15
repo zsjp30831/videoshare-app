@@ -31,6 +31,10 @@ export function fwError(msg) {
     });
 }
 
+export function  fwSuccess(msg){
+    Toast.success(msg, 1);
+}
+
 export function fwInitAuth(onSuccess) {
     fwLoading();
     getAWSToken().then((token) => {
@@ -65,7 +69,7 @@ export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncEr
 
     axios({
         method: 'post',
-        url: 'https://platform-console.vrcjp.com/v1/getbillinginfo',
+        url: apiUrl,
         contentType: "application/json",
         data: JSON.stringify(data),
     })
@@ -105,7 +109,7 @@ const twitterOpt = {
         protocol: 'Twitter',
     },
     intent: {
-        package: 'com.zhihu.android',
+        package: '',
         scheme: 'Twitter',
     },
     universal: {
@@ -139,14 +143,14 @@ const youtubeOpt = {
 
 const facebookOpt = {
     scheme: {
-        protocol: 'fb',
+        protocol: 'fb://profile',
     },
     intent: {
-        package: 'com.zhihu.android',
+        package: '',
         scheme: 'fb',
     },
     universal: {
-        host: 'facebook.com/?sk=welcome',
+        host: 'facebook.com',
         pathKey: 'action',
     },
     appstore: 'https://apps.apple.com/jp/app/facebook/id284882215',
@@ -155,23 +159,23 @@ const facebookOpt = {
     timeout: 2000,
 };
 
-const wechatOpt = {
-    scheme: {
-        protocol: 'weixin',
-    },
-    intent: {
-        package: 'com.weixin.android',
-        scheme: 'weixin',
-    },
-    // universal: {
-    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
-    //     pathKey: 'action',
-    // },
-    appstore: 'https://apps.apple.com/jp/app/wechat/id414478124',
-    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
-    fallback: 'https://wx.qq.com/',
-    timeout: 2000,
-};
+// const wechatOpt = {
+//     scheme: {
+//         protocol: 'weixin',
+//     },
+//     intent: {
+//         package: 'com.tencent.mm',
+//         scheme: 'weixin',
+//     },
+//     universal: {
+//         host: 'dl/moments',
+//         pathKey: 'action',
+//     },
+//     appstore: 'https://apps.apple.com/jp/app/wechat/id414478124',
+//     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+//     fallback: 'https://wx.qq.com/',
+//     timeout: 2000,
+// };
 
 export function fwCallApp(index,url) {
 
@@ -192,7 +196,7 @@ export function fwCallApp(index,url) {
             option = facebookOpt;
             break;
         case 5:
-            option = wechatOpt;
+            // option = wechatOpt;
             break;
         default:
             break;

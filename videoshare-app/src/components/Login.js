@@ -8,24 +8,7 @@ import {signin} from "../common/cognito-auth";
 import {fwErrorMessage, fwLoading, fwPush} from "../common/common";
 
 
-var urlInfoList = [
-    {
-        videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-        postUrl: "https://video-react.js.org/assets/poster.png"
-    },
-    {
-        videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-        postUrl: "https://video-react.js.org/assets/poster.png"
-    },
-    {
-        videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-        postUrl: "https://video-react.js.org/assets/poster.png"
-    },
-    {
-        videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-        postUrl: "https://video-react.js.org/assets/poster.png"
-    },
-];
+
 
 class Login extends Component {
 
@@ -41,7 +24,7 @@ class Login extends Component {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
                     // alert("success");
-                    fwPush("/home", urlInfoList);
+                    fwPush("/home", "");
                 },
                 function signinError(err) {
                     // console.log(err);

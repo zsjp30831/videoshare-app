@@ -1,16 +1,18 @@
 import React, {Component, Fragment} from 'react';
 import Styles from './VrcPlayer.css'
-import {WhiteSpace, NavBar, ActionSheet} from 'antd-mobile';
-import {fwCallApp} from '../common/common'
+import {NavBar, ActionSheet} from 'antd-mobile';
+import PlayerTitle from './PlayerTitle'
+import {fwCallApp, fwSuccess} from '../common/common'
+import copy from 'copy-to-clipboard';
 import Share from "../image/share.png";
 import Line from "../image/line.png";
 import Twitter from "../image/twitter.png";
 import YouTube from "../image/youtube.png";
 import Facebook from "../image/facebook.png";
-import Wechat from "../image/wechat.png";
-import Copy from "../image/copy.png";
+// import Wechat from "../image/wechat.png";
+import CopyIcon from "../image/copy.png";
 import AuthPicker from "./AuthPicker";
-
+import logo from "../image/admin-logo.png";
 import {
     Player,
     ControlBar,
@@ -44,21 +46,22 @@ class VrcPlayer extends Component {
             // alert(this.state.authLevel);
             // alert(this.props.srcUrl);
             if (index > 0) {
-                fwCallApp(index,this.props.srcUrl);
+                fwCallApp(index, this.props.srcUrl);
             } else {
                 // url copy
-
+                copy(this.props.srcUrl);
+                fwSuccess('コピーされました');
             }
         }
     }
 
     dataList = [
-        {title: 'Copy', icon: Copy},
+        {title: 'Copy', icon: CopyIcon},
         {title: 'Line', icon: Line},
         {title: 'Twitter', icon: Twitter},
         {title: 'YouTube', icon: YouTube},
         {title: 'Facebook', icon: Facebook},
-        {title: 'Wechat', icon: Wechat},
+        // {title: 'Wechat', icon: Wechat},
     ].map(obj => ({
         icon: <img src={obj.icon} alt={obj.title}
                    style={{width: 40}}/>,
@@ -85,13 +88,18 @@ class VrcPlayer extends Component {
                 <div style={{width: 400, height: 300}}>
                     <NavBar
                         className={Styles.NavBar}
+                        icon={<img src={logo} className={Styles.logo} alt=""/>}
                         mode="light"
                         rightContent={[
-                            <img src={Share} className={Styles.logo} alt="share"
+                            <img  key="0" src={Share} className={Styles.share} alt="share"
                                  onClick={this.showShareActionSheet}/>
                         ]}
                     >
-                        卒業証書授与動画
+                        <PlayerTitle title="卒業証書授与動画"
+                                     owner="zs30831"
+                                     frequency="100"
+                                     createDate="2021-2-15"
+                        />
                     </NavBar>
                     <Player poster={this.props.poster}>
                         <source src={this.props.srcUrl} type="video/mp4"/>
@@ -101,7 +109,6 @@ class VrcPlayer extends Component {
                         </ControlBar>
                     </Player>
                 </div>
-                <WhiteSpace/>
             </Fragment>
         )
     }
