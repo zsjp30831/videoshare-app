@@ -141,23 +141,23 @@ const youtubeOpt = {
 };
 
 
-const facebookOpt = {
-    scheme: {
-        protocol: 'fb://profile',
-    },
-    intent: {
-        package: '',
-        scheme: 'fb',
-    },
-    universal: {
-        host: 'facebook.com',
-        pathKey: 'action',
-    },
-    appstore: 'https://apps.apple.com/jp/app/facebook/id284882215',
-    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
-    fallback: 'https://www.facebook.com/',
-    timeout: 2000,
-};
+// const facebookOpt = {
+//     scheme: {
+//         protocol: 'fb',
+//     },
+//     intent: {
+//         package: '',
+//         scheme: 'fb',
+//     },
+//     universal: {
+//         host: 'facebook.com',
+//         pathKey: 'action',
+//     },
+//     appstore: 'https://apps.apple.com/jp/app/facebook/id284882215',
+//     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+//     fallback: 'https://www.facebook.com/',
+//     timeout: 2000,
+// };
 
 // const wechatOpt = {
 //     scheme: {
@@ -193,8 +193,9 @@ export function fwCallApp(index,url) {
             option = youtubeOpt;
             break;
         case 4:
-            option = facebookOpt;
-            break;
+            // option = facebookOpt;
+            window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(url)+'&t='+encodeURIComponent(document.title),'_blank');
+            return;
         case 5:
             // option = wechatOpt;
             break;

@@ -20,30 +20,40 @@ var urlInfoList = [
         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
         postUrl: "https://video-react.js.org/assets/poster.png"
     },
+    {
+        videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+        postUrl: "https://video-react.js.org/assets/poster.png"
+    },
+
+
 ];
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            urlInfoList: '',
+        };
+    }
+
+
+    componentDidMount() {
         var obj = this.props.location.state;
         if (obj && obj.hasOwnProperty('msg')) {
             //userInfo = this.props.location.state.msg;
-
-            // fwCallServiceByKeyDirect();
         }
 
         // console.log(userInfo);
-    }
+        fwInitAuth(() => {
 
-    // componentWillMount(){
-    // }
+            // fwCallServiceByKeyDirect();
+        });
 
-    componentDidMount() {
-        fwInitAuth(() => {});
     }
 
     render() {
+
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {
