@@ -34,7 +34,7 @@ class Login extends Component {
                         let currentUrl = document.location.href;
                         let path = currentUrl.split('/').slice(3).join('/')
                         if (path === "autologinerror") {
-                            fwPush("/nameinput");
+                            fwPush("/nameinput",email);
                         } else {
                             fwPush("/home", "");
                         }

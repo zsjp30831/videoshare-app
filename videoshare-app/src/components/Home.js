@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwInitAuth} from "../common/common";
-
+import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading} from "../common/common";
+import UrlConfig from '../config';
 
 class Home extends Component {
 
@@ -20,46 +20,70 @@ class Home extends Component {
 
 
     componentDidMount() {
+        let contentId = null;
         var obj = this.props.location.state;
         if (obj && obj.hasOwnProperty('msg')) {
-            //userInfo = this.props.location.state.msg;
+            contentId = this.props.location.state.msg;
         }
-        // console.log(userInfo);
+        if (!contentId) {
+            fwErrorMessage("コンテンツIDが未存在する。");
+            return;
+        }
+
+        console.log(contentId);
+
+        fwInitAuth((token) => {
+
+            let postData = {
+                ContentId: contentId,
+            };
+　　　　　　　　
 
 
-        fwInitAuth(() => {
+            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsStatusURL, token, postData, function onSuccess(response) {
+                    if (response && response.data){
+                        if(response.data.PStatus ==='Ready'){
+                            fwLoading("動画作成中、少々お待ちください。")
+                        }
 
-            // fwCallServiceByKeyDirect();
-           let  urlInfoList = [
-                {
-                    videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                    postUrl: "https://video-react.js.org/assets/poster.png"
+                    }else{
+                        fwErrorMessage("通信エラーが発生しました。");
+                    }
                 },
-                {
-                    videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                    postUrl: ""
-                },
-                {
-                    videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                    postUrl: "https://video-react.js.org/assets/poster.png"
-                },
-                {
-                    videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                    postUrl: "https://video-react.js.org/assets/poster.png"
-                },
-                {
-                    videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                    postUrl: "https://video-react.js.org/assets/poster.png"
-                },
-            ];
+                function onError(err) {
+                    fwErrorMessage("通信エラーが発生しました。");
+                }
+            );
+            // let urlInfoList = [
+            //     {
+            //         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+            //         postUrl: "https://video-react.js.org/assets/poster.png"
+            //     },
+            //     {
+            //         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+            //         postUrl: ""
+            //     },
+            //     {
+            //         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+            //         postUrl: "https://video-react.js.org/assets/poster.png"
+            //     },
+            //     {
+            //         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+            //         postUrl: "https://video-react.js.org/assets/poster.png"
+            //     },
+            //     {
+            //         videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+            //         postUrl: "https://video-react.js.org/assets/poster.png"
+            //     },
+            // ];
 
-            this.updateUI(urlInfoList);
+            // this.updateUI(urlInfoList);
         });
 
     }
 
     render() {
-        const{urlInfoList}= this.state;
+        const {urlInfoList} = this.state;
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {

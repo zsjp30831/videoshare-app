@@ -4,7 +4,7 @@ import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 import CallApp from 'callapp-lib';
 
-export function  fwIsEmpty(obj) {
+export function fwIsEmpty(obj) {
     return (JSON.stringify(obj) === '{}') ? true : false;
 }
 
@@ -41,7 +41,6 @@ export function fwError(msg) {
 }
 
 
-
 export function fwSuccess(msg) {
     Toast.success(msg, 1);
 }
@@ -51,7 +50,7 @@ export function fwInitAuth(onSuccess) {
     getAWSToken().then((token) => {
         fwUnLoading();
         if (token) {
-            onSuccess();
+            onSuccess(token);
         } else {
             fwError('認証失敗しました。');
         }
@@ -72,7 +71,7 @@ export function fwPush(path, data) {
     history.go();
 }
 
-export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncError) {
+export function fwCallServiceByKeyDirect(apiUrl, authToken, data, fncSuccess, fncError) {
     fwLoading();
     if (!fncError) { // error handle
         // fncError = fwErrorMessage;
@@ -81,6 +80,9 @@ export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncEr
     axios({
         method: 'post',
         url: apiUrl,
+        headers: {
+            Authorization: authToken,
+        },
         contentType: "application/json",
         data: JSON.stringify(data),
     })
@@ -88,6 +90,7 @@ export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncEr
             console.log(response);
             fwUnLoading();
             fncSuccess(response);
+
         })
         .catch(function (error) {
             console.log(error);
@@ -142,7 +145,7 @@ const youtubeOpt = {
         scheme: 'youtube',
     },
     universal: {
-        host: 'studio.youtube.com/channel/UCcE30wIraQxEahva6OCGKlg/videos/upload?d=ud&filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D',
+        host: 'youtube.com/',
         pathKey: 'action',
     },
     appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',

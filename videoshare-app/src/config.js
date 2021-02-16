@@ -1,8 +1,8 @@
 export default {
     region: 'ap-northeast-1',
     IdentityPoolId: '',
-    UserPoolId: 'ap-northeast-1_NrILpsZ49',
-    ClientId: '4hfk1ibpr0ktcj0huqr8aob14f',
+    UserPoolId: 'ap-northeast-1_RhnDUwWhf',
+    ClientId: '2olcmcba7urje3l2lnjf86rat8',
     //URL
     CreateMediaContentsURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/createmediacontents',
     GetMediaContentsStatusURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/getmediacontentsstatus',
@@ -12,5 +12,5 @@ export default {
     RequestNewFriendURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/requestnewfriend',
     GetFriendListURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/getfriendlist',
     ResponseNewFriendURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/responsenewfriend',
-
+    GetMediaContentsUnAuth:'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/getmediacontentsunauth',
 }

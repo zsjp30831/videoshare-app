@@ -16,8 +16,10 @@ class NameInput extends Component {
     }
 
     componentDidMount() {
-        fwInitAuth(() => {
-            // this.nameInst.focus();
+        fwInitAuth((token) => {
+            if (this.nameInst) {
+                this.nameInst.focus();
+            }
             this.setState({initAuthFlg: true,});
         });
     }
@@ -26,17 +28,38 @@ class NameInput extends Component {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
-            var postData = {
-                Name: name,
-            };
+            let email = null;
+            let obj = this.props.location.state;
+            if (obj && obj.hasOwnProperty('msg')) {
+                email = obj.msg;
+            }
 
-            fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, "", postData, function onSuccess(result) {
-                    fwPush("/home", "");
-                },
-                function onError(err) {
-                    // console.log(err);
-                    fwErrorMessage("エラーが発生しました。");
-                });
+            if (!email) {
+                fwErrorMessage("メースを入力してください。");
+                return;
+            }
+
+            let postData = {
+                Name: name,
+                Target: email,
+            };
+            // console.log(postData);
+            fwInitAuth((token) => {
+                // console.log(token);
+                fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
+
+                        if (response && response.data && response.data.Status === "OK") {
+                            fwPush("/home", response.data.ContentId);
+                        } else {
+                            fwErrorMessage("通信エラーが発生しました。");
+                        }
+                    },
+                    function onError(err) {
+                        // console.log(err);
+                        fwErrorMessage("通信エラーが発生しました。");
+                    });
+            });
+
         } else {
             fwErrorMessage("名前を入力してください。");
         }
