@@ -17,7 +17,7 @@ class NameInput extends Component {
 
     componentDidMount() {
         fwInitAuth(() => {
-            this.nameInst.focus();
+            // this.nameInst.focus();
             this.setState({initAuthFlg: true,});
         });
     }
