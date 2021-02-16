@@ -8,12 +8,19 @@ import {signin} from "../common/cognito-auth";
 import {fwErrorMessage, fwLoading, fwPush} from "../common/common";
 
 
-
+var accessUrl = null;
 
 class Login extends Component {
 
     componentDidMount() {
         this.emailInst.focus();
+
+        // login請求前のurl取得する
+        let obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('url')) {
+            accessUrl =  '/' + obj.url.split('/').slice(3).join('/'); // domainを除く
+            //console.log(accessUrl);
+        }
     }
 
     onSubmit = () => {
@@ -23,9 +30,13 @@ class Login extends Component {
         if (email && password) {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
-                    // alert("success");
-                    fwPush("/home", "");
+                    if (!accessUrl) {
+                        fwPush("/home", "");
+                    } else {
+                        fwPush(accessUrl, "");
+                    }
                 },
+
                 function signinError(err) {
                     // console.log(err);
                     fwErrorMessage("ユーザ名またパスワードは正しくありません。");

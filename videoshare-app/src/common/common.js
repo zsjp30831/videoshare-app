@@ -4,6 +4,10 @@ import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 import CallApp from 'callapp-lib';
 
+export function  fwIsEmpty(obj) {
+    return (JSON.stringify(obj) === '{}') ? true : false;
+}
+
 export function fwLoading(msg) {
     if (!msg) {
         Toast.loading("Loading...", 0);
@@ -26,12 +30,17 @@ export function fwError(msg) {
     }
     Toast.fail(msg, 1, () => {
         let history = createBrowserHistory();
-        history.push({pathname: "/login"});
+        history.push({
+            pathname: "/login",
+            state: {
+                url: document.location.href
+            }
+        });
         history.go();
     });
 }
 
-export function  fwSuccess(msg){
+export function fwSuccess(msg) {
     Toast.success(msg, 1);
 }
 
@@ -76,7 +85,7 @@ export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncEr
         .then(function (response) {
             console.log(response);
             fwUnLoading();
-            fncSuccess();
+            fncSuccess(response);
         })
         .catch(function (error) {
             console.log(error);
@@ -177,7 +186,7 @@ const youtubeOpt = {
 //     timeout: 2000,
 // };
 
-export function fwCallApp(index,url) {
+export function fwCallApp(index, url) {
 
     let option;
     switch (index) {
@@ -194,7 +203,7 @@ export function fwCallApp(index,url) {
             break;
         case 4:
             // option = facebookOpt;
-            window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(url)+'&t='+encodeURIComponent(document.title),'_blank');
+            window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), '_blank');
             return;
         case 5:
             // option = wechatOpt;
@@ -204,7 +213,7 @@ export function fwCallApp(index,url) {
     }
 
     const lib = new CallApp(option);
-    lib.open({path: '',param:{url}});
+    lib.open({path: '', param: {url}});
 
 }
 

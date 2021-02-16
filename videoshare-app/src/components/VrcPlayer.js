@@ -46,10 +46,11 @@ class VrcPlayer extends Component {
             // alert(this.state.authLevel);
             // alert(this.props.srcUrl);
             if (index > 0) {
-                fwCallApp(index, this.props.srcUrl);
+                fwCallApp(index, document.location.href+'/shared');
             } else {
                 // url copy
-                copy(this.props.srcUrl);
+                console.log(document.location.href);
+                copy(document.location.href+'/shared');
                 fwSuccess('コピーされました');
             }
         }
@@ -91,7 +92,7 @@ class VrcPlayer extends Component {
                         icon={<img src={logo} className={Styles.logo} alt=""/>}
                         mode="light"
                         rightContent={[
-                            <img  key="0" src={Share} className={Styles.share} alt="share"
+                            <img key="0" src={Share} className={Styles.share} alt="share"
                                  onClick={this.showShareActionSheet}/>
                         ]}
                     >
