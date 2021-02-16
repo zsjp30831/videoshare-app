@@ -19,8 +19,6 @@ class NameInput extends Component {
         let name = this.props.form.getFieldsValue().name;
         if (name) {
             fwCallServiceByKeyDirect(name, "","", function onSuccess(result) {
-                   // alert("success");
-
                     fwPush("/home","");
                 },
                 function onError(err) {

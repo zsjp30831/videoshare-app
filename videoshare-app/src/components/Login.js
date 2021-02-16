@@ -18,8 +18,8 @@ class Login extends Component {
         // login請求前のurl取得する
         let obj = this.props.location.state;
         if (obj && obj.hasOwnProperty('url')) {
-            accessUrl =  '/' + obj.url.split('/').slice(3).join('/'); // domainを除く
-            //console.log(accessUrl);
+            accessUrl = '/' + obj.url.split('/').slice(3).join('/'); // domainを除く
+            console.log(accessUrl);
         }
     }
 
@@ -31,7 +31,13 @@ class Login extends Component {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
                     if (!accessUrl) {
-                        fwPush("/home", "");
+                        let currentUrl = document.location.href;
+                        let path = currentUrl.split('/').slice(3).join('/')
+                        if (path === "autologinerror") {
+                            fwPush("/nameinput");
+                        } else {
+                            fwPush("/home", "");
+                        }
                     } else {
                         fwPush(accessUrl, "");
                     }
