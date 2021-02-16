@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {fwErrorMessage, fwLoading, fwPush, fwUnLoading} from "../common/common";
+import {fwLoading, fwPush, fwUnLoading} from "../common/common";
 import {signin} from "../common/cognito-auth";
 
 class AutoLogin extends Component {

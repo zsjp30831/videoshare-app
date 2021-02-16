@@ -75,7 +75,7 @@ export function fwPush(path, data) {
 export function fwCallServiceByKeyDirect(apiUrl, apiKey, data, fncSuccess, fncError) {
     fwLoading();
     if (!fncError) { // error handle
-        // fncError = fwError;
+        // fncError = fwErrorMessage;
     }
 
     axios({

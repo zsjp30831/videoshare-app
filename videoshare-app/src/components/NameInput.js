@@ -3,14 +3,22 @@ import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
 import logo from "../image/people.png";
-import {fwInitAuth,fwCallServiceByKeyDirect,fwErrorMessage,fwPush} from "../common/common";
-
+import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush} from "../common/common";
+import UrlConfig from '../config';
 
 class NameInput extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            initAuthFlg: false,
+        };
+    }
 
     componentDidMount() {
         fwInitAuth(() => {
             this.nameInst.focus();
+            this.setState({initAuthFlg: true,});
         });
     }
 
@@ -18,8 +26,12 @@ class NameInput extends Component {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
-            fwCallServiceByKeyDirect(name, "","", function onSuccess(result) {
-                    fwPush("/home","");
+            var postData = {
+                Name: name,
+            };
+
+            fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, "", postData, function onSuccess(result) {
+                    fwPush("/home", "");
                 },
                 function onError(err) {
                     // console.log(err);
@@ -31,12 +43,17 @@ class NameInput extends Component {
     }
 
     render() {
+        const {initAuthFlg} = this.state;
         const {getFieldProps, getFieldError} = this.props.form;
 
         const validateName = (rule, value, callback) => {
             if (value.length === 0) {
                 callback(new Error('名前を入力してください'));
             }
+        }
+
+        if (!initAuthFlg) {
+            return null;
         }
 
         return (
