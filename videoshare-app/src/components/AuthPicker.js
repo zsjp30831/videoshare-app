@@ -24,7 +24,7 @@ const authItem = [
         label:
             (<div>
                 <img src={Lock} alt="" style={{...itemStyle}}/>
-                <span>自分だけ</span>
+                <span>限定公開</span>
             </div>),
         value: 'Lock',
     },

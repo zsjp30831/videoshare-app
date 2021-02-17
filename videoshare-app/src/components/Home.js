@@ -23,19 +23,19 @@ class Home extends Component {
     dataPolling = (postData) => {
         handler = this;
         let timer = this.pollingTimer;
-        console.log(postData);
+        // console.log(postData);
         fwInitAuth((token) => {
             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsStatusURL, token, postData, function onSuccess(response) {
                     if (response && response.data) {
                         let status = response.data.PStatus;
                         if (status === 'Completed') {
                             timer && clearInterval(timer);
-                            console.log("step1");
+
                             // videoListを取得する
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, "", function onSuccess(response) {
                                     if (response && response.data && response.data.ContentIdList) {
-                                        console.log("step2");
-                                        console.log(response.data.ContentIdList.length);
+                                        // console.log(response.data.ContentIdList.length);
+                                        let lenght = response.data.ContentIdList.length;
 
                                         let urlInfoList = [];
                                         response.data.ContentIdList.forEach((item, index) => {
@@ -45,48 +45,43 @@ class Home extends Component {
 
                                             // videoItemを取得する
                                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
-                                                    fwUnLoading();
+                                                    if (index === lenght - 1) {
+                                                        fwUnLoading();
+                                                    }
                                                     if (response && response.data && response.data.Contents) {
                                                         urlInfoList.push(response.data.Contents);
-                                                        if (index === 5) {
-
-                                                            handler.updateUI(urlInfoList);
-                                                            console.log("stepyyy");
-                                                        }
-                                                        console.log("stepxxx");
-
+                                                        handler.updateUI(urlInfoList);
                                                     } else {
-                                                        fwErrorMessage("動画が存在しません。");
+                                                        // fwErrorMessage("動画が存在しません。");
                                                     }
                                                 },
                                                 function onError(err) {
-                                                    fwErrorMessage("例外が発生しました。");
+                                                    fwErrorMessage("動画取得例外が発生しました。");
                                                 }
                                             );
-
                                         });
-                                        console.log(urlInfoList);
+                                        // console.log(urlInfoList);
                                     } else {
                                         fwErrorMessage("動画が存在しません。");
                                     }
                                 },
                                 function onError(err) {
-                                    fwErrorMessage("例外が発生しました。");
+                                    fwErrorMessage("動画一覧取得例外が発生しました。");
                                 }
                             );
                         } else if (status !== 'Failed') {
                             fwLoading("動画作成中、少々お待ちください。。。");
                         } else {
-                            fwErrorMessage("通信エラーが発生しました。");
+                            fwErrorMessage("動画作成失敗しました。");
                             timer && clearInterval(timer);
                         }
                     } else {
-                        fwErrorMessage("通信エラーが発生しました。");
+                        fwErrorMessage("動画作成状態確認通信エラーが発生しました。");
                         timer && clearInterval(timer);
                     }
                 },
                 function onError(err) {
-                    fwErrorMessage("例外が発生しました。");
+                    fwErrorMessage("動画作成状態確認例外が発生しました。");
                     timer && clearInterval(timer);
                 }
             );
@@ -101,7 +96,7 @@ class Home extends Component {
         }
 
         if (!contentId) {
-            fwErrorMessage("コンテンツIDが未存在する。");
+            fwErrorMessage("コンテンツIDがないです。");
             return;
         }
 
@@ -110,6 +105,7 @@ class Home extends Component {
         let postData = {
             ContentId: contentId,
         };
+        fwLoading();
         this.pollingTimer = setInterval(
             () => {
                 this.dataPolling(postData);
@@ -123,6 +119,7 @@ class Home extends Component {
 
 
     render() {
+        // console.log("render");
         const {urlInfoList} = this.state;
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
@@ -132,7 +129,7 @@ class Home extends Component {
                                         contentId={item.ContentId}
                                         frequency={item.AccessCount}
                                         createDt={item.CreateTime}
-                                        srcUrl={item.Url}
+                                        srcUrl={item.Url} // "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                                         title={item.Title}
                                         poster=""/>);
             });

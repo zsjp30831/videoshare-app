@@ -45,7 +45,7 @@ class NameInput extends Component {
             };
             // console.log(postData);
             fwInitAuth((token) => {
-                // console.log(token);
+                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
                         fwUnLoading();
                         if (response && response.data && response.data.Status === "OK") {
@@ -56,7 +56,7 @@ class NameInput extends Component {
                     },
                     function onError(err) {
                         // console.log(err);
-                        fwErrorMessage("通信エラーが発生しました。");
+                        fwErrorMessage("名前入力画面にて、例外が発生しました。");
                     });
             });
 
@@ -67,16 +67,15 @@ class NameInput extends Component {
 
     render() {
         const {initAuthFlg} = this.state;
-        const {getFieldProps, getFieldError} = this.props.form;
+        if (!initAuthFlg) {
+            return null;
+        }
 
+        const {getFieldProps, getFieldError} = this.props.form;
         const validateName = (rule, value, callback) => {
             if (value.length === 0) {
                 callback(new Error('名前を入力してください'));
             }
-        }
-
-        if (!initAuthFlg) {
-            return null;
         }
 
         return (
