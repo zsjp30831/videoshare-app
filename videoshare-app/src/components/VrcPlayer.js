@@ -84,9 +84,10 @@ class VrcPlayer extends Component {
     }
 
     render() {
+        const{ title,owner,frequency,createDt,srcUrl,poster} = this.props;
         return (
             <Fragment>
-                <div style={{width: 400, height: 300}}>
+                <div style={{width: "400px", height: "300px"}}>
                     <NavBar
                         className={Styles.NavBar}
                         icon={<img src={logo} className={Styles.logo} alt=""/>}
@@ -96,14 +97,14 @@ class VrcPlayer extends Component {
                                  onClick={this.showShareActionSheet}/>
                         ]}
                     >
-                        <PlayerTitle title="卒業証書授与動画"
-                                     owner="zs30831"
-                                     frequency="100"
-                                     createDate="2021-2-15"
+                        <PlayerTitle title={title}
+                                     owner={owner}
+                                     frequency={frequency}
+                                     createDate={createDt}
                         />
                     </NavBar>
-                    <Player poster={this.props.poster}>
-                        <source src={this.props.srcUrl} type="video/mp4"/>
+                    <Player poster={poster}>
+                        <source src={srcUrl} type="video/mp4"/>
                         <BigPlayButton position="center"/>
                         <ControlBar autoHide={true} disableDefaultControls={false}>
                             <VolumeMenuButton/>

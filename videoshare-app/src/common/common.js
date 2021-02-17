@@ -46,9 +46,9 @@ export function fwSuccess(msg) {
 }
 
 export function fwInitAuth(onSuccess) {
-    fwLoading();
+    // fwLoading();
     getAWSToken().then((token) => {
-        fwUnLoading();
+        // fwUnLoading();
         if (token) {
             onSuccess(token);
         } else {
@@ -87,10 +87,8 @@ export function fwCallServiceByKeyDirect(apiUrl, authToken, data, fncSuccess, fn
         data: JSON.stringify(data),
     })
         .then(function (response) {
-            console.log(response);
-            fwUnLoading();
+            // console.log(response);
             fncSuccess(response);
-
         })
         .catch(function (error) {
             console.log(error);

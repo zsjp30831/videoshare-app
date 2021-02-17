@@ -30,22 +30,30 @@ class Home extends Component {
                         let status = response.data.PStatus;
                         if (status === 'Completed') {
                             timer && clearInterval(timer);
-                            fwUnLoading();
+                            console.log("step1");
                             // videoListを取得する
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, "", function onSuccess(response) {
                                     if (response && response.data && response.data.ContentIdList) {
-                                        
-                                        response.data.ContentIdList.forEach((item) => {
+                                        console.log("step2");
+                                        console.log(response.data.ContentIdList.length);
+
+                                        let urlInfoList = [];
+                                        response.data.ContentIdList.forEach((item, index) => {
                                             let pstData = {
                                                 ContentId: item,
                                             }
-                                            let urlInfoList = [];
 
                                             // videoItemを取得する
                                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
+                                                    fwUnLoading();
                                                     if (response && response.data && response.data.Contents) {
                                                         urlInfoList.push(response.data.Contents);
-                                                        handler.updateUI(urlInfoList);
+                                                        if (index === 5) {
+
+                                                            handler.updateUI(urlInfoList);
+                                                            console.log("stepyyy");
+                                                        }
+                                                        console.log("stepxxx");
 
                                                     } else {
                                                         fwErrorMessage("動画が存在しません。");
@@ -57,6 +65,7 @@ class Home extends Component {
                                             );
 
                                         });
+                                        console.log(urlInfoList);
                                     } else {
                                         fwErrorMessage("動画が存在しません。");
                                     }
@@ -66,7 +75,7 @@ class Home extends Component {
                                 }
                             );
                         } else if (status !== 'Failed') {
-                            fwLoading("動画作成中、少々お待ちください。");
+                            fwLoading("動画作成中、少々お待ちください。。。");
                         } else {
                             fwErrorMessage("通信エラーが発生しました。");
                             timer && clearInterval(timer);
@@ -119,8 +128,10 @@ class Home extends Component {
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {
                 players.push(<VrcPlayer key={index}
+                                        owner={item.VrcId}
                                         contentId={item.ContentId}
                                         frequency={item.AccessCount}
+                                        createDt={item.CreateTime}
                                         srcUrl={item.Url}
                                         title={item.Title}
                                         poster=""/>);

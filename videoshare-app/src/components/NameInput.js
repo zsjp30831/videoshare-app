@@ -3,7 +3,7 @@ import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
 import logo from "../image/people.png";
-import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush} from "../common/common";
+import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwUnLoading} from "../common/common";
 import UrlConfig from '../config';
 
 class NameInput extends Component {
@@ -47,7 +47,7 @@ class NameInput extends Component {
             fwInitAuth((token) => {
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
-
+                        fwUnLoading();
                         if (response && response.data && response.data.Status === "OK") {
                             fwPush("/home", response.data.ContentId);
                         } else {
