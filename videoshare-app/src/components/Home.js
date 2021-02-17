@@ -35,7 +35,7 @@ class Home extends Component {
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, "", function onSuccess(response) {
                                     if (response && response.data && response.data.ContentIdList) {
                                         
-                                        response.data.ContentIdList.foreach((item) => {
+                                        response.data.ContentIdList.forEach((item) => {
                                             let pstData = {
                                                 ContentId: item,
                                             }
