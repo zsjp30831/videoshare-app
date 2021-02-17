@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwInitAuth, fwIsEmpty} from "../common/common";
+import {fwCallServiceByKeyDirect, fwInitAuth, fwIsEmpty} from "../common/common";
+import UrlConfig from "../config";
 
 
 class Shared extends Component {
@@ -24,8 +25,16 @@ class Shared extends Component {
             //userInfo = obj.msg;
         }
 
+        fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsUnAuth, token, postData, function onSuccess(response) {
+
+            },
+            function onError(err) {
+
+            }
+        );
+
         fwInitAuth(() => {
-            // fwCallServiceByKeyDirect();
+
             let respones = {
                 videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
                 postUrl: "https://video-react.js.org/assets/poster.png",
