@@ -8,7 +8,7 @@ import {
     fwInitAuth,
     fwIsEmpty,
     fwLoading,
-    fwPush,
+    fwError,
     fwUnLoading
 } from "../common/common";
 import UrlConfig from "../config";
@@ -46,7 +46,8 @@ class Shared extends Component {
                     if (response && response.data) {
                         let status = response.data.Status
                         if (status === 'RequireLogin') {
-                            fwPush("/login");
+                            // fwPush("/login");
+                            fwError("/login");
                         } else if (status === 'OK') {
                             //動画取得する
                             fwInitAuth((token) => {
