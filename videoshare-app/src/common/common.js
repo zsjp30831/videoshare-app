@@ -55,7 +55,7 @@ export function fwInitAuth(onSuccess) {
             fwError('認証失敗しました。');
         }
     }).catch(() => {
-        fwError('認証失敗しました。');
+        fwError('認証例外しました。');
         // fwUnLoading();
     })
 }
@@ -133,24 +133,6 @@ export function fwDateFormat(str) {
     return formatted;
 };
 
-const lineOpt = {
-    scheme: {
-        protocol: 'line',
-    },
-    intent: {
-        package: '',
-        scheme: 'line',
-    },
-    universal: {
-        host: 'msg/text/',
-        pathKey: 'action',
-    },
-    appstore: 'https://apps.apple.com/jp/app/line/id443904275',
-    yingyongbao: 'https://chrome.google.com/webstore/detail/line/ophjlpahpchlmihnnnihgmmeilfjmjjc',
-    fallback: 'https://line.me/ja/',
-    timeout: 2000,
-};
-
 const twitterOpt = {
     scheme: {
         protocol: 'Twitter',
@@ -168,24 +150,6 @@ const twitterOpt = {
     fallback: 'https://twitter.com/',
     timeout: 2000,
 };
-
-// const youtubeOpt = {
-//     scheme: {
-//         protocol: 'youtube',
-//     },
-//     intent: {
-//         package: 'com.zhihu.android',
-//         scheme: 'youtube',
-//     },
-//     universal: {
-//         host: 'youtube.com/',
-//         pathKey: 'action',
-//     },
-//     appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',
-//     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
-//     fallback: 'https://www.youtube.com/',
-//     timeout: 2000,
-// };
 
 
 // const facebookOpt = {
@@ -226,32 +190,29 @@ const twitterOpt = {
 
 export function fwCallApp(index, url) {
 
-    let option;
     switch (index) {
         case 0:
             break;
         case 1:
-            option = lineOpt;
-            option.universal.host = lineOpt.universal.host + encodeURIComponent(url);
             // pc
-            // window.open('https://lineit.line.me/share/ui?url=' + encodeURIComponent(url), "_blank");
+            // window.open('https://lineit.line.me/share/ui?url=' + encodeURIComponent(url), "_blank");  //ios できない
+            // window.location.href = 'https://lineit.line.me/share/ui?url=' + encodeURIComponent(url);
+            window.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
             break;
         case 2:
-            option = twitterOpt;
+            const lib = new CallApp(twitterOpt);
+            lib.open({path: '', param: {url}});
             break;
         case 3:
             window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");
             // window.location.href = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url);
-            return;
+            break;
         case 4:
             // option = wechatOpt;
             break;
         default:
             break;
     }
-
-    const lib = new CallApp(option);
-    lib.open({path: '', param: {url}});
 
 }
 

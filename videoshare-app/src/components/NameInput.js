@@ -28,7 +28,7 @@ class NameInput extends Component {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
-            let email = null;
+            let email;
             let obj = this.props.location.state;
             if (obj && obj.hasOwnProperty('msg')) {
                 email = obj.msg;

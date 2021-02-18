@@ -50,32 +50,58 @@ class VrcPlayer extends Component {
                 ContentId: this.props.contentId,
                 Authority: this.state.authLevel === 'Unlock' ? 0 : 1,
             }
-            console.log(postData);
-            fwInitAuth((token) => {
-                fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
-                        fwUnLoading();
-                        // console.log(response);
-                        if (response && response.data && response.data.Status === 'OK') {
-
-                            if (index > 0) {
-                                fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
-                            } else {
-                                // url copy icon
-                                // console.log(document.location.href);
-                                copy(document.location.href + '/shared?cid=' + postData.ContentId);
-                                fwSuccess('コピーされました');
+            copy(document.location.href + '/shared?cid=' + postData.ContentId,{
+                onCopy:(text)=>{
+                    // console.log(postData);
+                    fwInitAuth((token) => {
+                        fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
+                                fwUnLoading();
+                                // console.log(response);
+                                if (response && response.data && response.data.Status === 'OK') {
+                                    // console.log(document.location.href);
+                                    if (index > 0) {
+                                        fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
+                                    } else {
+                                        // url copy icon
+                                        // copy(document.location.href + '/shared?cid=' + postData.ContentId);
+                                        fwSuccess('コピーされました');
+                                    }
+                                } else {
+                                    fwErrorMessage("権限設定失敗しました。");
+                                }
+                            },
+                            function onError(err) {
+                                fwErrorMessage("権限設定例外が発生しました。");
                             }
-                        } else {
-                            fwErrorMessage("権限設定失敗しました。");
-                        }
-                    },
-                    function onError(err) {
-                        fwErrorMessage("権限設定例外が発生しました。");
-                    }
-                );
+                        );
+                    });
+                } // end of onCopy
             });
 
-
+            // console.log(postData);
+            // fwInitAuth((token) => {
+            //     fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
+            //             fwUnLoading();
+            //             // console.log(response);
+            //             if (response && response.data && response.data.Status === 'OK') {
+            //
+            //                 if (index > 0) {
+            //                     fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
+            //                 } else {
+            //                     // url copy icon
+            //                     // console.log(document.location.href);
+            //                     copy(document.location.href + '/shared?cid=' + postData.ContentId);
+            //                     fwSuccess('コピーされました');
+            //                 }
+            //             } else {
+            //                 fwErrorMessage("権限設定失敗しました。");
+            //             }
+            //         },
+            //         function onError(err) {
+            //             fwErrorMessage("権限設定例外が発生しました。");
+            //         }
+            //     );
+            // });
         }
     }
 
