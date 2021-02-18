@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
 import {
+    fwCallServiceDirect,
     fwCallServiceByKeyDirect,
     fwErrorMessage,
     fwInitAuth,
@@ -31,15 +32,16 @@ class Shared extends Component {
         handler = this;
         // console.log(this.props.location.search);
         const query = this.props.location.search;
-        const arr = query.split('&') // ['?cid=x', 'fbclid=xx']
-        if (arr && arr.length === 2) {
-            const contentId = arr[0].substr(5);
+        const arr = query.split('?') // ['shared', 'cid=xxxxxx&']
+        if (arr && arr.length > 1) {
+            var pram = new URLSearchParams('?'+arr[1]);
+            let contentId = pram.get('cid');
             let postData = {
                 ContentId: contentId,
             };
             console.log(postData);
             fwLoading();
-            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsUnAuth, null, postData, function onSuccess(response) {
+            fwCallServiceDirect(UrlConfig.GetMediaContentsUnAuth, postData, function onSuccess(response) {
                     console.log(response);
                     if (response && response.data) {
                         let status = response.data.Status
@@ -71,8 +73,8 @@ class Shared extends Component {
                 }
             );
 
-        } else {
-            // fwErrorMessage("請求パラメータ不正。");
+        }else{
+            fwErrorMessage("請求url不正。");
             return;
         }
     }

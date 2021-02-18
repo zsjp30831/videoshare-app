@@ -12,5 +12,5 @@ export default {
     RequestNewFriendURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/requestnewfriend',
     GetFriendListURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/getfriendlist',
     ResponseNewFriendURL: 'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/responsenewfriend',
-    GetMediaContentsUnAuth:'https://khpdkuwlbe.execute-api.ap-northeast-1.amazonaws.com/v1/getmediacontentsunauth',
+    GetMediaContentsUnAuth:'https://platform.vrcjp.com/getmediacontentsunauth',
 }

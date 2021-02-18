@@ -52,7 +52,7 @@ class VrcPlayer extends Component {
             }
             copy(document.location.href + '/shared?cid=' + postData.ContentId,{
                 onCopy:(text)=>{
-                    // console.log(postData);
+                   console.log(postData);
                     fwInitAuth((token) => {
                         fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
                                 fwUnLoading();

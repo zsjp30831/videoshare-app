@@ -114,7 +114,7 @@ export function fwCallServiceDirect(apiUrl, data, fncSuccess, fncError) {
         .catch(function (error) {
             console.log(error);
             fwUnLoading();
-            fncError();
+            fncError(error);
         });
 }
 
@@ -204,8 +204,8 @@ export function fwCallApp(index, url) {
             lib.open({path: '', param: {url}});
             break;
         case 3:
-            window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");
-            // window.location.href = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url);
+            // window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");
+            window.location.href = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url);
             break;
         case 4:
             // option = wechatOpt;
