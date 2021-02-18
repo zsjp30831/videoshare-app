@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwCallServiceByKeyDirect, fwInitAuth, fwIsEmpty} from "../common/common";
+import {
+    fwCallServiceByKeyDirect,
+    fwErrorMessage,
+    fwInitAuth,
+    fwIsEmpty,
+    fwLoading,
+    fwPush,
+    fwUnLoading
+} from "../common/common";
 import UrlConfig from "../config";
 
+let handler;
 
 class Shared extends Component {
 
@@ -18,30 +27,54 @@ class Shared extends Component {
         this.setState({urlInfo: param});
     }
 
-
     componentDidMount() {
-        var obj = this.props.location.state;
-        if (obj && obj.hasOwnProperty('msg')) {
-            //userInfo = obj.msg;
+        handler = this;
+        // console.log(this.props.location.search);
+        const query = this.props.location.search;
+        const arr = query.split('&') // ['?cid=x', 'fbclid=xx']
+        if (arr && arr.length === 2) {
+            const contentId = arr[0].substr(5);
+            let postData = {
+                ContentId: contentId,
+            };
+            console.log(postData);
+            fwLoading();
+            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsUnAuth, null, postData, function onSuccess(response) {
+                    console.log(response);
+                    if (response && response.data) {
+                        let status = response.data.Status
+                        if (status === 'RequireLogin') {
+                            fwPush("/login");
+                        } else if (status === 'OK') {
+                            //動画取得する
+                            fwInitAuth((token) => {
+                                fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, postData, function onSuccess(response) {
+                                        fwUnLoading();
+                                        console.log(response.data);
+                                        handler.updateUI(response.data.Contents);
+                                    },
+                                    function onError(err) {
+                                        fwErrorMessage("動画取得例外が発生しました。");
+                                    }
+                                );
+                            });
+                        } else {
+                            fwErrorMessage("権限取得エラーが発生しました。");
+                        }
+                    } else {
+                        fwErrorMessage("権限取得失敗が発生しました。");
+                    }
+
+                },
+                function onError(err) {
+                    fwErrorMessage("権限取得例外が発生しました。");
+                }
+            );
+
+        } else {
+            // fwErrorMessage("請求パラメータ不正。");
+            return;
         }
-
-        fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsUnAuth, token, postData, function onSuccess(response) {
-
-            },
-            function onError(err) {
-
-            }
-        );
-
-        fwInitAuth(() => {
-
-            let respones = {
-                videoUrl: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
-                postUrl: "https://video-react.js.org/assets/poster.png",
-            }
-
-            this.updateUI(respones);
-        });
     }
 
     render() {
@@ -52,8 +85,13 @@ class Shared extends Component {
 
         return (
             <div className={Styles.center}>
-                <VrcPlayer srcUrl={urlInfo.videoUrl}
-                           poster={urlInfo.postUrl}/>
+                <VrcPlayer owner={urlInfo.VrcId}
+                           contentId={urlInfo.ContentId}
+                           frequency={urlInfo.AccessCount}
+                           createDt={urlInfo.CreateTime}
+                           srcUrl={urlInfo.Url} // "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+                           title={urlInfo.Title}
+                           poster=""/>);
             </div>
         );
     }

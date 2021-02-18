@@ -72,7 +72,6 @@ export function fwPush(path, data) {
 }
 
 export function fwCallServiceByKeyDirect(apiUrl, authToken, data, fncSuccess, fncError) {
-    fwLoading();
     if (!fncError) { // error handle
         // fncError = fwErrorMessage;
     }
@@ -93,10 +92,46 @@ export function fwCallServiceByKeyDirect(apiUrl, authToken, data, fncSuccess, fn
         .catch(function (error) {
             console.log(error);
             fwUnLoading();
+            fncError(error);
+        });
+}
+
+export function fwCallServiceDirect(apiUrl, data, fncSuccess, fncError) {
+    if (!fncError) { // error handle
+        // fncError = fwErrorMessage;
+    }
+
+    axios({
+        method: 'post',
+        url: apiUrl,
+        contentType: "application/json",
+        data: JSON.stringify(data),
+    })
+        .then(function (response) {
+            // console.log(response);
+            fncSuccess(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+            fwUnLoading();
             fncError();
         });
 }
 
+export function fwDateFormat(str) {
+
+    if (str && str.length < 8) {
+        return '';
+    }
+    const year = str.substr(0, 4);
+    const month = str.substr(4, 2);
+    const day = str.substr(6, 2);
+    // const hour = str.substr(8, 2);
+    // const min = str.substr(10, 2);
+    // const sec = str.substr(12, 2);
+    const formatted = `${year}-${month}-${day}`;
+    return formatted;
+};
 
 const lineOpt = {
     scheme: {
@@ -134,23 +169,23 @@ const twitterOpt = {
     timeout: 2000,
 };
 
-const youtubeOpt = {
-    scheme: {
-        protocol: 'youtube',
-    },
-    intent: {
-        package: 'com.zhihu.android',
-        scheme: 'youtube',
-    },
-    universal: {
-        host: 'youtube.com/',
-        pathKey: 'action',
-    },
-    appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',
-    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
-    fallback: 'https://www.youtube.com/',
-    timeout: 2000,
-};
+// const youtubeOpt = {
+//     scheme: {
+//         protocol: 'youtube',
+//     },
+//     intent: {
+//         package: 'com.zhihu.android',
+//         scheme: 'youtube',
+//     },
+//     universal: {
+//         host: 'youtube.com/',
+//         pathKey: 'action',
+//     },
+//     appstore: 'https://apps.apple.com/jp/app/youtube/id544007664',
+//     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+//     fallback: 'https://www.youtube.com/',
+//     timeout: 2000,
+// };
 
 
 // const facebookOpt = {
@@ -202,13 +237,10 @@ export function fwCallApp(index, url) {
             option = twitterOpt;
             break;
         case 3:
-            option = youtubeOpt;
-            break;
-        case 4:
-            // option = facebookOpt;
-            window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), '_blank');
+            window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");
+            // window.location.href = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url);
             return;
-        case 5:
+        case 4:
             // option = wechatOpt;
             break;
         default:

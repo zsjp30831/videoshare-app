@@ -7,7 +7,6 @@ import copy from 'copy-to-clipboard';
 import Share from "../image/share.png";
 import Line from "../image/line.png";
 import Twitter from "../image/twitter.png";
-import YouTube from "../image/youtube.png";
 import Facebook from "../image/facebook.png";
 // import Wechat from "../image/wechat.png";
 import CopyIcon from "../image/copy.png";
@@ -55,18 +54,18 @@ class VrcPlayer extends Component {
             fwInitAuth((token) => {
                 fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
                         fwUnLoading();
-                        console.log(response);
+                        // console.log(response);
                         if (response && response.data && response.data.Status === 'OK') {
 
                             if (index > 0) {
-                                fwCallApp(index, document.location.href + '/shared');
+                                fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
                             } else {
                                 // url copy icon
-                                console.log(document.location.href);
-                                copy(document.location.href + '/shared');
+                                // console.log(document.location.href);
+                                copy(document.location.href + '/shared?cid=' + postData.ContentId);
                                 fwSuccess('コピーされました');
                             }
-                        }else{
+                        } else {
                             fwErrorMessage("権限設定失敗しました。");
                         }
                     },
@@ -84,7 +83,6 @@ class VrcPlayer extends Component {
         {title: 'Copy', icon: CopyIcon},
         {title: 'Line', icon: Line},
         {title: 'Twitter', icon: Twitter},
-        {title: 'YouTube', icon: YouTube},
         {title: 'Facebook', icon: Facebook},
         // {title: 'Wechat', icon: Wechat},
     ].map(obj => ({
@@ -98,7 +96,7 @@ class VrcPlayer extends Component {
         ActionSheet.showShareActionSheetWithOptions({
                 options: this.dataList,
                 title: '共有',
-                message: <AuthPicker handleAuthChange={this.handleAuthChange.bind(this)}/>,
+                message: <AuthPicker key="0" handleAuthChange={this.handleAuthChange.bind(this)} />,
                 cancelButtonText: 'キャンセル',
             },
             (buttonIndex, rowIndex) => {

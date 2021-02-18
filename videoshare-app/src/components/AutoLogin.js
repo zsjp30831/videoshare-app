@@ -5,7 +5,6 @@ import {signin} from "../common/cognito-auth";
 class AutoLogin extends Component {
 
     componentDidMount() {
-        fwLoading();
         // console.log(this.props.location.search);
         const query = this.props.location.search;
         const arr = query.split('&') // ['?user=', 'pass=7']
@@ -29,6 +28,7 @@ class AutoLogin extends Component {
     }
 
     render() {
+        fwLoading();
         return (
             <div>
             </div>

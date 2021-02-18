@@ -1,18 +1,28 @@
 import React, {Component} from 'react';
-import Styles from './PlayerTitle.css'
+import Styles from './PlayerTitle.css';
+import {fwDateFormat} from '../common/common'
+
 
 class PlayerTitle extends Component {
 
-    render() {
+    countFormat = (count) => {
+        if (count > 10000) {
+            let res = (count / 10000).toFixed(1);
+            return `${res}万回視聴`;
+        }
+        return `${count}回視聴`;
+    }
 
+    render() {
+        const {title, owner, frequency, createDate} = this.props;
+        let count = this.countFormat(frequency);
+        let date = fwDateFormat(createDate);
         return (
             <div className={Styles.title}>
-                {this.props.title}
+                {title}
                 <div className={Styles.subTitle}>
                     <span style={{fontSize: 12}}>
-                        {this.props.owner}
-                        ・{this.props.frequency} 回視聴
-                        ・{this.props.createDate}
+                        {owner}・{count}・{date}
                     </span>
                 </div>
             </div>

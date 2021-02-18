@@ -8,14 +8,14 @@ const itemStyle = {
     verticalAlign: 'middle',
     width: '16px',
     height: '16px',
-    marginRight: '10px',
+    marginRight: '1px',
 };
 
 const authItem = [
     {
         label:
             (<div>
-                <img src={UnLock} alt="" style={{...itemStyle}}/>
+                <img key="0" src={UnLock} alt="" style={{...itemStyle}}/>
                 <span>誰にでも公開</span>
             </div>),
         value: 'Unlock',
@@ -23,7 +23,7 @@ const authItem = [
     {
         label:
             (<div>
-                <img src={Lock} alt="" style={{...itemStyle}}/>
+                <img key="1" src={Lock} alt="" style={{...itemStyle}}/>
                 <span>限定公開</span>
             </div>),
         value: 'Lock',

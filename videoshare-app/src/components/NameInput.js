@@ -35,7 +35,7 @@ class NameInput extends Component {
             }
 
             if (!email) {
-                fwErrorMessage("メースを入力してください。");
+                fwErrorMessage("メールを入力してください。");
                 return;
             }
 
