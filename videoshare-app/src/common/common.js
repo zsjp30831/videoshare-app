@@ -138,13 +138,13 @@ const lineOpt = {
         protocol: 'line',
     },
     intent: {
-        package: 'com.zhihu.android',
+        package: '',
         scheme: 'line',
     },
-    // universal: {
-    //     host: 'oia.zhihu.com/question/270839820/answer/477722658',
-    //     pathKey: 'action',
-    // },
+    universal: {
+        host: 'msg/text/',
+        pathKey: 'action',
+    },
     appstore: 'https://apps.apple.com/jp/app/line/id443904275',
     yingyongbao: 'https://chrome.google.com/webstore/detail/line/ophjlpahpchlmihnnnihgmmeilfjmjjc',
     fallback: 'https://line.me/ja/',
@@ -232,6 +232,9 @@ export function fwCallApp(index, url) {
             break;
         case 1:
             option = lineOpt;
+            option.universal.host = lineOpt.universal.host + encodeURIComponent(url);
+            // pc
+            // window.open('https://lineit.line.me/share/ui?url=' + encodeURIComponent(url), "_blank");
             break;
         case 2:
             option = twitterOpt;
