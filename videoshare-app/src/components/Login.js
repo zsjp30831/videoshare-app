@@ -36,10 +36,11 @@ class Login extends Component {
                         if (path === "autologinerror") {
                             fwPush("/nameinput",email);
                         } else {
-                            // fwPush("/home", "");
-                            fwErrorMessage("入口が間違う。");
+                            fwPush("/404", "");
+                            // fwErrorMessage("入口が間違う。");
                         }
                     } else {
+                        // alert(accessUrl);
                         fwPush(accessUrl, "");
                     }
                 },
