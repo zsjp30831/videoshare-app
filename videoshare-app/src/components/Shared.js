@@ -34,12 +34,19 @@ class Shared extends Component {
         const query = this.props.location.search;
         const arr = query.split('?') // ['shared', 'cid=xxxxxx&']
         if (arr && arr.length > 1) {
-            var pram = new URLSearchParams('?'+arr[1]);
+            var pram = new URLSearchParams('?' + arr[1]);
             let contentId = pram.get('cid');
+            let cid;
+            if (contentId && contentId.length > 24) {
+                cid = contentId.substr(0, 24);
+            } else {
+                cid = contentId;
+            }
+
             let postData = {
-                ContentId: contentId,
+                ContentId: cid,
             };
-            // console.log(postData);
+            console.log(postData);
             fwLoading();
             fwCallServiceDirect(UrlConfig.GetMediaContentsUnAuth, postData, function onSuccess(response) {
                     // console.log(response);
@@ -73,7 +80,7 @@ class Shared extends Component {
                 }
             );
 
-        }else{
+        } else {
             fwErrorMessage("請求url不正。");
             return;
         }
