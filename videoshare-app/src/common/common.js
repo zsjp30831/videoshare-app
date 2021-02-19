@@ -141,7 +141,7 @@ const twitterOpt = {
         protocol: 'Twitter',
     },
     intent: {
-        package: 'com.twitter.android',
+        package: '',
         scheme: 'Twitter',
     },
     universal: {
@@ -150,7 +150,7 @@ const twitterOpt = {
     },
     appstore: 'https://apps.apple.com/jp/app/twitter-%E3%83%84%E3%82%A4%E3%83%83%E3%82%BF%E3%83%BC/id333903271',
     yingyongbao: 'https://play.google.com/store/apps/details?id=com.twitter.android',
-    fallback: 'https://twitter.com/',
+    fallback: 'https://twitter.com/intent/tweet?text=',
     timeout: 2000,
 };
 
@@ -186,7 +186,9 @@ export function fwCallApp(index, url) {
             window.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
             break;
         case 2:
-            const lib = new CallApp(twitterOpt);
+            let option = twitterOpt;
+            option.fallback = twitterOpt.fallback + encodeURIComponent(url);
+            const lib = new CallApp(option);
             lib.open({path: '', param: {url}});
             break;
         case 3:
