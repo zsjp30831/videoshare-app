@@ -46,15 +46,15 @@ class Shared extends Component {
             let postData = {
                 ContentId: cid,
             };
-            console.log(postData);
+            // console.log(postData);
             fwLoading();
             fwCallServiceDirect(UrlConfig.GetMediaContentsUnAuth, postData, function onSuccess(response) {
-                    // console.log(response);
+                    console.log(response);
                     if (response && response.data) {
                         let status = response.data.Status
                         if (status === 'RequireLogin') {
                             // fwPush("/login");
-                            fwError("/login");
+                            fwError("登録してください。");
                         } else if (status === 'OK') {
                             //動画取得する
                             fwInitAuth((token) => {
