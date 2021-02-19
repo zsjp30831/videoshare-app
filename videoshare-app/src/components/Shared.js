@@ -39,10 +39,10 @@ class Shared extends Component {
             let postData = {
                 ContentId: contentId,
             };
-            console.log(postData);
+            // console.log(postData);
             fwLoading();
             fwCallServiceDirect(UrlConfig.GetMediaContentsUnAuth, postData, function onSuccess(response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response && response.data) {
                         let status = response.data.Status
                         if (status === 'RequireLogin') {
@@ -53,7 +53,7 @@ class Shared extends Component {
                             fwInitAuth((token) => {
                                 fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, postData, function onSuccess(response) {
                                         fwUnLoading();
-                                        console.log(response.data);
+                                        // console.log(response.data);
                                         handler.updateUI(response.data.Contents);
                                     },
                                     function onError(err) {
@@ -67,7 +67,6 @@ class Shared extends Component {
                     } else {
                         fwErrorMessage("権限取得失敗が発生しました。");
                     }
-
                 },
                 function onError(err) {
                     fwErrorMessage("権限取得例外が発生しました。");
@@ -94,7 +93,7 @@ class Shared extends Component {
                            createDt={urlInfo.CreateTime}
                            srcUrl={urlInfo.Url} // "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                            title={urlInfo.Title}
-                           poster=""/>);
+                           poster=""/>
             </div>
         );
     }

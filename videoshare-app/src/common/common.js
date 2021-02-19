@@ -90,7 +90,7 @@ export function fwCallServiceByKeyDirect(apiUrl, authToken, data, fncSuccess, fn
             fncSuccess(response);
         })
         .catch(function (error) {
-            console.log(error);
+            // console.log(error);
             fwUnLoading();
             fncError(error);
         });
@@ -104,6 +104,9 @@ export function fwCallServiceDirect(apiUrl, data, fncSuccess, fncError) {
     axios({
         method: 'post',
         url: apiUrl,
+        headers: {
+            'content-type': 'application/json',
+        },
         contentType: "application/json",
         data: JSON.stringify(data),
     })
@@ -112,7 +115,7 @@ export function fwCallServiceDirect(apiUrl, data, fncSuccess, fncError) {
             fncSuccess(response);
         })
         .catch(function (error) {
-            console.log(error);
+            // console.log(error);
             fwUnLoading();
             fncError(error);
         });

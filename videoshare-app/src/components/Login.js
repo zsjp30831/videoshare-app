@@ -19,7 +19,7 @@ class Login extends Component {
         let obj = this.props.location.state;
         if (obj && obj.hasOwnProperty('url')) {
             accessUrl = '/' + obj.url.split('/').slice(3).join('/'); // domainを除く
-            console.log(accessUrl);
+            // console.log(accessUrl);
         }
     }
 
