@@ -141,7 +141,7 @@ const twitterOpt = {
         protocol: 'Twitter',
     },
     intent: {
-        package: '',
+        package: 'com.twitter.android',
         scheme: 'Twitter',
     },
     universal: {
@@ -149,7 +149,7 @@ const twitterOpt = {
         pathKey: 'action',
     },
     appstore: 'https://apps.apple.com/jp/app/twitter-%E3%83%84%E3%82%A4%E3%83%83%E3%82%BF%E3%83%BC/id333903271',
-    yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
+    yingyongbao: 'https://play.google.com/store/apps/details?id=com.twitter.android',
     fallback: 'https://twitter.com/',
     timeout: 2000,
 };
@@ -173,23 +173,6 @@ const twitterOpt = {
 //     timeout: 2000,
 // };
 
-// const wechatOpt = {
-//     scheme: {
-//         protocol: 'weixin',
-//     },
-//     intent: {
-//         package: 'com.tencent.mm',
-//         scheme: 'weixin',
-//     },
-//     universal: {
-//         host: 'dl/moments',
-//         pathKey: 'action',
-//     },
-//     appstore: 'https://apps.apple.com/jp/app/wechat/id414478124',
-//     yingyongbao: '//a.app.qq.com/o/simple.jsp?pkgname=com.zhihu.android',
-//     fallback: 'https://wx.qq.com/',
-//     timeout: 2000,
-// };
 
 export function fwCallApp(index, url) {
 
