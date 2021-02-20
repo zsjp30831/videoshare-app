@@ -18,6 +18,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Login}/>
                     <Route path='/autologinerror' component={Login}/>
+                    <Route path='/index.html' component={AutoLogin}/>
                     <Route path='/autologin' component={AutoLogin}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/player' component={VrcPlayer}/>
