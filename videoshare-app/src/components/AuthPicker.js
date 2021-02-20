@@ -43,6 +43,10 @@ class AuthPicker extends Component {
         this.props.handleAuthChange(item);
     };
 
+    componentDidMount() {
+        this.props.handleAuthChange(this.state.itemValue);
+    }
+
     render() {
         return (
             <div>

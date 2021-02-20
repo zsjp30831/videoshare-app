@@ -42,18 +42,16 @@ class VrcPlayer extends Component {
 
     doShare = (index) => {
         if (index > -1) {
-            // alert(this.dataList[index].title);
-            // alert(this.state.authLevel);
-            // alert(this.props.srcUrl);
             // authLevel設定
             let postData = {
                 ContentId: this.props.contentId,
-                Authority: this.state.authLevel === 'Unlock' ? 0 : 1,
+                Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
             }
 
             copy(document.location.href + '/shared?cid=' + postData.ContentId);
 
             // console.log(postData);
+            // alert(postData.Authority);
             fwInitAuth((token) => {
                 fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
                         fwUnLoading();
@@ -64,7 +62,7 @@ class VrcPlayer extends Component {
                                 fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
                             } else {
                                 // url copy icon
-                                fwSuccess('コピーされました');
+                                fwSuccess('コピーされました。');
                             }
                         } else {
                             fwErrorMessage("権限設定失敗しました。");
@@ -97,7 +95,7 @@ class VrcPlayer extends Component {
         ActionSheet.showShareActionSheetWithOptions({
                 options: this.dataList,
                 title: '共有',
-                message: <AuthPicker key="0" handleAuthChange={this.handleAuthChange.bind(this)}/>,
+                message: <AuthPicker handleAuthChange={this.handleAuthChange.bind(this)}/>,
                 cancelButtonText: 'キャンセル',
             },
             (buttonIndex, rowIndex) => {
