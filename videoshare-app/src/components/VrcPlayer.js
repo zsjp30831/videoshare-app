@@ -50,33 +50,32 @@ class VrcPlayer extends Component {
                 ContentId: this.props.contentId,
                 Authority: this.state.authLevel === 'Unlock' ? 0 : 1,
             }
-            copy(document.location.href + '/shared?cid=' + postData.ContentId,{
-                onCopy:(text)=>{
-                   // console.log(postData);
-                    fwInitAuth((token) => {
-                        fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
-                                fwUnLoading();
-                                // console.log(response);
-                                if (response && response.data && response.data.Status === 'OK') {
-                                    // console.log(document.location.href);
-                                    if (index > 0) {
-                                        fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
-                                    } else {
-                                        // url copy icon
-                                        // copy(document.location.href + '/shared?cid=' + postData.ContentId);
-                                        fwSuccess('コピーされました');
-                                    }
-                                } else {
-                                    fwErrorMessage("権限設定失敗しました。");
-                                }
-                            },
-                            function onError(err) {
-                                fwErrorMessage("権限設定例外が発生しました。");
+
+            copy(document.location.href + '/shared?cid=' + postData.ContentId);
+
+            // console.log(postData);
+            fwInitAuth((token) => {
+                fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
+                        fwUnLoading();
+                        // console.log(response);
+                        if (response && response.data && response.data.Status === 'OK') {
+                            // console.log(document.location.href);
+                            if (index > 0) {
+                                fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
+                            } else {
+                                // url copy icon
+                                fwSuccess('コピーされました');
                             }
-                        );
-                    });
-                } // end of onCopy
+                        } else {
+                            fwErrorMessage("権限設定失敗しました。");
+                        }
+                    },
+                    function onError(err) {
+                        fwErrorMessage("権限設定例外が発生しました。");
+                    }
+                );
             });
+
 
         }
     }
@@ -98,7 +97,7 @@ class VrcPlayer extends Component {
         ActionSheet.showShareActionSheetWithOptions({
                 options: this.dataList,
                 title: '共有',
-                message: <AuthPicker key="0" handleAuthChange={this.handleAuthChange.bind(this)} />,
+                message: <AuthPicker key="0" handleAuthChange={this.handleAuthChange.bind(this)}/>,
                 cancelButtonText: 'キャンセル',
             },
             (buttonIndex, rowIndex) => {

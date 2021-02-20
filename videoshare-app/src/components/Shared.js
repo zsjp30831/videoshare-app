@@ -5,7 +5,7 @@ import {
     fwCallServiceDirect,
     fwCallServiceByKeyDirect,
     fwErrorMessage,
-    fwInitAuth,
+    fwgetAWSToken,
     fwIsEmpty,
     fwLoading,
     fwError,
@@ -49,25 +49,30 @@ class Shared extends Component {
             // console.log(postData);
             fwLoading();
             fwCallServiceDirect(UrlConfig.GetMediaContentsUnAuth, postData, function onSuccess(response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response && response.data) {
                         let status = response.data.Status
                         if (status === 'RequireLogin') {
-                            // fwPush("/login");
-                            fwError("登録してください。");
+                            fwgetAWSToken(function onSuccess(token) {
+                                    fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, postData, function onSuccess(response) {
+                                            // console.log(response);
+                                            fwUnLoading();
+                                            //動画表示
+                                            handler.updateUI(response.data.Contents);
+                                        },
+                                        function onError() {
+                                            fwError("動画取得失敗しました。");
+                                        }
+                                    );
+                                },
+                                function onError() {
+                                    fwError("サインインしてください。");
+                                }
+                            );
                         } else if (status === 'OK') {
-                            //動画取得する
-                            fwInitAuth((token) => {
-                                fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, postData, function onSuccess(response) {
-                                        fwUnLoading();
-                                        // console.log(response.data);
-                                        handler.updateUI(response.data.Contents);
-                                    },
-                                    function onError(err) {
-                                        fwErrorMessage("動画取得例外が発生しました。");
-                                    }
-                                );
-                            });
+                            fwUnLoading();
+                            //動画表示
+                            handler.updateUI(response.data.Contents);
                         } else {
                             fwErrorMessage("権限取得エラーが発生しました。");
                         }

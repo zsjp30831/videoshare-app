@@ -60,6 +60,19 @@ export function fwInitAuth(onSuccess) {
     })
 }
 
+export function fwgetAWSToken(onSuccess,onError) {
+
+    getAWSToken().then((token) => {
+        if (token) {
+            onSuccess(token);
+        } else {
+            onError();
+        }
+    }).catch(() => {
+        onError();
+    })
+}
+
 export function fwPush(path, data) {
     let history = createBrowserHistory();
     history.push({
