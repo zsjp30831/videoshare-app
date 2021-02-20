@@ -43,10 +43,10 @@ class Home extends Component {
                                                 ContentId: item,
                                             }
 
-                                            if (index > 5) {
-                                                fwUnLoading();
-                                                return;
-                                            }
+                                            // if (index > 5) {
+                                            //     fwUnLoading();
+                                            //     return;
+                                            // }
 
                                             // videoItemを取得する
                                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
