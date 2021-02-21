@@ -11,6 +11,7 @@ import Facebook from "../image/facebook.png";
 import CopyIcon from "../image/copy.png";
 import AuthPicker from "./AuthPicker";
 import logo from "../image/people-b.png";
+import downloadlogo from "../image/download.png";
 import {
     Player,
     ControlBar,
@@ -115,15 +116,18 @@ class VrcPlayer extends Component {
                             <VolumeMenuButton/>
                         </ControlBar>
                     </Player>
-                    <WhiteSpace/>
+                    <WhiteSpace size={'lg'}/>
                     <NavBar
                         className={Styles.NavBar}
                         icon={<img src={logo} className={Styles.logo} alt=""/>}
                         mode="light"
                         rightContent={[
                             share && (<img key="0" src={Share} className={Styles.share}
-                                                                          alt="share"
-                                                                          onClick={this.showShareActionSheet}/>)
+                                           alt="share"
+                                           onClick={this.showShareActionSheet}/>),
+                            download && (
+                                <img src={downloadlogo} className={Styles.logo} alt="" />
+                            )
                         ]}
                     >
                         <PlayerTitle key="1"
@@ -133,7 +137,6 @@ class VrcPlayer extends Component {
                                      createDate={createDt}
                         />
                     </NavBar>
-                    {download && (<div></div>)}
                     <WhiteSpace size={'lg'}/>
                 </div>
             </Fragment>

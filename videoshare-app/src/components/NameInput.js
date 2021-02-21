@@ -27,6 +27,12 @@ class NameInput extends Component {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
+            let title = this.props.form.getFieldsValue().title;
+            if (title && title.length > 15) {
+                fwErrorMessage("15文字以内入力可能。");
+                return;
+            }
+
             let email;
             let obj = this.props.location.state;
             if (obj && obj.hasOwnProperty('msg')) {
@@ -41,11 +47,11 @@ class NameInput extends Component {
             let postData = {
                 Name: name,
                 Target: email,
-                Title: this.props.form.getFieldsValue().title,
+                Title: title,
             };
             // console.log(postData);
             fwInitAuth((token) => {
-                 // console.log(token);
+                // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
                         fwUnLoading();
                         if (response && response.data && response.data.Status === "OK") {
@@ -78,6 +84,12 @@ class NameInput extends Component {
             }
         }
 
+        const validateTitle = (rule, value, callback) => {
+            if (value.length >= 16) {
+                callback(new Error('15文字以内入力可能'));
+            }
+        }
+
         return (
             <div className={Styles.nameInput}>
                 <div className={Styles.center}>
@@ -104,7 +116,7 @@ class NameInput extends Component {
                         className={Styles.inputItem}
                         {...getFieldProps('title', {
                             rules: [
-                                {validator: validateName},
+                                {validator: validateTitle},
                             ],
                         })}
                         ref={el => this.nameInst = el}
@@ -113,7 +125,7 @@ class NameInput extends Component {
                             Toast.info(getFieldError('title'), 1);
                         }}
                         clear
-                        placeholder=""
+                        placeholder="15文字以内入力可能"
                     >
                     </InputItem>
                     <WhiteSpace/>
