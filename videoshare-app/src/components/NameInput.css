@@ -1,17 +1,18 @@
 
 .submit {
-    width: 160px;
-    height: 40px;
-    background: #2cabe3;
-    font-size: 17px;
-    margin-top: 20px;
+    width: 260px;
+    height: 45px;
+    background: darkorange;
+    font-size: 23px;
+    margin-top: 30px;
 }
 
-.nameInput{
+.nameInput {
     height: 100%;
-    /*background: aliceblue;*/
-    background: url("../image/login-register.png") center no-repeat;
+    background: linear-gradient(darkorange,DeepPink);
+    /*background: url("../image/login-register.png") center no-repeat;*/
 }
+
 .center {
     min-height: 80vh;
     display: flex;
@@ -26,17 +27,22 @@
     height: 180px;
 }
 
-.inputItem{
+.inputItem {
     width: 300px;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
 }
+
 .footer {
     bottom: 0;
-    color: #58666e;
+    /*color: #58666e;*/
     left: 0;
-    padding: 20px 30px;
+    /*padding: 20px 30px;*/
     position: absolute;
     right: 0;
-    text-align: center;
-    /*background: aliceblue;*/
+    /*text-align: center;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
 }

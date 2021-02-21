@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
-import logo from "../image/people.png";
 import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwUnLoading} from "../common/common";
 import UrlConfig from '../config';
 
@@ -42,6 +41,7 @@ class NameInput extends Component {
             let postData = {
                 Name: name,
                 Target: email,
+                Title: this.props.form.getFieldsValue().title,
             };
             // console.log(postData);
             fwInitAuth((token) => {
@@ -56,7 +56,7 @@ class NameInput extends Component {
                     },
                     function onError(err) {
                         // console.log(err);
-                        fwErrorMessage("名前入力画面にて、例外が発生しました。");
+                        fwErrorMessage("名前入力画面例外が発生しました。");
                     });
             });
 
@@ -82,8 +82,6 @@ class NameInput extends Component {
             <div className={Styles.nameInput}>
                 <div className={Styles.center}>
                     <h2>名前入力</h2>
-                    <img src={logo} className={Styles.logo} alt="logo"/>
-                    <WhiteSpace/>
                     <InputItem
                         className={Styles.inputItem}
                         {...getFieldProps('name', {
@@ -97,15 +95,31 @@ class NameInput extends Component {
                             Toast.info(getFieldError('name'), 1);
                         }}
                         clear
-                        placeholder="名前を入力してください"
+                        placeholder=""
                     >
                         {/*<span>名前</span>*/}
                     </InputItem>
+                    <h2>タイトル入力</h2>
+                    <InputItem
+                        className={Styles.inputItem}
+                        {...getFieldProps('title', {
+                            rules: [
+                                {validator: validateName},
+                            ],
+                        })}
+                        ref={el => this.nameInst = el}
+                        error={!!getFieldError('title')}
+                        onErrorClick={() => {
+                            Toast.info(getFieldError('title'), 1);
+                        }}
+                        clear
+                        placeholder=""
+                    >
+                    </InputItem>
                     <WhiteSpace/>
-
-                    <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>決定</Button>
                     <footer className={Styles.footer}>
-                        <span>Copyright © VRC, Inc. All Rights Reserved.</span>
+                        <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                        {/*<span>Copyright © VRC, Inc. All Rights Reserved.</span>*/}
                     </footer>
                 </div>
             </div>

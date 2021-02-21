@@ -16,9 +16,8 @@ class App extends Component {
         return (
             <div className={Styles.App}>
                 <Switch>
-                    <Route exact path='/' component={Login}/>
+                    <Route exact path='/' component={AutoLogin}/>
                     <Route path='/autologinerror' component={Login}/>
-                    <Route path='/index.html' component={AutoLogin}/>
                     <Route path='/autologin' component={AutoLogin}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/player' component={VrcPlayer}/>

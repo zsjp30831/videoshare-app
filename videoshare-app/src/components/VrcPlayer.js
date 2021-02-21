@@ -8,10 +8,9 @@ import Share from "../image/share.png";
 import Line from "../image/line.png";
 import Twitter from "../image/twitter.png";
 import Facebook from "../image/facebook.png";
-// import Wechat from "../image/wechat.png";
 import CopyIcon from "../image/copy.png";
 import AuthPicker from "./AuthPicker";
-import logo from "../image/admin-logo.png";
+import logo from "../image/people-b.png";
 import {
     Player,
     ControlBar,
@@ -105,17 +104,26 @@ class VrcPlayer extends Component {
     }
 
     render() {
-        const {title, owner, frequency, createDt, srcUrl, poster} = this.props;
+        const {title, owner, frequency, createDt, srcUrl, poster, share, download} = this.props;
         return (
             <Fragment>
                 <div style={{width: 400, height: 300, margin: 20}}>
+                    <Player poster={poster} fluid={false} width={'100%'} height={'90%'}>
+                        <source src={srcUrl} type="video/mp4"/>
+                        <BigPlayButton position="center"/>
+                        <ControlBar autoHide={true} disableDefaultControls={false}>
+                            <VolumeMenuButton/>
+                        </ControlBar>
+                    </Player>
+                    <WhiteSpace/>
                     <NavBar
                         className={Styles.NavBar}
                         icon={<img src={logo} className={Styles.logo} alt=""/>}
                         mode="light"
                         rightContent={[
-                            <img key="0" src={Share} className={Styles.share} alt="share"
-                                 onClick={this.showShareActionSheet}/>
+                            share && (<img key="0" src={Share} className={Styles.share}
+                                                                          alt="share"
+                                                                          onClick={this.showShareActionSheet}/>)
                         ]}
                     >
                         <PlayerTitle key="1"
@@ -125,13 +133,7 @@ class VrcPlayer extends Component {
                                      createDate={createDt}
                         />
                     </NavBar>
-                    <Player poster={poster} fluid={false} width={'100%'} height={'90%'}>
-                        <source src={srcUrl} type="video/mp4"/>
-                        <BigPlayButton position="center"/>
-                        <ControlBar autoHide={true} disableDefaultControls={false}>
-                            <VolumeMenuButton/>
-                        </ControlBar>
-                    </Player>
+                    {download && (<div></div>)}
                     <WhiteSpace size={'lg'}/>
                 </div>
             </Fragment>

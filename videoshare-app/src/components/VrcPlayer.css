@@ -1,16 +1,24 @@
 
-.NavBar{
+.NavBar {
     background: transparent;
+    display: inline-flex;
 }
 
-.logo{
-    width: 60px;
-    height: 32px;
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
-.share{
+
+.share {
     width: 32px;
     height: 30px;
     margin-bottom: 8px;
     margin-right: -1px;
+}
+
+
+.am-navbar-left {
 }

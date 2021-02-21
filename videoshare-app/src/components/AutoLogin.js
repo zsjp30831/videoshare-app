@@ -6,6 +6,7 @@ class AutoLogin extends Component {
 
     componentDidMount() {
         // console.log(this.props.location.search);
+        // alert(this.props.location.search);
         const query = this.props.location.search;
         const arr = query.split('&') // ['?user=', 'pass=7']
         if (arr && arr.length === 2) {

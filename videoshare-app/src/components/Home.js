@@ -136,6 +136,8 @@ class Home extends Component {
                                         createDt={item.CreateTime}
                                         srcUrl={item.Url} // "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                                         title={item.Title}
+                                        share={true}
+                                        download={false}
                                         poster=""/>);
             });
         }
