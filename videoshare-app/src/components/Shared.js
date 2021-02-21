@@ -12,6 +12,7 @@ import {
     fwUnLoading
 } from "../common/common";
 import UrlConfig from "../config";
+import 'url-search-params-polyfill';
 
 let handler;
 

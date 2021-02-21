@@ -2,7 +2,7 @@
   "name": "create-react-app",
   "version": "2.0.0",
   "private": true,
-  "homepage":".",
+  "homepage": ".",
   "dependencies": {
     "amazon-cognito-identity-js": "^4.5.10",
     "antd-mobile": "^2.0.0",
@@ -14,6 +14,7 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "1.0.13",
+    "url-search-params-polyfill": "^8.1.0",
     "video-react": "^0.14.1"
   },
   "scripts": {
