@@ -25,6 +25,7 @@
 }
 .label{
     color: white;
+    font-size: 23px;
 }
 .logo {
     height: 180px;
@@ -32,6 +33,7 @@
 
 .inputItem {
     width: 300px;
+    height: 46px !important;
     /*margin-top: 80px;*/
 }
 

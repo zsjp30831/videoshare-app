@@ -93,7 +93,7 @@ class NameInput extends Component {
         return (
             <div className={Styles.nameInput}>
                 <div className={Styles.center}>
-                    <h1 className={Styles.label}>名前入力</h1>
+                    <h1 className={Styles.label}>あなたの名前</h1>
                     <InputItem
                         className={Styles.inputItem}
                         {...getFieldProps('name', {
@@ -111,7 +111,7 @@ class NameInput extends Component {
                     >
                         {/*<span>名前</span>*/}
                     </InputItem>
-                    <h1 className={Styles.label}>タイトル入力</h1>
+                    <h1 className={Styles.label}>卒業証書授与動画タイトル</h1>
                     <InputItem
                         className={Styles.inputItem}
                         {...getFieldProps('title', {
