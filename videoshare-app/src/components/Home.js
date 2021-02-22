@@ -4,7 +4,8 @@ import Styles from './Home.css'
 import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading, fwUnLoading} from "../common/common";
 import UrlConfig from '../config';
 
-let handler;
+var handler;
+var pollingFlag = false;
 
 class Home extends Component {
 
@@ -21,6 +22,7 @@ class Home extends Component {
     }
 
     dataPolling = (postData) => {
+        pollingFlag = true;
         handler = this;
         let timer = this.pollingTimer;
         // console.log(postData);
@@ -52,6 +54,7 @@ class Home extends Component {
                                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
                                                     if (index === lenght - 1) {
                                                         fwUnLoading();
+                                                        pollingFlag = false;
                                                     }
                                                     if (response && response.data && response.data.Contents) {
                                                         urlInfoList.push(response.data.Contents);
@@ -113,15 +116,25 @@ class Home extends Component {
         fwLoading();
         this.pollingTimer = setInterval(
             () => {
-                this.dataPolling(postData);
+                if (!pollingFlag) {
+                    this.dataPolling(postData);
+                }
             },
             3000);
+
+        //timeout check
+        setTimeout(() => {
+            // alert("timeout ");
+            if (this.pollingTimer) {
+                clearInterval(this.pollingTimer);
+            }
+        }, 180 * 1000);
+
     }
 
     componentWillUnmount() {
         this.pollingTimer && clearInterval(this.pollingTimer);
     }
-
 
     render() {
         // console.log("render");
