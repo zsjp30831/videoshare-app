@@ -75,7 +75,7 @@ class Login extends Component {
             <div className={Styles.login}>
                 <div className={Styles.center}>
                     <img src={logo} className={Styles.logo} alt="logo"/>
-                    <h3>ログイン</h3>
+                    <h3 className={Styles.label}>ログイン</h3>
 
                     <InputItem
                         className={Styles.inputItem}

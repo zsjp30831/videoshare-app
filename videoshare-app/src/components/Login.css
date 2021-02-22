@@ -1,14 +1,15 @@
 
-.block{
+.block {
     display: block;
     margin: 12px 0;;
 }
 
-.btn_submit{
+.btn_submit {
     display: block;
     margin: 10px 0;
     text-align: center;
 }
+
 .submit {
     width: 160px;
     height: 40px;
@@ -17,10 +18,11 @@
     margin-top: 20px;
 }
 
-.login{
+.login {
     height: 100%;
-background: url("../image/login-register.png") center no-repeat;
+    background: url("../image/login-register.png") center no-repeat;
 }
+
 .center {
     min-height: 80vh;
     display: flex;
@@ -31,7 +33,7 @@ background: url("../image/login-register.png") center no-repeat;
     "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
 }
 
-.title{
+.title {
     font-size: 20px
 }
 
@@ -39,9 +41,14 @@ background: url("../image/login-register.png") center no-repeat;
     height: 50px;
 }
 
-.inputItem{
+.label {
+    color: white;
+}
+
+.inputItem {
     width: 300px;
 }
+
 .footer {
     bottom: 0;
     color: #58666e;

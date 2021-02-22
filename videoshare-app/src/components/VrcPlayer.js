@@ -48,7 +48,10 @@ class VrcPlayer extends Component {
                 Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
             }
 
-            copy(document.location.href + '/shared?cid=' + postData.ContentId);
+            let sharedUrl = document.location.href + '/shared?cid=' + postData.ContentId;
+            copy(sharedUrl);
+
+            let title = this.props.title;
 
             // console.log(postData);
             // alert(postData.Authority);
@@ -59,7 +62,11 @@ class VrcPlayer extends Component {
                         if (response && response.data && response.data.Status === 'OK') {
                             // console.log(document.location.href);
                             if (index > 0) {
-                                fwCallApp(index, document.location.href + '/shared?cid=' + encodeURIComponent(postData.ContentId));
+                                if (!title) {
+                                    title = "AvarU App Shared:"
+                                }
+
+                                fwCallApp(index, sharedUrl, title);
                             } else {
                                 // url copy icon
                                 fwSuccess('コピーされました。');
@@ -126,7 +133,7 @@ class VrcPlayer extends Component {
                                            alt="share"
                                            onClick={this.showShareActionSheet}/>),
                             download && (
-                                <img src={downloadlogo} className={Styles.logo} alt="" />
+                                <img src={downloadlogo} className={Styles.logo} alt=""/>
                             )
                         ]}
                     >

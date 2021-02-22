@@ -60,7 +60,7 @@ export function fwInitAuth(onSuccess) {
     })
 }
 
-export function fwgetAWSToken(onSuccess,onError) {
+export function fwgetAWSToken(onSuccess, onError) {
 
     getAWSToken().then((token) => {
         if (token) {
@@ -187,7 +187,7 @@ const twitterOpt = {
 // };
 
 
-export function fwCallApp(index, url) {
+export function fwCallApp(index, url, title) {
 
     switch (index) {
         case 0:
@@ -202,7 +202,7 @@ export function fwCallApp(index, url) {
             let option = twitterOpt;
             option.fallback = twitterOpt.fallback + encodeURIComponent(url);
             const lib = new CallApp(option);
-            lib.open({path: '', param: {url}});
+            lib.open({path: '', param: {text: title, url: url}});
             break;
         case 3:
             // window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");

@@ -1,10 +1,11 @@
 
 .submit {
-    width: 260px;
+    width: 90%;
     height: 45px;
-    background: darkorange;
+    background: #ff4800;
     font-size: 23px;
-    margin-top: 30px;
+    margin-top: 40px;
+    margin-bottom: 35px;
 }
 
 .nameInput {
@@ -22,7 +23,9 @@
     font-family: "lato", "Noto Sans JP", -apple-system, "ヒラギノ角ゴ ProN W3",
     "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
 }
-
+.label{
+    color: white;
+}
 .logo {
     height: 180px;
 }
