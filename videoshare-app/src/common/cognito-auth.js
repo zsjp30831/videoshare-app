@@ -1,6 +1,13 @@
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 import AWSConfig from '../config';
 
+var VrcId;
+
+export function getVrcId() {
+    return VrcId;
+}
+
+
 export function signin(email, password, onSuccess, onFailure) {
     var authenticationDetails = new AuthenticationDetails({
         Username: email,
@@ -28,7 +35,7 @@ export function signin(email, password, onSuccess, onFailure) {
 }
 
 
-export  const getAWSToken = () => {
+export const getAWSToken = () => {
     return new Promise(function fetchCurrentAuthToken(resolve, reject) {
         const poolData = {
             UserPoolId: AWSConfig.UserPoolId,
@@ -38,17 +45,19 @@ export  const getAWSToken = () => {
         const userPool = new CognitoUserPool(poolData);
         const cognitoUser = userPool.getCurrentUser();
         if (cognitoUser) {
-            cognitoUser.getSession(function sessionCallback(err , session ) {
+            cognitoUser.getSession(function sessionCallback(err, session) {
                 if (err) {
                     reject(err);
                 } else if (!session.isValid()) {
                     resolve(null);
                 } else {
                     cognitoUser.getUserAttributes(
-                        function(err, result ) {
+                        function (err, result) {
                             if (!err) {
-                                // var vrcId = cognitoUser?.getUsername();
-                                // console.log("VrcId=" + vrcId);
+                                if (!VrcId) {
+                                    VrcId = cognitoUser.getUsername();
+                                    // console.log("VrcId=" + VrcId);
+                                }
                                 // for (var i = 0; i < result.length; i++) {
                                 //   console.log(result[i].getName() + "=" + result[i].getValue());
                                 // }

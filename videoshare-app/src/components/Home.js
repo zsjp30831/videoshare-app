@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading, fwUnLoading} from "../common/common";
+import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading, fwUnLoading, fwPush} from "../common/common";
 import UrlConfig from '../config';
+import {getVrcId} from "../common/cognito-auth";
+import {Button} from "antd-mobile";
 
 var handler;
-var pollingFlag = false;
 
 class Home extends Component {
 
@@ -14,126 +15,79 @@ class Home extends Component {
         this.state = {
             urlInfoList: [],
         };
-        this.dataPolling = this.dataPolling.bind(this);
     }
 
     updateUI = (param) => {
         this.setState({urlInfoList: param});
     }
 
-    dataPolling = (postData) => {
-        pollingFlag = true;
+    getVideoList = () => {
+        fwLoading();
         handler = this;
-        let timer = this.pollingTimer;
-        // console.log(postData);
         fwInitAuth((token) => {
-            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsStatusURL, token, postData, function onSuccess(response) {
-                    if (response && response.data) {
-                        let status = response.data.PStatus;
-                        if (status === 'Completed') {
-                            timer && clearInterval(timer);
+            let postData = {
+                VrcId: getVrcId(),
+            };
+            // videoListを取得する
+            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, postData, function onSuccess(response) {
+                    if (response && response.data && response.data.ContentIdList) {
+                        // console.log(response.data.ContentIdList.length);
+                        let length = response.data.ContentIdList.length;
 
-                            // videoListを取得する
-                            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, "", function onSuccess(response) {
-                                    if (response && response.data && response.data.ContentIdList) {
-                                        // console.log(response.data.ContentIdList.length);
-                                        let lenght = response.data.ContentIdList.length;
+                        let urlInfoList = [];
+                        response.data.ContentIdList.forEach((item, index) => {
+                            let pstData = {
+                                ContentId: item,
+                                VrcId: getVrcId(),
+                            };
 
-                                        let urlInfoList = [];
-                                        response.data.ContentIdList.forEach((item, index) => {
-                                            let pstData = {
-                                                ContentId: item,
-                                            }
+                            // if (index > 5) {
+                            //     fwUnLoading();
+                            //     return;
+                            // }
 
-                                            // if (index > 5) {
-                                            //     fwUnLoading();
-                                            //     return;
-                                            // }
-
-                                            // videoItemを取得する
-                                            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
-                                                    if (index === lenght - 1) {
-                                                        fwUnLoading();
-                                                        pollingFlag = false;
-                                                    }
-                                                    if (response && response.data && response.data.Contents) {
-                                                        urlInfoList.push(response.data.Contents);
-                                                        handler.updateUI(urlInfoList);
-                                                    } else {
-                                                        // fwErrorMessage("動画が存在しません。");
-                                                    }
-                                                },
-                                                function onError(err) {
-                                                    fwErrorMessage("動画取得例外が発生しました。");
-                                                }
-                                            );
-                                        });
-                                        // console.log(urlInfoList);
+                            // videoItemを取得する
+                            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
+                                    if (index === length - 1) {
+                                        fwUnLoading();
+                                    }
+                                    if (response && response.data && response.data.Contents) {
+                                        urlInfoList.push(response.data.Contents);
+                                        handler.updateUI(urlInfoList);
                                     } else {
-                                        fwErrorMessage("動画が存在しません。");
+                                        // fwErrorMessage("動画が存在しません。");
                                     }
                                 },
                                 function onError(err) {
-                                    fwErrorMessage("動画一覧取得例外が発生しました。");
+                                    fwErrorMessage("動画取得例外が発生しました。");
                                 }
                             );
-                        } else if (status !== 'Failed') {
-                            fwLoading("動画作成中、少々お待ちください。。。");
-                        } else {
-                            fwErrorMessage("動画作成失敗しました。");
-                            timer && clearInterval(timer);
-                        }
+                        });
+                        // console.log(urlInfoList);
                     } else {
-                        fwErrorMessage("動画作成状態確認通信エラーが発生しました。");
-                        timer && clearInterval(timer);
+                        fwErrorMessage("動画が存在しません。");
                     }
                 },
                 function onError(err) {
-                    fwErrorMessage("動画作成状態確認例外が発生しました。");
-                    timer && clearInterval(timer);
+                    fwErrorMessage("動画一覧取得例外が発生しました。");
                 }
             );
         });
     }
 
     componentDidMount() {
-        let contentId = null;
-        let obj = this.props.location.state;
-        if (obj && obj.hasOwnProperty('msg')) {
-            contentId = this.props.location.state.msg;
-        }
 
-        if (!contentId) {
-            fwErrorMessage("コンテンツIDがないです。");
-            return;
-        }
+        // let obj = this.props.location.state;
+        // if (obj && obj.hasOwnProperty('msg')) {
+        //     email = this.props.location.state.msg;
+        // }
+        // console.log(email);
 
-        // console.log(contentId);
-
-        let postData = {
-            ContentId: contentId,
-        };
-        fwLoading();
-        this.pollingTimer = setInterval(
-            () => {
-                if (!pollingFlag) {
-                    this.dataPolling(postData);
-                }
-            },
-            3000);
-
-        //timeout check
-        setTimeout(() => {
-            // alert("timeout ");
-            if (this.pollingTimer) {
-                clearInterval(this.pollingTimer);
-            }
-        }, 180 * 1000);
-
+        this.getVideoList();
     }
 
-    componentWillUnmount() {
-        this.pollingTimer && clearInterval(this.pollingTimer);
+    onSubmit=()=>{
+        fwPush('/nameinput');
     }
 
     render() {
@@ -158,6 +112,9 @@ class Home extends Component {
         return (
             <div className={Styles.center}>
                 {players}
+                <footer className={Styles.footer}>
+                    <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
+                </footer>
             </div>
         );
     }

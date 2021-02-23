@@ -16,7 +16,7 @@ class AutoLogin extends Component {
             // console.log(password);
             signin(email, password, function signinSuccess(result) {
                     fwUnLoading();
-                    fwPush("/nameinput", email);
+                    fwPush("/home");
                 },
                 function signinError(err) {
                     // fwErrorMessage("ユーザ名またパスワードは正しくありません。");

@@ -2,8 +2,12 @@ import React, {Component} from 'react'
 import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
-import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwUnLoading} from "../common/common";
+import {getVrcId} from "../common/cognito-auth";
+import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwUnLoading, fwLoading} from "../common/common";
 import UrlConfig from '../config';
+
+var handler;
+var pollingFlag = false;
 
 class NameInput extends Component {
 
@@ -12,7 +16,39 @@ class NameInput extends Component {
         this.state = {
             initAuthFlg: false,
         };
+        this.dataPolling = this.dataPolling.bind(this);
     }
+
+    dataPolling = (postData) => {
+        pollingFlag = true;
+        let timer = this.pollingTimer;
+        fwInitAuth((token) => {
+            fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsStatusURL, token, postData, function onSuccess(response) {
+                    if (response && response.data) {
+                        let status = response.data.PStatus;
+                        if (status === 'Completed') {
+                            timer && clearInterval(timer);
+                            fwPush('/home');
+                        } else if (status !== 'Failed') {
+                            pollingFlag = false;
+                            fwLoading("動画作成中、少々お待ちください。。。");
+                        } else {
+                            fwErrorMessage("動画作成失敗しました。");
+                            timer && clearInterval(timer);
+                        }
+                    } else {
+                        fwErrorMessage("動画作成状態確認通信エラーが発生しました。");
+                        timer && clearInterval(timer);
+                    }
+                },
+                function onError(err) {
+                    fwErrorMessage("動画作成状態確認例外が発生しました。");
+                    timer && clearInterval(timer);
+                }
+            );
+        });
+    }
+
 
     componentDidMount() {
         fwInitAuth((token) => {
@@ -20,8 +56,14 @@ class NameInput extends Component {
                 this.nameInst.focus();
             }
             this.setState({initAuthFlg: true,});
+            handler = this;
         });
     }
+
+    componentWillUnmount() {
+        this.pollingTimer && clearInterval(this.pollingTimer);
+    }
+
 
     onSubmit = () => {
         // console.log(this.props.form.getFieldsValue());
@@ -33,29 +75,40 @@ class NameInput extends Component {
                 return;
             }
 
-            let email;
-            let obj = this.props.location.state;
-            if (obj && obj.hasOwnProperty('msg')) {
-                email = obj.msg;
-            }
 
-            if (!email) {
-                fwErrorMessage("メールを入力してください。");
-                return;
-            }
 
-            let postData = {
-                Name: name,
-                Target: email,
-                Title: title,
-            };
-            // console.log(postData);
+            fwLoading();
             fwInitAuth((token) => {
+                let postData = {
+                    Name: name,
+                    Title: title,
+                    VrcId: getVrcId(),
+                };
+                console.log(postData);
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
                         fwUnLoading();
                         if (response && response.data && response.data.Status === "OK") {
-                            fwPush("/home", response.data.ContentId);
+                            console.log(response.data.ContentId);
+
+                            // polling
+                            handler.pollingTimer = setInterval(
+                                () => {
+                                    if (!pollingFlag) {
+                                        handler.dataPolling(postData);
+                                    }
+                                },
+                                3000);
+
+                            //timeout check
+                            setTimeout(() => {
+                                // alert("timeout ");
+                                if (handler.pollingTimer) {
+                                    clearInterval(handler.pollingTimer);
+                                }
+                            }, 180 * 1000);
+
+
                         } else {
                             fwErrorMessage("通信エラーが発生しました。");
                         }
