@@ -187,9 +187,15 @@ const twitterOpt = {
 // };
 
 
-export function fwAddMeta(name, content) {//手动添加mate标签
+export function fwAddMeta(name, content, property) {//手动添加mate标签
     let meta = document.createElement('meta');
-    meta.name = name;
+    if (name && name.length > 0) {
+        meta.name = name;
+    }
+
+    if (property) {
+        meta.property = property;
+    }
     meta.content = content;
     document.getElementsByTagName('head')[0].appendChild(meta);
 }
