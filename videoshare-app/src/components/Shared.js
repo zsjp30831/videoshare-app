@@ -102,11 +102,14 @@ class Shared extends Component {
         // twitter card display 作成
         let playerUrl = "https://d2lyotf9hzix2g.cloudfront.net/shared?cid=" + urlInfo.ContentId;
         fwAddMeta("twitter:card", "player");
+        fwAddMeta("twitter:site", "@AvarU");
+        fwAddMeta("twitter:title", urlInfo.Title);
         fwAddMeta("twitter:player", playerUrl);
         fwAddMeta("twitter:player:width", "480");
         fwAddMeta("twitter:player:height", "480");
 
         // facebook display 作成
+        fwAddMeta("og:type", "@AvarU");
         fwAddMeta("og:image", "https://video-react.js.org/assets/poster.png");
         fwAddMeta("og:title", urlInfo.Title);
         fwAddMeta("og:url", playerUrl);

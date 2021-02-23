@@ -189,8 +189,8 @@ const twitterOpt = {
 
 export function fwAddMeta(name, content) {//手动添加mate标签
     let meta = document.createElement('meta');
-    meta.content = content;
     meta.name = name;
+    meta.content = content;
     document.getElementsByTagName('head')[0].appendChild(meta);
 }
 
