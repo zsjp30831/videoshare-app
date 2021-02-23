@@ -9,7 +9,8 @@ import {
     fwIsEmpty,
     fwLoading,
     fwError,
-    fwUnLoading
+    fwUnLoading,
+    fwAddMeta
 } from "../common/common";
 import UrlConfig from "../config";
 import 'url-search-params-polyfill';
@@ -97,6 +98,18 @@ class Shared extends Component {
         if (fwIsEmpty(urlInfo)) {
             return null;
         }
+
+        // twitter card display 作成
+        let playerUrl = "https://d2lyotf9hzix2g.cloudfront.net/shared?cid=" + urlInfo.ContentId;
+        fwAddMeta("twitter:card", "player");
+        fwAddMeta("twitter:player", playerUrl);
+        fwAddMeta("twitter:player:width", "480");
+        fwAddMeta("twitter:player:height", "480");
+
+        // facebook display 作成
+        fwAddMeta("og:image", "https://video-react.js.org/assets/poster.png");
+        fwAddMeta("og:title", urlInfo.Title);
+        fwAddMeta("og:url", playerUrl);
 
         return (
             <div className={Styles.center}>

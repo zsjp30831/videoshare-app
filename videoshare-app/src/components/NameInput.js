@@ -3,11 +3,12 @@ import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
 import {getVrcId} from "../common/cognito-auth";
-import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwUnLoading, fwLoading} from "../common/common";
+import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwLoading} from "../common/common";
 import UrlConfig from '../config';
 
 var handler;
 var pollingFlag = false;
+var loadingFlag = true;
 
 class NameInput extends Component {
 
@@ -27,23 +28,30 @@ class NameInput extends Component {
                     if (response && response.data) {
                         let status = response.data.PStatus;
                         if (status === 'Completed') {
+                            fwLoading("動画作成しました。");
                             timer && clearInterval(timer);
                             fwPush('/home');
                         } else if (status !== 'Failed') {
                             pollingFlag = false;
-                            fwLoading("動画作成中、少々お待ちください。。。");
+                            if (loadingFlag) {
+                                loadingFlag = false;
+                                fwLoading("動画作成中、一分ほどお待ちください...");
+                            }
                         } else {
                             fwErrorMessage("動画作成失敗しました。");
                             timer && clearInterval(timer);
+                            loadingFlag = true;
                         }
                     } else {
                         fwErrorMessage("動画作成状態確認通信エラーが発生しました。");
                         timer && clearInterval(timer);
+                        loadingFlag = true;
                     }
                 },
                 function onError(err) {
                     fwErrorMessage("動画作成状態確認例外が発生しました。");
                     timer && clearInterval(timer);
+                    loadingFlag = true;
                 }
             );
         });
@@ -64,20 +72,16 @@ class NameInput extends Component {
         this.pollingTimer && clearInterval(this.pollingTimer);
     }
 
-
     onSubmit = () => {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
             let title = this.props.form.getFieldsValue().title;
             if (title && title.length > 15) {
-                fwErrorMessage("15文字以内入力可能。");
+                fwErrorMessage("15文字以内入力可能.");
                 return;
             }
 
-
-
-            fwLoading();
             fwInitAuth((token) => {
                 let postData = {
                     Name: name,
@@ -85,17 +89,20 @@ class NameInput extends Component {
                     VrcId: getVrcId(),
                 };
                 console.log(postData);
+
+                fwLoading();
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
-                        fwUnLoading();
                         if (response && response.data && response.data.Status === "OK") {
-                            console.log(response.data.ContentId);
-
+                            // console.log(response.data.ContentId);
+                            let pstData = {
+                                ContentId: response.data.ContentId,
+                            }
                             // polling
                             handler.pollingTimer = setInterval(
                                 () => {
                                     if (!pollingFlag) {
-                                        handler.dataPolling(postData);
+                                        handler.dataPolling(pstData);
                                     }
                                 },
                                 3000);
@@ -106,21 +113,23 @@ class NameInput extends Component {
                                 if (handler.pollingTimer) {
                                     clearInterval(handler.pollingTimer);
                                 }
+                                fwErrorMessage("リトライしてください.");
+                                loadingFlag = true;
                             }, 180 * 1000);
 
 
                         } else {
-                            fwErrorMessage("通信エラーが発生しました。");
+                            fwErrorMessage("通信エラーが発生しました.");
                         }
                     },
                     function onError(err) {
                         // console.log(err);
-                        fwErrorMessage("名前入力画面例外が発生しました。");
+                        fwErrorMessage("名前入力画面例外が発生しました.");
                     });
             });
 
         } else {
-            fwErrorMessage("名前を入力してください。");
+            fwErrorMessage("名前を入力してください.");
         }
     }
 

@@ -187,10 +187,10 @@ const twitterOpt = {
 // };
 
 
-function addMeta(name,content){//手动添加mate标签
+export function fwAddMeta(name, content) {//手动添加mate标签
     let meta = document.createElement('meta');
-    meta.content=content;
-    meta.name=name;
+    meta.content = content;
+    meta.name = name;
     document.getElementsByTagName('head')[0].appendChild(meta);
 }
 
@@ -206,14 +206,8 @@ export function fwCallApp(index, url, title) {
             window.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
             break;
         case 2:
-            // twitter card display 作成
-            addMeta("twitter:card","player");
-            addMeta("twitter:player",url);
-            addMeta("twitter:player:width","480");
-            addMeta("twitter:player:height","480");
-
             let option = twitterOpt;
-            option.fallback = twitterOpt.fallback + encodeURIComponent(url);
+            option.fallback = twitterOpt.fallback + title + '　' + encodeURIComponent(url);
             const lib = new CallApp(option);
             lib.open({path: '', param: {text: title, url: url}});
             break;
