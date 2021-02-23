@@ -194,7 +194,7 @@ export function fwAddMeta(name, content, property) {//手动添加mate标签
     }
 
     if (property) {
-        meta.property = property;
+        meta.setAttribute("property",property);
     }
     meta.content = content;
     document.getElementsByTagName('head')[0].appendChild(meta);
