@@ -19,7 +19,7 @@ class Login extends Component {
         if (obj) {
             accessUrl = obj.substr(1, obj.length - 1);
         }
-        console.log(accessUrl);
+        // console.log(accessUrl);
     }
 
     onSubmit = () => {
@@ -29,7 +29,6 @@ class Login extends Component {
         if (email && password) {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
-
                     if (!accessUrl) {
                         // let currentUrl = document.location.href;
                         // let path = currentUrl.split('/').slice(3).join('/')
