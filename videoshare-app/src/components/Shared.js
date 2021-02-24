@@ -63,7 +63,7 @@ class Shared extends Component {
                                             handler.updateUI(response.data.Contents);
                                         },
                                         function onError() {
-                                            fwError("動画取得失敗しました。");
+                                            fwErrorMessage("動画取得失敗しました。");
                                         }
                                     );
                                 },

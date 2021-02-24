@@ -7,18 +7,19 @@ import {NavLink} from "react-router-dom"
 import {signin} from "../common/cognito-auth";
 import {fwErrorMessage, fwLoading, fwPush} from "../common/common";
 
+var accessUrl;
 
 class Login extends Component {
 
     componentDidMount() {
         this.emailInst.focus();
 
-        // // login請求前のurl取得する
-        // let obj = this.props.location.state;
-        // if (obj && obj.hasOwnProperty('url')) {
-        //     accessUrl = '/' + obj.url.split('/').slice(3).join('/'); // domainを除く
-        //     // console.log(accessUrl);
-        // }
+        // login請求前のurl取得する
+        let obj = this.props.location.hash;
+        if (obj) {
+            accessUrl = obj.substr(1, obj.length - 1);
+        }
+        console.log(accessUrl);
     }
 
     onSubmit = () => {
@@ -28,17 +29,20 @@ class Login extends Component {
         if (email && password) {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
-                    // if (!accessUrl) {
-                    //     let currentUrl = document.location.href;
-                    //     let path = currentUrl.split('/').slice(3).join('/')
-                    //     if (path === "autologinerror") {
-                    //         fwPush("/nameinput",email);
-                    //     } else {
-                    //         fwPush("/404", "");
-                    //         // fwErrorMessage("入口が間違う。");
-                    //     }
-                    // }
-                    fwPush("/home");
+
+                    if (!accessUrl) {
+                        // let currentUrl = document.location.href;
+                        // let path = currentUrl.split('/').slice(3).join('/')
+                        // if (path === "autologinerror") {
+                        //     fwPush("/nameinput",email);
+                        // } else {
+                        //     fwPush("/404", "");
+                        //     // fwErrorMessage("入口が間違う。");
+                        // }
+                        fwPush("/home");
+                    } else {
+                        fwPush(accessUrl);
+                    }
                 },
 
                 function signinError(err) {
@@ -115,7 +119,7 @@ class Login extends Component {
                             <span>
                                 <NavLink to="/privacy">プライバシー</NavLink>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <NavLink to="/terms">規約 </NavLink>
+                                <NavLink to="/terms">規約</NavLink>
                             </span>
                     </footer>
                 </div>
