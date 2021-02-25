@@ -15,9 +15,10 @@ class Login extends Component {
         this.emailInst.focus();
 
         // login請求前のurl取得する
-        let obj = this.props.location.hash;
+        // console.log(this.props.location);
+        let obj = this.props.location.search;
         if (obj) {
-            accessUrl = obj.substr(1, obj.length - 1);
+            accessUrl ='/' + obj.split('/').slice(3).join('/'); // domainを除く
         }
         // console.log(accessUrl);
     }
@@ -30,20 +31,11 @@ class Login extends Component {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
                     if (!accessUrl) {
-                        // let currentUrl = document.location.href;
-                        // let path = currentUrl.split('/').slice(3).join('/')
-                        // if (path === "autologinerror") {
-                        //     fwPush("/nameinput",email);
-                        // } else {
-                        //     fwPush("/404", "");
-                        //     // fwErrorMessage("入口が間違う。");
-                        // }
-                        fwPush("/home");
+                         fwPush("/home");
                     } else {
                         fwPush(accessUrl);
                     }
                 },
-
                 function signinError(err) {
                     // console.log(err);
                     fwErrorMessage("ユーザ名またパスワードは正しくありません。");

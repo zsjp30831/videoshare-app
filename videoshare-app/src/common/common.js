@@ -1,5 +1,5 @@
 import {Toast} from 'antd-mobile'
-import { createHashHistory } from 'history';
+import {createBrowserHistory} from 'history';
 import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 import CallApp from 'callapp-lib';
@@ -29,10 +29,10 @@ export function fwError(msg) {
         msg = "エラーが発生しました";
     }
     Toast.fail(msg, 1, () => {
-        let history = createHashHistory();
+        let history = createBrowserHistory();
         history.push({
             pathname: "/login",
-            search:  document.location.href,
+            search: document.location.href,
         });
         history.go();
     });
@@ -71,7 +71,7 @@ export function fwgetAWSToken(onSuccess, onError) {
 }
 
 export function fwPush(path) {
-   let history = createHashHistory();
+    let history = createBrowserHistory();
     history.push({
         pathname: path,
         // query: data
@@ -189,7 +189,7 @@ export function fwAddMeta(name, content, property) {//手动添加mate标签
     }
 
     if (property) {
-        meta.setAttribute("property",property);
+        meta.setAttribute("property", property);
     }
     meta.content = content;
     document.getElementsByTagName('head')[0].appendChild(meta);
