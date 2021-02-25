@@ -91,9 +91,9 @@ class NameInput extends Component {
                     Name: name,
                     Title: title,
                     VrcId: getVrcId(),
-                    ConferKbn: this.state.radioA === true ? 1 : 2,
+                    ConferKbn: this.state.radioA ? 1 : 2,
                 };
-                 // console.log(postData);
+                 console.log(postData);
 
                 fwLoading();
                 // console.log(token);
@@ -139,7 +139,7 @@ class NameInput extends Component {
     }
 
     onChange = (value) => {
-        if (value == 1) {
+        if (value === 1) {
             this.setState({
                 radioA: true,
                 radioB: false,
