@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {fwPush, fwUnLoading} from "../common/common";
+import {fwPush,fwLoading, fwUnLoading} from "../common/common";
 import {signin} from "../common/cognito-auth";
 
 class AutoLogin extends Component {
@@ -31,6 +31,7 @@ class AutoLogin extends Component {
     }
 
     render() {
+        fwLoading();
         return (
             <div>
             </div>
