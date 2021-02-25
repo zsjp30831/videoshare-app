@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
+import {Button, InputItem, Toast, WhiteSpace, Checkbox, Flex} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
 import {getVrcId} from "../common/cognito-auth";
 import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwLoading} from "../common/common";
 import UrlConfig from '../config';
+
+const AgreeItem = Checkbox.AgreeItem;
 
 var handler;
 var pollingFlag = false;
@@ -16,6 +18,8 @@ class NameInput extends Component {
         super(props);
         this.state = {
             initAuthFlg: false,
+            radioA: true,
+            radioB: false,
         };
         this.dataPolling = this.dataPolling.bind(this);
     }
@@ -87,8 +91,9 @@ class NameInput extends Component {
                     Name: name,
                     Title: title,
                     VrcId: getVrcId(),
+                    ConferKbn: this.state.radioA === true ? 1 : 2,
                 };
-                console.log(postData);
+                 // console.log(postData);
 
                 fwLoading();
                 // console.log(token);
@@ -133,8 +138,22 @@ class NameInput extends Component {
         }
     }
 
+    onChange = (value) => {
+        if (value == 1) {
+            this.setState({
+                radioA: true,
+                radioB: false,
+            })
+        } else {
+            this.setState({
+                radioA: false,
+                radioB: true,
+            })
+        }
+    };
+
     render() {
-        const {initAuthFlg} = this.state;
+        const {initAuthFlg, radioA, radioB} = this.state;
         if (!initAuthFlg) {
             return null;
         }
@@ -151,6 +170,7 @@ class NameInput extends Component {
                 callback(new Error('15文字以内入力可能'));
             }
         }
+
 
         return (
             <div className={Styles.nameInput}>
@@ -191,6 +211,23 @@ class NameInput extends Component {
                     >
                     </InputItem>
                     <WhiteSpace/>
+
+                    <h1 className={Styles.label2}>学位を授与する方を選択</h1>
+                    <div className={Styles.box}>
+                        <Flex justify="between">
+                            <Flex.Item>
+                                <AgreeItem className={Styles.radioA} checked={radioA} onChange={() => this.onChange(1)}>
+                                    <span className={Styles.font}>学長</span>
+                                </AgreeItem>
+                            </Flex.Item>
+                            <Flex.Item>
+                                <AgreeItem className={Styles.radioB} checked={radioB} onChange={() => this.onChange(2)}>
+                                    <span className={Styles.font}>学科長</span>
+                                </AgreeItem>
+                            </Flex.Item>
+                        </Flex>
+                    </div>
+
                     <footer className={Styles.footer}>
                         <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
                         {/*<span>Copyright © VRC, Inc. All Rights Reserved.</span>*/}

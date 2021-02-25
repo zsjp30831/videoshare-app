@@ -10,7 +10,7 @@
 
 .nameInput {
     height: 100%;
-    background: linear-gradient(darkorange,DeepPink);
+    background: linear-gradient(darkorange, DeepPink);
     /*background: url("../image/login-register.png") center no-repeat;*/
 }
 
@@ -23,10 +23,39 @@
     font-family: "lato", "Noto Sans JP", -apple-system, "ヒラギノ角ゴ ProN W3",
     "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
 }
-.label{
+
+.label {
     color: white;
     font-size: 23px;
 }
+
+.label2 {
+    color: white;
+    font-size: 23px;
+    margin-top: 40px;
+}
+
+.box {
+    /*background: red;*/
+}
+
+.radioA {
+    height: 30px;
+    width: 80px;
+    padding: 6px;
+}
+
+.radioB {
+    height: 30px;
+    width: 100px;
+    padding: 6px;
+}
+
+.font{
+    font-size: 20px;
+    color: white;
+}
+
 .logo {
     height: 180px;
 }
