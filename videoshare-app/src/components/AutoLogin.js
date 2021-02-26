@@ -21,12 +21,12 @@ class AutoLogin extends Component {
                 function signinError(err) {
                     // fwErrorMessage("ユーザ名またパスワードは正しくありません。");
                     // console.log("ユーザ名またパスワードは正しくありません。");
-                    fwPush("/autologinerror");
+                    fwPush("/autologinerr");
                 });
         } else {
             // fwErrorMessage("請求パラメータ不正。");
             // console.log("請求パラメータ不正。");
-            fwPush("/autologinerror");
+            fwPush("/autologinerr");
         }
     }
 
