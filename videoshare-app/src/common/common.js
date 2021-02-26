@@ -195,6 +195,17 @@ export function fwAddMeta(name, content, property) {//手动添加mate标签
     document.getElementsByTagName('head')[0].appendChild(meta);
 }
 
+
+export function fwTwitterInsertMeta(name, content) {
+    let refNode = document.getElementsByName('twitter:player:width');
+    let meta = document.createElement('meta');
+    meta.name = name;
+    meta.content = content;
+
+    document.getElementsByTagName('head')[0].insertBefore(meta, refNode[0]);
+}
+
+
 export function fwCallApp(index, url, title) {
 
     switch (index) {
