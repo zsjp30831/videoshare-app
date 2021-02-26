@@ -15,6 +15,9 @@ class Home extends Component {
         this.state = {
             urlInfoList: [],
         };
+        document.oncontextmenu = () => {
+            return false
+        };
     }
 
     updateUI = (param) => {
@@ -86,7 +89,7 @@ class Home extends Component {
         this.getVideoList();
     }
 
-    onSubmit=()=>{
+    onSubmit = () => {
         fwPush('/nameinput');
     }
 

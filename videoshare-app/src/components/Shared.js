@@ -24,6 +24,9 @@ class Shared extends Component {
         this.state = {
             urlInfo: {},
         };
+        document.oncontextmenu = () => {
+            return false
+        };
     }
 
     updateUI = (param) => {
