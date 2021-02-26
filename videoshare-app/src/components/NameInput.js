@@ -217,12 +217,12 @@ class NameInput extends Component {
                         <Flex justify="between">
                             <Flex.Item>
                                 <AgreeItem className={Styles.radioA} checked={radioA} onChange={() => this.onChange(1)}>
-                                    <span className={Styles.font}>学長</span>
+                                    <span className={Styles.font} onClick={() => this.onChange(1)}>学長</span>
                                 </AgreeItem>
                             </Flex.Item>
                             <Flex.Item>
                                 <AgreeItem className={Styles.radioB} checked={radioB} onChange={() => this.onChange(2)}>
-                                    <span className={Styles.font}>学科長</span>
+                                    <span className={Styles.font} onClick={() => this.onChange(2)}>学科長</span>
                                 </AgreeItem>
                             </Flex.Item>
                         </Flex>
