@@ -10,7 +10,6 @@ import {
     fwLoading,
     fwError,
     fwUnLoading,
-    fwAddMeta
 } from "../common/common";
 import UrlConfig from "../config";
 import 'url-search-params-polyfill';
@@ -103,27 +102,6 @@ class Shared extends Component {
         if (fwIsEmpty(urlInfo)) {
             return null;
         }
-
-        // twitter card display 作成
-        let playerUrl = "https://d2lyotf9hzix2g.cloudfront.net/shared?cid=" + urlInfo.ContentId;
-        fwAddMeta("twitter:card", "player");
-        fwAddMeta("twitter:site", "AvarU");
-        fwAddMeta("twitter:title", urlInfo.Title);
-        fwAddMeta("twitter:player", playerUrl);
-        fwAddMeta("twitter:player:width", "480");
-        fwAddMeta("twitter:player:height", "480");
-
-        // facebook display 作成
-        fwAddMeta("", urlInfo.Title, "og:title");
-        fwAddMeta("", "https://video-react.js.org/assets/poster.png", "og:image");
-        fwAddMeta("", playerUrl, "og:url");
-        fwAddMeta("", "video", "og:type");
-        fwAddMeta("", playerUrl, "og:video");
-        fwAddMeta("", playerUrl, "og:video:secure_url");
-        fwAddMeta("", " video/mp4", "og:video:type");
-        fwAddMeta("", "400", "og:video:width");
-        fwAddMeta("", "300", "og:video:height");
-
 
         return (
             <div className={Styles.center}>
