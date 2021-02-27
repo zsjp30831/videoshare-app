@@ -24,6 +24,7 @@ class Home extends Component {
         super(props);
         this.state = {
             urlInfoList: [],
+            nothing: false,
         };
         document.oncontextmenu = () => {
             return false
@@ -32,6 +33,10 @@ class Home extends Component {
 
     updateUI = (param) => {
         this.setState({urlInfoList: param});
+    }
+
+    setResult = (flg) => {
+        this.setState({nothing: flg});
     }
 
     getVideoList = () => {
@@ -47,6 +52,14 @@ class Home extends Component {
                     if (response && response.data && response.data.ContentIdList) {
                         // console.log(response.data.ContentIdList.length);
                         let length = response.data.ContentIdList.length;
+
+                        // 動画が存在しない
+                        if (length === 0) {
+                            handler.setResult(true);
+                            return;
+                        } else {
+                            handler.setResult(false);
+                        }
 
                         let urlInfoList = [];
                         response.data.ContentIdList.forEach((item, index) => {
@@ -107,7 +120,7 @@ class Home extends Component {
 
     render() {
         // console.log("render");
-        const {urlInfoList} = this.state;
+        const {urlInfoList, nothing} = this.state;
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {
@@ -126,6 +139,7 @@ class Home extends Component {
 
         return (
             <div className={Styles.center}>
+                {nothing && (<p className={Styles.centerEx}>卒業式動画はありません</p>)}
                 {players}
                 <footer className={Styles.footer}>
                     <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>

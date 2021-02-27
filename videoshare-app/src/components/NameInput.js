@@ -141,7 +141,6 @@ class NameInput extends Component {
                                 loadingFlag = true;
                             }, 180 * 1000);
 
-
                         } else {
                             fwErrorMessage("通信エラーが発生しました.");
                         }
