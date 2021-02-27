@@ -48,7 +48,7 @@ class VrcPlayer extends Component {
                 Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
             }
 
-            let sharedUrl = document.location.href.substr(0, document.location.href.length - 5) + '/shared?cid=' + postData.ContentId;
+            let sharedUrl = document.location.href.substr(0, document.location.href.length - 8) + '/shared?cid=' + postData.ContentId;
             copy(sharedUrl);
 
             let title = this.props.title;

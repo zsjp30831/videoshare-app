@@ -31,7 +31,7 @@ class AutoLogin extends Component {
                     fwPush("/autologinerr", {vrcId: vrcId, relationId: relationId});
                 });
         } else {
-            fwErrorMessage("請求パラメータ不正。");
+            fwErrorMessage("請求パラメータ不正、リトライしてください。");
             // console.log("請求パラメータ不正。");
             // fwPush("/autologinerr", {});
         }
