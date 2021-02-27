@@ -2,8 +2,17 @@ import React, {Component} from 'react'
 import {Button, InputItem, Toast, WhiteSpace, Checkbox, Flex} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
-import {getVrcId} from "../common/cognito-auth";
-import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwLoading} from "../common/common";
+import {
+    fwInitAuth,
+    fwCallServiceByKeyDirect,
+    fwErrorMessage,
+    fwPush,
+    fwLoading,
+    setVrcId,
+    getVrcId,
+    setRelationId,
+    getRelationId,
+} from "../common/common";
 import UrlConfig from '../config';
 
 const AgreeItem = Checkbox.AgreeItem;
@@ -34,7 +43,7 @@ class NameInput extends Component {
                         if (status === 'Completed') {
                             fwLoading("動画作成しました。");
                             timer && clearInterval(timer);
-                            fwPush('/home');
+                            fwPush('/webview');
                         } else if (status !== 'Failed') {
                             pollingFlag = false;
                             if (loadingFlag) {
@@ -63,6 +72,15 @@ class NameInput extends Component {
 
 
     componentDidMount() {
+        console.log(this.props.location);
+        let obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('vrcId')) {
+            setVrcId(obj.vrcId);
+        }
+        if (obj && obj.hasOwnProperty('relationId')) {
+            setRelationId(obj.relationId);
+        }
+
         fwInitAuth((token) => {
             if (this.nameInst) {
                 this.nameInst.focus();
@@ -92,8 +110,9 @@ class NameInput extends Component {
                     Title: title,
                     VrcId: getVrcId(),
                     ConferKbn: this.state.radioA ? 1 : 2,
+                    RelationId: getRelationId(),
                 };
-                 console.log(postData);
+                // console.log(postData);
 
                 fwLoading();
                 // console.log(token);
@@ -170,7 +189,6 @@ class NameInput extends Component {
                 callback(new Error('15文字以内入力可能'));
             }
         }
-
 
         return (
             <div className={Styles.nameInput}>

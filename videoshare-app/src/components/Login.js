@@ -31,7 +31,7 @@ class Login extends Component {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
                     if (!accessUrl) {
-                         fwPush("/home");
+                         fwPush("/webview");
                     } else {
                         fwPush(accessUrl);
                     }

@@ -4,6 +4,26 @@ import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 import CallApp from 'callapp-lib';
 
+var VrcId;
+var RelationId;
+
+export function getVrcId() {
+    return VrcId;
+}
+
+export function setVrcId(vrcid) {
+    VrcId = vrcid;
+}
+
+export function getRelationId() {
+    return RelationId;
+}
+
+export function setRelationId(relationid) {
+    RelationId = relationid;
+}
+
+
 export function fwIsEmpty(obj) {
     return (JSON.stringify(obj) === '{}') ? true : false;
 }
@@ -70,11 +90,11 @@ export function fwgetAWSToken(onSuccess, onError) {
     })
 }
 
-export function fwPush(path) {
+export function fwPush(path,data) {
     let history = createBrowserHistory();
     history.push({
         pathname: path,
-        // query: data
+        state: data
     });
     history.go();
 }

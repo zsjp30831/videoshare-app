@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading, fwUnLoading, fwPush} from "../common/common";
+import {
+    fwErrorMessage,
+    fwInitAuth,
+    fwCallServiceByKeyDirect,
+    fwLoading,
+    fwUnLoading,
+    fwPush,
+    getVrcId,
+    setVrcId,
+    getRelationId,
+    setRelationId
+} from "../common/common";
 import UrlConfig from '../config';
-import {getVrcId} from "../common/cognito-auth";
 import {Button} from "antd-mobile";
 
 var handler;
@@ -31,6 +41,7 @@ class Home extends Component {
             let postData = {
                 VrcId: getVrcId(),
             };
+            // console.log(postData);
             // videoListを取得する
             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, postData, function onSuccess(response) {
                     if (response && response.data && response.data.ContentIdList) {
@@ -43,7 +54,6 @@ class Home extends Component {
                                 ContentId: item,
                                 VrcId: getVrcId(),
                             };
-
                             // if (index > 5) {
                             //     fwUnLoading();
                             //     return;
@@ -79,18 +89,20 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
-        // let obj = this.props.location.state;
-        // if (obj && obj.hasOwnProperty('msg')) {
-        //     email = this.props.location.state.msg;
-        // }
-        // console.log(email);
+        // console.log(this.props.location);
+        let obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('vrcId')) {
+            setVrcId(obj.vrcId);
+        }
+        if (obj && obj.hasOwnProperty('relationId')) {
+            setRelationId(obj.relationId);
+        }
 
         this.getVideoList();
     }
 
     onSubmit = () => {
-        fwPush('/nameinput');
+        fwPush('/nameinput', {vrcId: getVrcId(), relationId: getRelationId()});
     }
 
     render() {

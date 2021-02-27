@@ -57,7 +57,13 @@
   </script>
   <script>
     window.onerror = function(msg, url, line, col, error) {
-
+      console.log("common error");
+      console.log(msg);
+      console.log(url);
+      console.log(line);
+      console.log(col);
+      window.location.reload(true);
     };
+
   </script>
 </html>
