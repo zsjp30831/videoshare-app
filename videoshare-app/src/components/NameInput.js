@@ -129,7 +129,7 @@ class NameInput extends Component {
                                         handler.dataPolling(pstData);
                                     }
                                 },
-                                10000);
+                                6000);
 
                             //timeout check
                             setTimeout(() => {

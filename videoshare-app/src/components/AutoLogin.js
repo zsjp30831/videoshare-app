@@ -10,7 +10,7 @@ class AutoLogin extends Component {
         // alert(this.props.location.search);
         const query = this.props.location.search;
         const arr = query.split('&') // ['?user=', 'pass=7',vrcid=xx,relationid=xxxxx]
-        if (arr && arr.length >= 2) {
+        if (arr && arr.length >= 4) {
             const email = arr[0].substr(6);
             const password = arr[1].substr(5);
             const vrcId = arr[2].substr(6);
