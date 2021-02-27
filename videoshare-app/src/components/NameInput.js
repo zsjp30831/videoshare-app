@@ -43,7 +43,7 @@ class NameInput extends Component {
                         if (status === 'Completed') {
                             fwLoading("動画作成しました。");
                             timer && clearInterval(timer);
-                            fwPush('/webview',{vrcId:getVrcId(),relationId:getRelationId()});
+                            fwPush('/webview', {vrcId: getVrcId(), relationId: getRelationId()});
                         } else if (status !== 'Failed') {
                             pollingFlag = false;
                             if (loadingFlag) {
@@ -117,6 +117,7 @@ class NameInput extends Component {
                 fwLoading();
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
+                        // console.log(response);
                         if (response && response.data && response.data.Status === "OK") {
                             // console.log(response.data.ContentId);
                             let pstData = {
@@ -141,6 +142,10 @@ class NameInput extends Component {
                                 loadingFlag = true;
                             }, 180 * 1000);
 
+                        } else if (response && response.data && response.data.Status === "AwardNotExists") {
+                            fwErrorMessage("授与する方を学長に選択してください.");
+                        } else if (response && response.data && response.data.Status === "AvatarNotExists") {
+                            fwErrorMessage("対象アバターは存在しないため、動画は生成できません.");
                         } else {
                             fwErrorMessage("通信エラーが発生しました.");
                         }

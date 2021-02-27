@@ -41,7 +41,7 @@ export function fwUnLoading() {
 }
 
 export function fwErrorMessage(msg) {
-    Toast.fail(msg, 1);
+    Toast.fail(msg, 2);
 }
 
 export function fwError(msg) {
