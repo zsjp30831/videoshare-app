@@ -20,7 +20,7 @@ class Login extends Component {
         if (obj) {
             accessUrl ='/' + obj.split('/').slice(3).join('/'); // domainを除く
         }
-        console.log(accessUrl);
+        // console.log(accessUrl);
 
         //autologin error
         // console.log(this.props.location);
@@ -31,8 +31,8 @@ class Login extends Component {
         if (object && object.hasOwnProperty('relationId')) {
             setRelationId(object.relationId);
         }
-        console.log(getVrcId());
-        console.log(getRelationId());
+        // console.log(getVrcId());
+        // console.log(getRelationId());
     }
 
     onSubmit = () => {

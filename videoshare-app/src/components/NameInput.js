@@ -72,7 +72,7 @@ class NameInput extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.location);
+        // console.log(this.props.location);
         let obj = this.props.location.state;
         if (obj && obj.hasOwnProperty('vrcId')) {
             setVrcId(obj.vrcId);
