@@ -5,6 +5,7 @@ import {signin} from "../common/cognito-auth";
 class AutoLogin extends Component {
 
     componentDidMount() {
+        fwLoading();
         // console.log(this.props.location.search);
         // alert(this.props.location.search);
         const query = this.props.location.search;
@@ -38,7 +39,6 @@ class AutoLogin extends Component {
     }
 
     render() {
-        fwLoading();
         return (
             <div>
             </div>
