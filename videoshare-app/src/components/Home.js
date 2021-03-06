@@ -55,6 +55,7 @@ class Home extends Component {
 
                         // 動画が存在しない
                         if (length === 0) {
+                            fwUnLoading();
                             handler.setResult(true);
                             return;
                         } else {
