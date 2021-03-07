@@ -19,6 +19,10 @@
     "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
 }
 
+.space{
+    margin-top: 150px;
+}
+
 .fixedButton{
     width: 52px;
     height: 52px;
