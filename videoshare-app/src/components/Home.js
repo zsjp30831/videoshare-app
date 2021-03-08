@@ -128,7 +128,7 @@ class Home extends Component {
             urlInfoList.sort((a, b) => b.CreateTime - a.CreateTime);
             urlInfoList.forEach((item, index) => {
                 players.push(<VrcPlayer key={index}
-                                        owner={item.VrcId}
+                                        owner={item.DispName}
                                         contentId={item.ContentId}
                                         frequency={item.AccessCount}
                                         createDt={item.CreateTime}
