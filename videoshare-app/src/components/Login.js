@@ -5,7 +5,7 @@ import Styles from './Login.css'
 import logo from "../image/admin-logo.png";
 import {NavLink} from "react-router-dom"
 import {signin} from "../common/cognito-auth";
-import {fwErrorMessage, fwLoading, fwPush} from "../common/common";
+import {fwErrorMessage, fwLoading, fwPush, getRelationId, getVrcId, setRelationId, setVrcId} from "../common/common";
 
 var accessUrl;
 
@@ -21,6 +21,18 @@ class Login extends Component {
             accessUrl ='/' + obj.split('/').slice(3).join('/'); // domainを除く
         }
         // console.log(accessUrl);
+
+        //autologin error
+        // console.log(this.props.location);
+        let object = this.props.location.state;
+        if (object && object.hasOwnProperty('vrcId')) {
+            setVrcId(object.vrcId);
+        }
+        if (object && object.hasOwnProperty('relationId')) {
+            setRelationId(object.relationId);
+        }
+        // console.log(getVrcId());
+        // console.log(getRelationId());
     }
 
     onSubmit = () => {
@@ -31,7 +43,7 @@ class Login extends Component {
             fwLoading();
             signin(email, password, function signinSuccess(result) {
                     if (!accessUrl) {
-                         fwPush("/home");
+                         fwPush("/webview",{vrcId: getVrcId(), relationId: getRelationId()});
                     } else {
                         fwPush(accessUrl);
                     }

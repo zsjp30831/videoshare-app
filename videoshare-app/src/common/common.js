@@ -4,6 +4,26 @@ import {getAWSToken} from "./cognito-auth";
 import axios from 'axios';
 import CallApp from 'callapp-lib';
 
+var VrcId;
+var RelationId;
+
+export function getVrcId() {
+    return VrcId;
+}
+
+export function setVrcId(vrcid) {
+    VrcId = vrcid;
+}
+
+export function getRelationId() {
+    return RelationId;
+}
+
+export function setRelationId(relationid) {
+    RelationId = relationid;
+}
+
+
 export function fwIsEmpty(obj) {
     return (JSON.stringify(obj) === '{}') ? true : false;
 }
@@ -21,7 +41,7 @@ export function fwUnLoading() {
 }
 
 export function fwErrorMessage(msg) {
-    Toast.fail(msg, 1);
+    Toast.fail(msg, 2);
 }
 
 export function fwError(msg) {
@@ -70,11 +90,11 @@ export function fwgetAWSToken(onSuccess, onError) {
     })
 }
 
-export function fwPush(path) {
+export function fwPush(path, data) {
     let history = createBrowserHistory();
     history.push({
         pathname: path,
-        // query: data
+        state: data
     });
     history.go();
 }
@@ -144,6 +164,25 @@ export function fwDateFormat(str) {
     return formatted;
 };
 
+// const lineOpt = {
+//     scheme: {
+//         protocol: 'line',
+//     },
+//     intent: {
+//         package: '',
+//         scheme: 'line',
+//     },
+//     universal: {
+//         host: 'line.me/R/msg/text/',
+//         pathKey: '',
+//     },
+//     appstore: '',
+//     yingyongbao: '',
+//     fallback: 'https://social-plugins.line.me/lineit/share?url=',
+//     timeout: 2000,
+// };
+
+
 const twitterOpt = {
     scheme: {
         protocol: 'Twitter',
@@ -207,6 +246,8 @@ export function fwTwitterInsertMeta(name, content) {
 
 
 export function fwCallApp(index, url, title) {
+    var option;
+    var lib;
 
     switch (index) {
         case 0:
@@ -215,12 +256,18 @@ export function fwCallApp(index, url, title) {
             // pc
             // window.open('https://lineit.line.me/share/ui?url=' + encodeURIComponent(url), "_blank");  //ios できない
             // window.location.href = 'https://lineit.line.me/share/ui?url=' + encodeURIComponent(url);
-            window.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
+            // window.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
+            // window.top.location.href = 'line://msg/text/' + encodeURIComponent(url);    //iphone
+            window.top.location.href = 'https://line.me/R/msg/text/?' + title + '　' + encodeURIComponent(url);
+            // option = lineOpt;
+            // option.fallback = lineOpt.fallback + encodeURIComponent(url);
+            // lib = new CallApp(option);
+            // lib.open({path: '', param: {t: title, u: url}});
             break;
         case 2:
-            let option = twitterOpt;
+            option = twitterOpt;
             option.fallback = twitterOpt.fallback + title + '　' + encodeURIComponent(url);
-            const lib = new CallApp(option);
+            lib = new CallApp(option);
             lib.open({path: '', param: {text: title, url: url}});
             break;
         case 3:

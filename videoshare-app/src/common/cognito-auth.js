@@ -1,11 +1,6 @@
 import {CognitoUserPool, CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 import AWSConfig from '../config';
 
-var VrcId;
-
-export function getVrcId() {
-    return VrcId;
-}
 
 
 export function signin(email, password, onSuccess, onFailure) {
@@ -54,10 +49,10 @@ export const getAWSToken = () => {
                     cognitoUser.getUserAttributes(
                         function (err, result) {
                             if (!err) {
-                                if (!VrcId) {
-                                    VrcId = cognitoUser.getUsername();
-                                    // console.log("VrcId=" + VrcId);
-                                }
+                                // if (!VrcId) {
+                                //     VrcId = cognitoUser.getUsername();
+                                //     // console.log("VrcId=" + VrcId);
+                                // }
                                 // for (var i = 0; i < result.length; i++) {
                                 //   console.log(result[i].getName() + "=" + result[i].getValue());
                                 // }

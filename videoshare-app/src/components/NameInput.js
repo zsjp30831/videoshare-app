@@ -2,8 +2,17 @@ import React, {Component} from 'react'
 import {Button, InputItem, Toast, WhiteSpace, Checkbox, Flex} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './NameInput.css'
-import {getVrcId} from "../common/cognito-auth";
-import {fwInitAuth, fwCallServiceByKeyDirect, fwErrorMessage, fwPush, fwLoading} from "../common/common";
+import {
+    fwInitAuth,
+    fwCallServiceByKeyDirect,
+    fwErrorMessage,
+    fwPush,
+    fwLoading,
+    setVrcId,
+    getVrcId,
+    setRelationId,
+    getRelationId,
+} from "../common/common";
 import UrlConfig from '../config';
 
 const AgreeItem = Checkbox.AgreeItem;
@@ -34,7 +43,7 @@ class NameInput extends Component {
                         if (status === 'Completed') {
                             fwLoading("動画作成しました。");
                             timer && clearInterval(timer);
-                            fwPush('/home');
+                            fwPush('/webview', {vrcId: getVrcId(), relationId: getRelationId()});
                         } else if (status !== 'Failed') {
                             pollingFlag = false;
                             if (loadingFlag) {
@@ -63,6 +72,15 @@ class NameInput extends Component {
 
 
     componentDidMount() {
+        // console.log(this.props.location);
+        let obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('vrcId')) {
+            setVrcId(obj.vrcId);
+        }
+        if (obj && obj.hasOwnProperty('relationId')) {
+            setRelationId(obj.relationId);
+        }
+
         fwInitAuth((token) => {
             if (this.nameInst) {
                 this.nameInst.focus();
@@ -92,12 +110,14 @@ class NameInput extends Component {
                     Title: title,
                     VrcId: getVrcId(),
                     ConferKbn: this.state.radioA ? 1 : 2,
+                    RelationId: getRelationId(),
                 };
-                 console.log(postData);
+                // console.log(postData);
 
                 fwLoading();
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
+                        // console.log(response);
                         if (response && response.data && response.data.Status === "OK") {
                             // console.log(response.data.ContentId);
                             let pstData = {
@@ -110,7 +130,7 @@ class NameInput extends Component {
                                         handler.dataPolling(pstData);
                                     }
                                 },
-                                3000);
+                                6000);
 
                             //timeout check
                             setTimeout(() => {
@@ -122,7 +142,10 @@ class NameInput extends Component {
                                 loadingFlag = true;
                             }, 180 * 1000);
 
-
+                        } else if (response && response.data && response.data.Status === "AwardNotExists") {
+                            fwErrorMessage("授与する方を学長に選択してください.");
+                        } else if (response && response.data && response.data.Status === "AvatarNotExists") {
+                            fwErrorMessage("対象アバターは存在しないため、動画は生成できません.");
                         } else {
                             fwErrorMessage("通信エラーが発生しました.");
                         }
@@ -171,7 +194,6 @@ class NameInput extends Component {
             }
         }
 
-
         return (
             <div className={Styles.nameInput}>
                 <div className={Styles.center}>
@@ -217,12 +239,12 @@ class NameInput extends Component {
                         <Flex justify="between">
                             <Flex.Item>
                                 <AgreeItem className={Styles.radioA} checked={radioA} onChange={() => this.onChange(1)}>
-                                    <span className={Styles.font}>学長</span>
+                                    <span className={Styles.font} onClick={() => this.onChange(1)}>学長</span>
                                 </AgreeItem>
                             </Flex.Item>
                             <Flex.Item>
                                 <AgreeItem className={Styles.radioB} checked={radioB} onChange={() => this.onChange(2)}>
-                                    <span className={Styles.font}>学科長</span>
+                                    <span className={Styles.font} onClick={() => this.onChange(2)}>学科長</span>
                                 </AgreeItem>
                             </Flex.Item>
                         </Flex>
