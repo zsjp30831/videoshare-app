@@ -103,7 +103,7 @@ class Shared extends Component {
 
         return (
             <div className={Styles.center}>
-                <VrcPlayer owner={urlInfo.VrcId}
+                <VrcPlayer owner={urlInfo.DispName}
                            contentId={urlInfo.ContentId}
                            frequency={urlInfo.AccessCount}
                            createDt={urlInfo.CreateTime}
