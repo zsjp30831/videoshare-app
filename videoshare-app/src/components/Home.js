@@ -125,6 +125,7 @@ class Home extends Component {
         const {urlInfoList, nothing} = this.state;
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
+            urlInfoList.sort((a, b) => b.CreateTime - a.CreateTime);
             urlInfoList.forEach((item, index) => {
                 players.push(<VrcPlayer key={index}
                                         owner={item.VrcId}
