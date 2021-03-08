@@ -10,7 +10,7 @@ const Error = ()=>{
             <img src={logo} className={Style.App_logo} alt="logo"/>
             <h3>404</h3>
             <p>Sorry, the page you visited does not exist.</p>
-            {/*<Button  size="small" type="primary" onClick={() => fwPush('/webview')}>*/}
+            {/*<Button  size="small" type="primary" onClick={() => fwPush('/home')}>*/}
             {/*    Back Home*/}
             {/*</Button>*/}
             <footer className={Style.footer}>

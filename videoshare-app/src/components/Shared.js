@@ -13,6 +13,7 @@ import {
 } from "../common/common";
 import UrlConfig from "../config";
 import 'url-search-params-polyfill';
+import {getVrcId} from "../common/cognito-auth";
 
 let handler;
 
@@ -22,9 +23,6 @@ class Shared extends Component {
         super(props);
         this.state = {
             urlInfo: {},
-        };
-        document.oncontextmenu = () => {
-            return false
         };
     }
 
@@ -58,7 +56,11 @@ class Shared extends Component {
                         let status = response.data.Status
                         if (status === 'RequireLogin') {
                             fwgetAWSToken(function onSuccess(token) {
-                                    fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsAuthURL, token, postData, function onSuccess(response) {
+                                   let pstDat={
+                                       ContentId: cid,
+                                       VrcId:getVrcId(),
+                                   }
+                                    fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstDat, function onSuccess(response) {
                                             // console.log(response);
                                             fwUnLoading();
                                             //動画表示

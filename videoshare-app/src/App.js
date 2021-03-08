@@ -22,7 +22,7 @@ class App extends Component {
                     <Route path='/login' component={Login}/>
                     <Route path='/player' component={VrcPlayer}/>
                     <Route path='/nameinput' component={NameInput}/>
-                    <Route exact path='/webview' component={Home}/>
+                    <Route exact path='/home' component={Home}/>
                     <Route exact path='/shared' component={Shared}/>
                     <Route path='/privacy' component={Privacy}/>
                     <Route path='/terms' component={Terms}/>
@@ -30,6 +30,7 @@ class App extends Component {
                 </Switch>
             </div>
         );
+
     }
 }
 
