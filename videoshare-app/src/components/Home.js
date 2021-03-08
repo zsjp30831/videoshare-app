@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
 import Styles from './Home.css'
-import {fwErrorMessage, fwInitAuth, fwCallServiceByKeyDirect, fwLoading, fwUnLoading, fwPush} from "../common/common";
+import {
+    fwErrorMessage,
+    fwInitAuth,
+    fwCallServiceByKeyDirect,
+    fwLoading,
+    fwUnLoading,
+    fwPush,
+    getVrcId,
+    setVrcId,
+    getRelationId,
+    setRelationId
+} from "../common/common";
 import UrlConfig from '../config';
-import {getVrcId} from "../common/cognito-auth";
 import {Button} from "antd-mobile";
 
 var handler;
@@ -14,11 +24,19 @@ class Home extends Component {
         super(props);
         this.state = {
             urlInfoList: [],
+            nothing: false,
+        };
+        document.oncontextmenu = () => {
+            return false
         };
     }
 
     updateUI = (param) => {
         this.setState({urlInfoList: param});
+    }
+
+    setResult = (flg) => {
+        this.setState({nothing: flg});
     }
 
     getVideoList = () => {
@@ -28,11 +46,22 @@ class Home extends Component {
             let postData = {
                 VrcId: getVrcId(),
             };
+            // console.log(postData);
             // videoListを取得する
             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, postData, function onSuccess(response) {
                     if (response && response.data && response.data.ContentIdList) {
+                        // console.log(response.data);
                         // console.log(response.data.ContentIdList.length);
                         let length = response.data.ContentIdList.length;
+
+                        // 動画が存在しない
+                        if (length === 0) {
+                            fwUnLoading();
+                            handler.setResult(true);
+                            return;
+                        } else {
+                            handler.setResult(false);
+                        }
 
                         let urlInfoList = [];
                         response.data.ContentIdList.forEach((item, index) => {
@@ -40,7 +69,6 @@ class Home extends Component {
                                 ContentId: item,
                                 VrcId: getVrcId(),
                             };
-
                             // if (index > 5) {
                             //     fwUnLoading();
                             //     return;
@@ -76,23 +104,25 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
-        // let obj = this.props.location.state;
-        // if (obj && obj.hasOwnProperty('msg')) {
-        //     email = this.props.location.state.msg;
-        // }
-        // console.log(email);
+        // console.log(this.props.location);
+        let obj = this.props.location.state;
+        if (obj && obj.hasOwnProperty('vrcId')) {
+            setVrcId(obj.vrcId);
+        }
+        if (obj && obj.hasOwnProperty('relationId')) {
+            setRelationId(obj.relationId);
+        }
 
         this.getVideoList();
     }
 
-    onSubmit=()=>{
-        fwPush('/nameinput');
+    onSubmit = () => {
+        fwPush('/nameinput', {vrcId: getVrcId(), relationId: getRelationId()});
     }
 
     render() {
         // console.log("render");
-        const {urlInfoList} = this.state;
+        const {urlInfoList, nothing} = this.state;
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.forEach((item, index) => {
@@ -111,7 +141,9 @@ class Home extends Component {
 
         return (
             <div className={Styles.center}>
+                {nothing && (<p className={Styles.centerEx}>卒業式動画はありません</p>)}
                 {players}
+                <div className={Styles.space}></div>
                 <footer className={Styles.footer}>
                     <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
                 </footer>
