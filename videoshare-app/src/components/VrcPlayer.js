@@ -42,12 +42,17 @@ class VrcPlayer extends Component {
 
     doShare = (index) => {
         if (index > -1) {
+            let downloadUrl = this.props.srcUrl;
+            if (index === 0) {
+                window.open(downloadUrl);
+                return;
+            }
+
             // authLevel設定
             let postData = {
                 ContentId: this.props.contentId,
                 Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
             }
-            let downloadUrl = this.props.srcUrl;
 
             let sharedUrl = document.location.href.substr(0, document.location.href.length - 8) + '/shared?cid=' + postData.ContentId;
             copy(sharedUrl);
@@ -67,12 +72,9 @@ class VrcPlayer extends Component {
                                     title = "AvarU App Shared:"
                                 }
                                 fwCallApp(index, sharedUrl, title);
-                            } else if (index === 1) {
+                            } else {
                                 // url copy icon
                                 fwSuccess('コピーされました。');
-                            } else {
-                                // alert(downloadUrl);
-                                window.open(downloadUrl);
                             }
                         } else {
                             fwErrorMessage("権限設定失敗しました。");
