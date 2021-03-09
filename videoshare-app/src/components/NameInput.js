@@ -211,7 +211,7 @@ class NameInput extends Component {
                             Toast.info(getFieldError('name'), 1);
                         }}
                         clear
-                        placeholder=""
+                        placeholder="6文字以内入力可能"
                     >
                         {/*<span>名前</span>*/}
                     </InputItem>

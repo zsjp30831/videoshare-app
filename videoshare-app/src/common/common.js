@@ -251,8 +251,9 @@ export function fwCallApp(index, url, title) {
 
     switch (index) {
         case 0:
-            break;
         case 1:
+            break;
+        case 2:
             // pc
             // window.open('https://lineit.line.me/share/ui?url=' + encodeURIComponent(url), "_blank");  //ios できない
             // window.location.href = 'https://lineit.line.me/share/ui?url=' + encodeURIComponent(url);
@@ -264,17 +265,17 @@ export function fwCallApp(index, url, title) {
             // lib = new CallApp(option);
             // lib.open({path: '', param: {t: title, u: url}});
             break;
-        case 2:
+        case 3:
             option = twitterOpt;
             option.fallback = twitterOpt.fallback + title + '　' + encodeURIComponent(url);
             lib = new CallApp(option);
             lib.open({path: '', param: {text: title, url: url}});
             break;
-        case 3:
+        case 4:
             // window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url), "_blank");
             window.location.href = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url);
             break;
-        case 4:
+        case 5:
             // option = wechatOpt;
             break;
         default:

@@ -11,7 +11,7 @@ import Facebook from "../image/facebook.png";
 import CopyIcon from "../image/copy.png";
 import AuthPicker from "./AuthPicker";
 import logo from "../image/people-b.png";
-import downloadlogo from "../image/download.png";
+import downloadIcon from "../image/download.png";
 import {
     Player,
     ControlBar,
@@ -47,6 +47,7 @@ class VrcPlayer extends Component {
                 ContentId: this.props.contentId,
                 Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
             }
+            let downloadUrl = this.props.srcUrl;
 
             let sharedUrl = document.location.href.substr(0, document.location.href.length - 8) + '/shared?cid=' + postData.ContentId;
             copy(sharedUrl);
@@ -61,15 +62,17 @@ class VrcPlayer extends Component {
                         // console.log(response);
                         if (response && response.data && response.data.Status === 'OK') {
                             // console.log(document.location.href);
-                            if (index > 0) {
+                            if (index > 1) {
                                 if (!title) {
                                     title = "AvarU App Shared:"
                                 }
-
                                 fwCallApp(index, sharedUrl, title);
-                            } else {
+                            } else if (index === 1) {
                                 // url copy icon
                                 fwSuccess('コピーされました。');
+                            } else {
+                                // alert(downloadUrl);
+                                window.open(downloadUrl);
                             }
                         } else {
                             fwErrorMessage("権限設定失敗しました。");
@@ -86,6 +89,7 @@ class VrcPlayer extends Component {
     }
 
     dataList = [
+        {title: 'Download', icon: downloadIcon},
         {title: 'Copy', icon: CopyIcon},
         {title: 'Line', icon: Line},
         {title: 'Twitter', icon: Twitter},
@@ -133,7 +137,7 @@ class VrcPlayer extends Component {
                                            alt="share"
                                            onClick={this.showShareActionSheet}/>),
                             download && (
-                                <img src={downloadlogo} className={Styles.logo} alt=""/>
+                                <img src={downloadIcon} className={Styles.logo} alt=""/>
                             )
                         ]}
                     >
