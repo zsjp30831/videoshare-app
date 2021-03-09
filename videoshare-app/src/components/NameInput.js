@@ -98,9 +98,13 @@ class NameInput extends Component {
         // console.log(this.props.form.getFieldsValue());
         let name = this.props.form.getFieldsValue().name;
         if (name) {
+            if (name.length > 6) {
+                fwErrorMessage("名前は6文字以内を入力してください.");
+                return;
+            }
             let title = this.props.form.getFieldsValue().title;
             if (title && title.length > 15) {
-                fwErrorMessage("15文字以内入力可能.");
+                fwErrorMessage("タイトルは15文字以内を入力してください.");
                 return;
             }
 
@@ -113,7 +117,6 @@ class NameInput extends Component {
                     RelationId: getRelationId(),
                 };
                 // console.log(postData);
-
                 fwLoading();
                 // console.log(token);
                 fwCallServiceByKeyDirect(UrlConfig.CreateMediaContentsURL, token, postData, function onSuccess(response) {
@@ -185,6 +188,9 @@ class NameInput extends Component {
         const validateName = (rule, value, callback) => {
             if (value.length === 0) {
                 callback(new Error('名前を入力してください'));
+            } else if (value.length > 6) {
+                callback(new Error('名前は6文字以内を入力してください'));
+            } else {
             }
         }
 
@@ -195,67 +201,66 @@ class NameInput extends Component {
         }
 
         return (
-            <div className={Styles.nameInput}>
-                <div className={Styles.center}>
-                    <h1 className={Styles.label}>あなたの名前</h1>
-                    <InputItem
-                        className={Styles.inputItem}
-                        {...getFieldProps('name', {
-                            rules: [
-                                {validator: validateName},
-                            ],
-                        })}
-                        ref={el => this.nameInst = el}
-                        error={!!getFieldError('name')}
-                        onErrorClick={() => {
-                            Toast.info(getFieldError('name'), 1);
-                        }}
-                        clear
-                        placeholder="6文字以内入力可能"
-                    >
-                        {/*<span>名前</span>*/}
-                    </InputItem>
-                    <h1 className={Styles.label}>卒業証書授与動画タイトル</h1>
-                    <InputItem
-                        className={Styles.inputItem}
-                        {...getFieldProps('title', {
-                            rules: [
-                                {validator: validateTitle},
-                            ],
-                        })}
-                        ref={el => this.nameInst = el}
-                        error={!!getFieldError('title')}
-                        onErrorClick={() => {
-                            Toast.info(getFieldError('title'), 1);
-                        }}
-                        clear
-                        placeholder="15文字以内入力可能"
-                    >
-                    </InputItem>
-                    <WhiteSpace/>
+            <div className={Styles.center}>
+                <h1 className={Styles.label}>あなたの名前</h1>
+                <InputItem
+                    className={Styles.inputItem}
+                    {...getFieldProps('name', {
+                        rules: [
+                            {validator: validateName},
+                        ],
+                    })}
+                    ref={el => this.nameInst = el}
+                    error={!!getFieldError('name')}
+                    onErrorClick={() => {
+                        Toast.info(getFieldError('name'), 1);
+                    }}
+                    clear
+                    placeholder="6文字以内入力可能"
+                >
+                    {/*<span>名前</span>*/}
+                </InputItem>
+                <h1 className={Styles.label}>卒業証書授与動画タイトル</h1>
+                <InputItem
+                    className={Styles.inputItem}
+                    {...getFieldProps('title', {
+                        rules: [
+                            {validator: validateTitle},
+                        ],
+                    })}
+                    ref={el => this.titleInst = el}
+                    error={!!getFieldError('title')}
+                    onErrorClick={() => {
+                        Toast.info(getFieldError('title'), 1);
+                    }}
+                    clear
+                    placeholder="15文字以内入力可能"
+                >
+                </InputItem>
+                <WhiteSpace/>
 
-                    <h1 className={Styles.label2}>学位を授与する方を選択</h1>
-                    <div className={Styles.box}>
-                        <Flex justify="between">
-                            <Flex.Item>
-                                <AgreeItem className={Styles.radioA} checked={radioA} onChange={() => this.onChange(1)}>
-                                    <span className={Styles.font} onClick={() => this.onChange(1)}>学長</span>
-                                </AgreeItem>
-                            </Flex.Item>
-                            <Flex.Item>
-                                <AgreeItem className={Styles.radioB} checked={radioB} onChange={() => this.onChange(2)}>
-                                    <span className={Styles.font} onClick={() => this.onChange(2)}>学科長</span>
-                                </AgreeItem>
-                            </Flex.Item>
-                        </Flex>
-                    </div>
-
-                    <footer className={Styles.footer}>
-                        <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
-                        {/*<span>Copyright © VRC, Inc. All Rights Reserved.</span>*/}
-                    </footer>
+                <h1 className={Styles.label2}>学位を授与する方を選択</h1>
+                <div className={Styles.box}>
+                    <Flex justify="between">
+                        <Flex.Item>
+                            <AgreeItem className={Styles.radioA} checked={radioA} onChange={() => this.onChange(1)}>
+                                <span className={Styles.font} onClick={() => this.onChange(1)}>学長</span>
+                            </AgreeItem>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <AgreeItem className={Styles.radioB} checked={radioB} onChange={() => this.onChange(2)}>
+                                <span className={Styles.font} onClick={() => this.onChange(2)}>学科長</span>
+                            </AgreeItem>
+                        </Flex.Item>
+                    </Flex>
                 </div>
+
+                <footer className={Styles.footer}>
+                    <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                    {/*<span>Copyright © VRC, Inc. All Rights Reserved.</span>*/}
+                </footer>
             </div>
+
         );
     }
 
