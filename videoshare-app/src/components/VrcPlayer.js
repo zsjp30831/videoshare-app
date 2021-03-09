@@ -46,19 +46,22 @@ class VrcPlayer extends Component {
                 let postData = {
                     ContentId: this.props.contentId
                 }
-                // fwInitAuth((token) => {
-                //     fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
-                //
-                //
-                //
-                //         },
-                //         function onError(err) {
-                //             fwErrorMessage("ダウンロード例外が発生しました。");
-                //         }
-                //     );
-                // });
+                fwInitAuth((token) => {
+                    fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
+                            console.log(response);
+                            if (response && response.data && response.data.Status === 'OK') {
+                                window.location.href = response.data.Url;
+                            } else {
+                                fwErrorMessage("ダウンロード失敗しました.");
+                            }
+                        },
+                        function onError(err) {
+                            fwErrorMessage("ダウンロード例外が発生しました.");
+                        }
+                    );
+                });
 
-            }else{
+            } else {
                 // authLevel設定
                 let postData = {
                     ContentId: this.props.contentId,
