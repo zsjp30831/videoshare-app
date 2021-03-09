@@ -48,7 +48,7 @@ class VrcPlayer extends Component {
                 }
                 fwInitAuth((token) => {
                     fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
-                            console.log(response);
+                            // console.log(response);
                             if (response && response.data && response.data.Status === 'OK') {
                                 window.location.href = response.data.Url;
                             } else {
