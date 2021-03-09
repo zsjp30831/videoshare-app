@@ -42,51 +42,61 @@ class VrcPlayer extends Component {
 
     doShare = (index) => {
         if (index > -1) {
-            let downloadUrl = this.props.srcUrl;
             if (index === 0) {
-                window.open(downloadUrl);
-                return;
-            }
+                let postData = {
+                    ContentId: this.props.contentId
+                }
+                // fwInitAuth((token) => {
+                //     fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
+                //
+                //
+                //
+                //         },
+                //         function onError(err) {
+                //             fwErrorMessage("ダウンロード例外が発生しました。");
+                //         }
+                //     );
+                // });
 
-            // authLevel設定
-            let postData = {
-                ContentId: this.props.contentId,
-                Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
-            }
+            }else{
+                // authLevel設定
+                let postData = {
+                    ContentId: this.props.contentId,
+                    Authority: this.state.authLevel[0] === 'Unlock' ? 0 : 1,
+                }
 
-            let sharedUrl = document.location.href.substr(0, document.location.href.length - 8) + '/shared?cid=' + postData.ContentId;
-            copy(sharedUrl);
+                let sharedUrl = document.location.href.substr(0, document.location.href.length - 8) + '/shared?cid=' + postData.ContentId;
+                copy(sharedUrl);
 
-            let title = this.props.title;
+                let title = this.props.title;
 
-            // console.log(postData);
-            // alert(postData.Authority);
-            fwInitAuth((token) => {
-                fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
-                        fwUnLoading();
-                        // console.log(response);
-                        if (response && response.data && response.data.Status === 'OK') {
-                            // console.log(document.location.href);
-                            if (index > 1) {
-                                if (!title) {
-                                    title = "AvarU App Shared:"
+                // console.log(postData);
+                // alert(postData.Authority);
+                fwInitAuth((token) => {
+                    fwCallServiceByKeyDirect(UrlConfig.SetMediaContentsAuthorityURL, token, postData, function onSuccess(response) {
+                            fwUnLoading();
+                            // console.log(response);
+                            if (response && response.data && response.data.Status === 'OK') {
+                                // console.log(document.location.href);
+                                if (index > 1) {
+                                    if (!title) {
+                                        title = "AvarU App Shared:"
+                                    }
+                                    fwCallApp(index, sharedUrl, title);
+                                } else {
+                                    // url copy icon
+                                    fwSuccess('コピーされました。');
                                 }
-                                fwCallApp(index, sharedUrl, title);
                             } else {
-                                // url copy icon
-                                fwSuccess('コピーされました。');
+                                fwErrorMessage("権限設定失敗しました。");
                             }
-                        } else {
-                            fwErrorMessage("権限設定失敗しました。");
+                        },
+                        function onError(err) {
+                            fwErrorMessage("権限設定例外が発生しました。");
                         }
-                    },
-                    function onError(err) {
-                        fwErrorMessage("権限設定例外が発生しました。");
-                    }
-                );
-            });
-
-
+                    );
+                });
+            }
         }
     }
 
