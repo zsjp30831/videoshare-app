@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import VrcPlayer from "./VrcPlayer";
-import Styles from './Home.css'
+import Styles from './Shared.css'
 import {
     fwCallServiceDirect,
     fwCallServiceByKeyDirect,
@@ -13,6 +13,10 @@ import {
 } from "../common/common";
 import UrlConfig from "../config";
 import 'url-search-params-polyfill';
+import hus from "../image/hus_sv.png";
+import vrc from "../image/vrc.png";
+import nine from "../image/nine.png";
+import {Flex, WhiteSpace} from 'antd-mobile';
 
 let handler;
 
@@ -103,6 +107,9 @@ class Shared extends Component {
 
         return (
             <div className={Styles.center}>
+                <div className={Styles.title}>
+                    バーチャル学位記授与式
+                </div>
                 <VrcPlayer owner={urlInfo.DispName}
                            contentId={urlInfo.ContentId}
                            frequency={urlInfo.AccessCount}
@@ -112,6 +119,31 @@ class Shared extends Component {
                            share={false}
                            download={false}
                            poster=""/>
+                <footer className={Styles.footer}>
+                    <Flex>
+                        <Flex.Item>
+                            <img src={hus} className={Styles.hus} alt="" onClick={() => {
+                                window.location.href = "https://www.hus.ac.jp/";
+                            }}/>
+                            <WhiteSpace/>
+                            <div className={Styles.husText}>北海道科学大学</div>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <img src={vrc} className={Styles.vrc} alt="" onClick={() => {
+                                window.location.href = "https://www.vrcjp.com/";
+                            }}/>
+                            <WhiteSpace/>
+                            <div className={Styles.vrcText}>株式会社VRC</div>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <img src={nine} className={Styles.nine} alt="" onClick={() => {
+                                window.location.href = "https://9nine-hakama.jp/";
+                            }}/>
+                            <WhiteSpace/>
+                            <div className={Styles.nineText}>株式会社9</div>
+                        </Flex.Item>
+                    </Flex>
+                </footer>
             </div>
         );
     }
