@@ -3,7 +3,7 @@ import {Button, InputItem, Toast, WhiteSpace} from 'antd-mobile'
 import {createForm} from 'rc-form'
 import Styles from './Login.css'
 import logo from "../image/admin-logo.png";
-import {NavLink} from "react-router-dom"
+// import {NavLink} from "react-router-dom"
 import {signin} from "../common/cognito-auth";
 import {fwErrorMessage, fwLoading, fwPush, getRelationId, getVrcId, setRelationId, setVrcId} from "../common/common";
 
@@ -120,9 +120,9 @@ class Login extends Component {
                     <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>ログイン</Button>
                     <footer className={Styles.footer}>
                             <span>
-                                <NavLink to="/privacy">プライバシー</NavLink>
+                                <a href="https://avaru.vrcjp.com/vrc_privacy.html">プライバシー</a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <NavLink to="/terms">規約</NavLink>
+                                <a href="https://avaru.vrcjp.com/personal_terms.html">規約</a>
                             </span>
                     </footer>
                 </div>

@@ -16,7 +16,7 @@ import 'url-search-params-polyfill';
 import hus from "../image/hus_sv.png";
 import vrc from "../image/vrc.png";
 import nine from "../image/nine.png";
-import {Flex, WhiteSpace} from 'antd-mobile';
+import {Flex} from 'antd-mobile';
 
 let handler;
 
@@ -125,22 +125,22 @@ class Shared extends Component {
                             <img src={hus} className={Styles.hus} alt="" onClick={() => {
                                 window.location.href = "https://www.hus.ac.jp/";
                             }}/>
-                            <WhiteSpace/>
-                            <div className={Styles.husText}>北海道科学大学</div>
+                            {/*<WhiteSpace/>*/}
+                            {/*<div className={Styles.husText}>北海道科学大学</div>*/}
                         </Flex.Item>
                         <Flex.Item>
                             <img src={vrc} className={Styles.vrc} alt="" onClick={() => {
                                 window.location.href = "https://www.vrcjp.com/";
                             }}/>
-                            <WhiteSpace/>
-                            <div className={Styles.vrcText}>株式会社VRC</div>
+                            {/*<WhiteSpace/>*/}
+                            {/*<div className={Styles.vrcText}>株式会社VRC</div>*/}
                         </Flex.Item>
                         <Flex.Item>
                             <img src={nine} className={Styles.nine} alt="" onClick={() => {
                                 window.location.href = "https://9nine-hakama.jp/";
                             }}/>
-                            <WhiteSpace/>
-                            <div className={Styles.nineText}>株式会社9</div>
+                            {/*<WhiteSpace/>*/}
+                            {/*<div className={Styles.nineText}>株式会社9</div>*/}
                         </Flex.Item>
                     </Flex>
                 </footer>

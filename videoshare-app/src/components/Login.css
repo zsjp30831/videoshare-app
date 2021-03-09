@@ -11,16 +11,16 @@
 }
 
 .submit {
-    width: 160px;
+    width: 300px;
     height: 40px;
-    background: #2cabe3;
+    background: #ff4800;
     font-size: 17px;
     margin-top: 20px;
 }
 
 .login {
     height: 100%;
-    background: url("../image/login-register.png") center no-repeat;
+    /*background: url("../image/login-register.png") center no-repeat;*/
 }
 
 .center {
@@ -42,7 +42,7 @@
 }
 
 .label {
-    color: white;
+    color: black;
 }
 
 .inputItem {

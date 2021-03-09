@@ -62,6 +62,10 @@ export function fwSuccess(msg) {
     Toast.success(msg, 1);
 }
 
+export function fwSuccessEx(msg,time) {
+    Toast.success(msg, time);
+}
+
 export function fwInitAuth(onSuccess) {
     // fwLoading();
     getAWSToken().then((token) => {

@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import Styles from './VrcPlayer.css'
 import {NavBar, ActionSheet, WhiteSpace} from 'antd-mobile';
 import PlayerTitle from './PlayerTitle'
-import {fwCallApp, fwCallServiceByKeyDirect, fwErrorMessage, fwInitAuth, fwSuccess, fwUnLoading} from '../common/common'
+import {fwCallApp, fwCallServiceByKeyDirect, fwErrorMessage, fwInitAuth, fwSuccess,fwSuccessEx, fwUnLoading} from '../common/common'
 import copy from 'copy-to-clipboard';
 import Share from "../image/share.png";
 import Line from "../image/line.png";
@@ -50,7 +50,7 @@ class VrcPlayer extends Component {
                     fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
                             // console.log(response);
                             if (response && response.data && response.data.Status === 'OK') {
-                                window.location.href = response.data.Url;
+                                fwSuccessEx(`ダウンロードURLが「${response.data.Email}」に送信しました。ご確認お願い致します。`,8);
                             } else {
                                 fwErrorMessage("ダウンロード失敗しました.");
                             }
