@@ -4,7 +4,7 @@ import {NavBar, ActionSheet, WhiteSpace, Icon, Modal, Toast} from 'antd-mobile';
 import PlayerTitle from './PlayerTitle'
 import {
     fwCallApp,
-    fwCallServiceByKeyDirect,
+    fwCallServiceByKeyDirect, fwDateFormat,
     fwErrorMessage,
     fwInitAuth,
     fwSuccess,
@@ -112,8 +112,10 @@ class VrcPlayer extends Component {
                     }
                     //delete
                     if (index === 1) {
+                        let title = this.props.title;
+                        let createDt = fwDateFormat(this.props.createDt);
                         // messagebox
-                        alertM('削除', '削除しますか?', [
+                        alertM('削除しますか?', `${title}　${createDt}`, [
                             { text: '取消', onPress: () => { } },
                             {
                                 text: '確定',
@@ -129,11 +131,11 @@ class VrcPlayer extends Component {
                                                         window.location.reload(true);
                                                     });
                                                 } else {
-                                                    fwErrorMessage("ダウンロード失敗しました.");
+                                                    fwErrorMessage("削除失敗しました.");
                                                 }
                                             },
                                             function onError(err) {
-                                                fwErrorMessage("ダウンロード例外が発生しました.");
+                                                fwErrorMessage("削除例外が発生しました.");
                                             }
                                         );
                                     });
