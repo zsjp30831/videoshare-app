@@ -6,8 +6,6 @@ import Home from "./components/Home";
 import VrcPlayer from "./components/VrcPlayer";
 import Shared from "./components/Shared";
 import Error from "./components/404";
-import Privacy from "./components/Privacy";
-import Terms from "./components/Terms";
 import {Route, Switch} from "react-router-dom"
 import Styles from './App.css'
 
