@@ -64,6 +64,7 @@ class Home extends Component {
                         }
 
                         let urlInfoList = [];
+                        let cnt = 0;
                         response.data.ContentIdList.forEach((item, index) => {
                             let pstData = {
                                 ContentId: item,
@@ -82,7 +83,8 @@ class Home extends Component {
                                     } else {
                                         // fwErrorMessage("動画が存在しません。");
                                     }
-                                    if (index === length - 1) {
+                                    cnt++;
+                                    if (cnt === length) {
                                         fwUnLoading();
                                         handler.updateUI(urlInfoList);
                                     }
