@@ -24,8 +24,6 @@ class App extends Component {
                     <Route path='/nameinput' component={NameInput}/>
                     <Route exact path='/webview' component={Home}/>
                     <Route exact path='/shared' component={Shared}/>
-                    <Route path='/privacy' component={Privacy}/>
-                    <Route path='/terms' component={Terms}/>
                     <Route component={Error}/>
                 </Switch>
             </div>

@@ -220,7 +220,7 @@ class NameInput extends Component {
                 >
                     {/*<span>名前</span>*/}
                 </InputItem>
-                <h1 className={Styles.label}>卒業証書授与動画タイトル</h1>
+                <h1 className={Styles.label}>動画タイトル</h1>
                 <InputItem
                     className={Styles.inputItem}
                     {...getFieldProps('title', {
@@ -239,7 +239,7 @@ class NameInput extends Component {
                 </InputItem>
                 <WhiteSpace/>
 
-                <h1 className={Styles.label2}>学位を授与する方を選択</h1>
+                <h1 className={Styles.label2}>学位記を授与する方を選択</h1>
                 <div className={Styles.box}>
                     <Flex justify="between">
                         <Flex.Item>

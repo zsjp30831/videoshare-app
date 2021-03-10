@@ -117,7 +117,6 @@ class Shared extends Component {
                            srcUrl={urlInfo.Url} // "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                            title={urlInfo.Title}
                            share={false}
-                           download={false}
                            poster=""/>
                 <footer className={Styles.footer}>
                     <Flex>
