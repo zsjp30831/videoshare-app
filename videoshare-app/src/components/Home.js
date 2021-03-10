@@ -64,7 +64,6 @@ class Home extends Component {
                         }
 
                         let urlInfoList = [];
-                        let cnt = 0;
                         response.data.ContentIdList.forEach((item, index) => {
                             let pstData = {
                                 ContentId: item,
@@ -83,11 +82,11 @@ class Home extends Component {
                                     } else {
                                         // fwErrorMessage("動画が存在しません。");
                                     }
-                                    cnt++;
-                                    if (cnt === length - 1) {
+                                    if (index === length - 1) {
                                         fwUnLoading();
                                         handler.updateUI(urlInfoList);
-                                    }                                },
+                                    }
+                                },
                                 function onError(err) {
                                     fwErrorMessage("動画取得例外が発生しました。");
                                 }
