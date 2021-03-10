@@ -48,9 +48,9 @@ class VrcPlayer extends Component {
                 }
                 fwInitAuth((token) => {
                     fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
-                            // console.log(response);
+                           // console.log(response);
                             if (response && response.data && response.data.Status === 'OK') {
-                                fwSuccessEx(`ダウンロードURLが「${response.data.Email}」に送信しました。ご確認お願い致します。`,8);
+                                fwSuccessEx(`ダウンロードURLが「${response.data.Email}」に送信しました。ご確認お願い致します。`,6);
                             } else {
                                 fwErrorMessage("ダウンロード失敗しました.");
                             }
