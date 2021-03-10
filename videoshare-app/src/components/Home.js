@@ -50,7 +50,7 @@ class Home extends Component {
             // videoListを取得する
             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsListURL, token, postData, function onSuccess(response) {
                     if (response && response.data && response.data.ContentIdList) {
-                        // console.log(response.data);
+                        console.log(response.data);
                         // console.log(response.data.ContentIdList.length);
                         let length = response.data.ContentIdList.length;
 
@@ -126,6 +126,7 @@ class Home extends Component {
         let players = [];
         if (urlInfoList && urlInfoList.length > 0) {
             urlInfoList.sort((a, b) => b.CreateTime - a.CreateTime);
+            console.log(urlInfoList);
             urlInfoList.forEach((item, index) => {
                 players.push(<VrcPlayer key={index}
                                         owner={item.DispName}
