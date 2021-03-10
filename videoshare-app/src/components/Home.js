@@ -64,6 +64,7 @@ class Home extends Component {
                         }
 
                         let urlInfoList = [];
+                        let cnt = 0;
                         response.data.ContentIdList.forEach((item, index) => {
                             let pstData = {
                                 ContentId: item,
@@ -76,17 +77,17 @@ class Home extends Component {
 
                             // videoItemを取得する
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
-                                    if (index === length - 1) {
-                                        fwUnLoading();
-                                        handler.updateUI(urlInfoList);
-                                    }
                                     if (response && response.data && response.data.Contents) {
                                         urlInfoList.push(response.data.Contents);
                                         //handler.updateUI(urlInfoList);
                                     } else {
                                         // fwErrorMessage("動画が存在しません。");
                                     }
-                                },
+                                    cnt++;
+                                    if (cnt === length - 1) {
+                                        fwUnLoading();
+                                        handler.updateUI(urlInfoList);
+                                    }                                },
                                 function onError(err) {
                                     fwErrorMessage("動画取得例外が発生しました。");
                                 }
