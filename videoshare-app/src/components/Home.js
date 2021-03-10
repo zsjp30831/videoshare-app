@@ -84,7 +84,7 @@ class Home extends Component {
                                         // fwErrorMessage("動画が存在しません。");
                                     }
                                     cnt++;
-                                    if (cnt === length - 1) {
+                                    if (cnt === length) {
                                         fwUnLoading();
                                         handler.updateUI(urlInfoList);
                                     }                                },
