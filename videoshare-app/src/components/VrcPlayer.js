@@ -122,7 +122,7 @@ class VrcPlayer extends Component {
                                         ContentId: this.props.contentId
                                     }
                                     fwInitAuth((token) => {
-                                        fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
+                                        fwCallServiceByKeyDirect(UrlConfig.DeleteMediaContentsURL, token, postData, function onSuccess(response) {
                                                 // console.log(response);
                                                 if (response && response.data && response.data.Status === 'OK') {
                                                     Toast.success("削除しました.",1,()=>{
