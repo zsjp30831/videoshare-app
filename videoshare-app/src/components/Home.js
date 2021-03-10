@@ -78,10 +78,11 @@ class Home extends Component {
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsURL, token, pstData, function onSuccess(response) {
                                     if (index === length - 1) {
                                         fwUnLoading();
+                                        handler.updateUI(urlInfoList);
                                     }
                                     if (response && response.data && response.data.Contents) {
                                         urlInfoList.push(response.data.Contents);
-                                        handler.updateUI(urlInfoList);
+                                        //handler.updateUI(urlInfoList);
                                     } else {
                                         // fwErrorMessage("動画が存在しません。");
                                     }
