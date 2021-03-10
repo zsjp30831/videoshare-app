@@ -6,7 +6,7 @@ import {
     fwCallApp,
     fwCallServiceByKeyDirect, fwDateFormat,
     fwErrorMessage,
-    fwInitAuth,
+    fwInitAuth, fwLoading,
     fwSuccess,
     fwSuccessEx,
     fwUnLoading
@@ -92,6 +92,7 @@ class VrcPlayer extends Component {
                 case 1:
                     // download
                     if (index === 0) {
+                        fwLoading();
                         let postData = {
                             ContentId: this.props.contentId
                         }
@@ -99,7 +100,7 @@ class VrcPlayer extends Component {
                             fwCallServiceByKeyDirect(UrlConfig.GetMediaContentsDownloadURL, token, postData, function onSuccess(response) {
                                     // console.log(response);
                                     if (response && response.data && response.data.Status === 'OK') {
-                                        fwSuccessEx(`ダウンロードURLが「${response.data.Email}」に送信しました。ご確認お願い致します。`, 5);
+                                        fwSuccessEx(`ダウンロードURLが「${response.data.Email}」に送信しました.`, 5);
                                     } else {
                                         fwErrorMessage("ダウンロード失敗しました.");
                                     }
@@ -120,6 +121,7 @@ class VrcPlayer extends Component {
                             {
                                 text: '確定',
                                 onPress: () =>{
+                                    fwLoading();
                                     let postData = {
                                         ContentId: this.props.contentId
                                     }
