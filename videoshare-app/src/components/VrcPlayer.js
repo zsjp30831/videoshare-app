@@ -116,7 +116,7 @@ class VrcPlayer extends Component {
                         let createDt = fwDateFormat(this.props.createDt);
                         // messagebox
                         alertM('削除しますか?', `${title}　${createDt}`, [
-                            { text: '取消', onPress: () => { } },
+                            { text: 'キャンセル', onPress: () => { } },
                             {
                                 text: '確定',
                                 onPress: () =>{
