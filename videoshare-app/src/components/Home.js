@@ -11,7 +11,7 @@ import {
     getVrcId,
     setVrcId,
     getRelationId,
-    setRelationId
+    setRelationId, fwApp
 } from "../common/common";
 import UrlConfig from '../config';
 import {Button} from "antd-mobile";
@@ -142,15 +142,24 @@ class Home extends Component {
                                         poster=""/>);
             });
         }
+        const isAndroid = fwApp();
 
         return (
             <div className={Styles.center}>
                 {nothing && (<p className={Styles.centerEx}>卒業式動画はありません</p>)}
                 {players}
                 <div className={Styles.space}></div>
-                <footer className={Styles.footer}>
-                    <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
-                </footer>
+                {
+                    isAndroid === true ? (
+                        <footer className={Styles.androidFooter}>
+                            <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
+                        </footer>
+                    ) : (
+                        <footer className={Styles.iOSFooter}>
+                            <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
+                        </footer>)
+                }
+
             </div>
         );
     }

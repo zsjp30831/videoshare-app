@@ -7,6 +7,7 @@ import {
     fwCallServiceByKeyDirect,
     fwErrorMessage,
     fwPush,
+    fwApp,
     fwLoading,
     setVrcId,
     getVrcId,
@@ -184,6 +185,7 @@ class NameInput extends Component {
             return null;
         }
 
+        const isAndroid = fwApp();
         const {getFieldProps, getFieldError} = this.props.form;
         const validateName = (rule, value, callback) => {
             if (value.length === 0) {
@@ -255,10 +257,16 @@ class NameInput extends Component {
                     </Flex>
                 </div>
 
-                <footer className={Styles.footer}>
-                    <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
-                    {/*<span>Copyright © VRC, Inc. All Rights Reserved.</span>*/}
-                </footer>
+                {isAndroid === true ? (
+                        <footer className={Styles.androidFooter}>
+                            <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                        </footer>
+                    ) :
+                    (<footer className={Styles.iOSFooter}>
+                        <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                    </footer>)
+                }
+
             </div>
 
         );

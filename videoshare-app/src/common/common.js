@@ -66,6 +66,18 @@ export function fwSuccessEx(msg,time) {
     Toast.success(msg, time);
 }
 
+export function fwApp(){
+    let u = navigator.userAgent;
+    // let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+    if(isAndroid){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 export function fwInitAuth(onSuccess) {
     // fwLoading();
     getAWSToken().then((token) => {
