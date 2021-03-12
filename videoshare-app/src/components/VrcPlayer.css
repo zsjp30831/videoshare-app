@@ -5,10 +5,16 @@
 }
 
 
-.logo {
+.androidLogo {
     width: 30px;
     height: 30px;
     margin-left: 10px;
+    margin-right: 8px;
+}
+
+.iosLogo {
+    width: 30px;
+    height: 30px;
     margin-right: 8px;
 }
 

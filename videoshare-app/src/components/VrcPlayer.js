@@ -3,6 +3,7 @@ import Styles from './VrcPlayer.css'
 import {NavBar, ActionSheet, WhiteSpace, Icon, Modal, Toast} from 'antd-mobile';
 import PlayerTitle from './PlayerTitle'
 import {
+    fwApp,
     fwCallApp,
     fwCallServiceByKeyDirect, fwDateFormat,
     fwErrorMessage,
@@ -117,10 +118,13 @@ class VrcPlayer extends Component {
                         let createDt = fwDateFormat(this.props.createDt);
                         // messagebox
                         alertM('削除しますか?', `${title}　${createDt}`, [
-                            { text: 'キャンセル', onPress: () => { } },
+                            {
+                                text: 'キャンセル', onPress: () => {
+                                }
+                            },
                             {
                                 text: '確定',
-                                onPress: () =>{
+                                onPress: () => {
                                     fwLoading();
                                     let postData = {
                                         ContentId: this.props.contentId
@@ -129,7 +133,7 @@ class VrcPlayer extends Component {
                                         fwCallServiceByKeyDirect(UrlConfig.DeleteMediaContentsURL, token, postData, function onSuccess(response) {
                                                 // console.log(response);
                                                 if (response && response.data && response.data.Status === 'OK') {
-                                                    Toast.success("削除しました.",1,()=>{
+                                                    Toast.success("削除しました.", 1, () => {
                                                         window.location.reload(true);
                                                     });
                                                 } else {
@@ -183,6 +187,7 @@ class VrcPlayer extends Component {
 
     render() {
         const {title, owner, frequency, createDt, srcUrl, poster, share} = this.props;
+        const isAndroid = fwApp();
         return (
             <Fragment>
                 <div style={{width: 400, height: 300, margin: 20}}>
@@ -196,7 +201,8 @@ class VrcPlayer extends Component {
                     <WhiteSpace size={'lg'}/>
                     <NavBar
                         className={Styles.NavBar}
-                        icon={<img src={logo} className={Styles.logo} alt=""/>}
+                        icon={<img src={logo} className={isAndroid === true ? (Styles.androidLogo) : (Styles.iosLogo)}
+                                   alt=""/>}
                         mode="light"
                         rightContent={[
                             // share && (<img key="0" src={Share} className={Styles.share}
