@@ -198,7 +198,6 @@ class VrcPlayer extends Component {
                             <VolumeMenuButton/>
                         </ControlBar>
                     </Player>
-                    <WhiteSpace size={'lg'}/>
                     <WhiteSpace />
                     <NavBar
                         className={Styles.NavBar}
