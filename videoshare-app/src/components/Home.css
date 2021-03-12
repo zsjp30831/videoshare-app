@@ -19,8 +19,12 @@
     "Hiragino Kaku Gothic ProN", "メイリオ", "Meiryo", sans-serif;
 }
 
-.space{
-    margin-top: 150px;
+.androidSpace{
+    margin-top: 185px;
+}
+
+.iosSpace{
+    margin-top: 145px;
 }
 
 .fixedButton{
@@ -38,6 +42,8 @@
     font-size: 23px;
     margin-top: 40px;
     margin-bottom: 35px;
+    vertical-align: center;
+    justify-content: center;
 }
 
 .androidFooter {

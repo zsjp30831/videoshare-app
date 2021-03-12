@@ -148,7 +148,9 @@ class Home extends Component {
             <div className={Styles.center}>
                 {nothing && (<p className={Styles.centerEx}>卒業式動画はありません</p>)}
                 {players}
-                <div className={Styles.space}></div>
+                {
+                    isAndroid === true ? ( <div className={Styles.androidSpace}></div>):( <div className={Styles.iosSpace}></div>)
+                }
                 {
                     isAndroid === true ? (
                         <footer className={Styles.androidFooter}>
