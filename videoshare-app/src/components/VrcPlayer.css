@@ -2,8 +2,8 @@
 .NavBar {
     background: transparent;
     display: inline-flex;
+    color: black;
 }
-
 
 .androidLogo {
     width: 30px;
