@@ -154,10 +154,12 @@ class Home extends Component {
                 {
                     isAndroid === true ? (
                         <footer className={Styles.androidFooter}>
+                            <span className={Styles.subTitle}>期間限定</span>
                             <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
                         </footer>
                     ) : (
                         <footer className={Styles.iOSFooter}>
+                            <span className={Styles.subTitle}>期間限定</span>
                             <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>卒業式動画作成</Button>
                         </footer>)
                 }

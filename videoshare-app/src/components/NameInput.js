@@ -262,12 +262,10 @@ class NameInput extends Component {
 
                 {isAndroid === true ? (
                         <footer className={Styles.androidFooter}>
-                            <span className={Styles.subTitle}>期間限定</span>
                             <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>作成する</Button>
                         </footer>
                     ) :
                     (<footer className={Styles.iOSFooter}>
-                        <span className={Styles.subTitle}>期間限定</span>
                         <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>作成する</Button>
                     </footer>)
                 }
