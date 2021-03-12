@@ -1,4 +1,11 @@
 
+.player {
+    width: 400px;
+    /*width: 96%;*/
+    height: 320px;
+    margin: 26px;
+}
+
 .NavBar {
     background: transparent;
     display: inline-flex;

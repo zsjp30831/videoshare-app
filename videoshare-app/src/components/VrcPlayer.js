@@ -190,7 +190,7 @@ class VrcPlayer extends Component {
         const isAndroid = fwApp();
         return (
             <Fragment>
-                <div style={{width: 400, height: 320, margin: 26}}>
+                <div  className={Styles.player}>
                     <Player poster={poster} fluid={false} width={'100%'} height={'90%'}>
                         <source src={srcUrl} type="video/mp4"/>
                         <BigPlayButton position="center"/>
