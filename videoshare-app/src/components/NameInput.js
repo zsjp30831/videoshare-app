@@ -150,7 +150,10 @@ class NameInput extends Component {
                             fwErrorMessage("授与する方を学長に選択してください.");
                         } else if (response && response.data && response.data.Status === "AvatarNotExists") {
                             fwErrorMessage("対象アバターは存在しないため、動画は生成できません.");
-                        } else {
+                        }
+                        else if (response && response.data && response.data.Status === "EndOfService") {
+                            fwErrorMessage("サービス提供終了しました.");
+                        }else {
                             fwErrorMessage("通信エラーが発生しました.");
                         }
                     },
@@ -259,11 +262,13 @@ class NameInput extends Component {
 
                 {isAndroid === true ? (
                         <footer className={Styles.androidFooter}>
-                            <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                            <span className={Styles.subTitle}>期間限定</span>
+                            <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>作成する</Button>
                         </footer>
                     ) :
                     (<footer className={Styles.iOSFooter}>
-                        <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>つぎへ</Button>
+                        <span className={Styles.subTitle}>期間限定</span>
+                        <Button className={Styles.submit} type='primary' onClick={this.onSubmit}>作成する</Button>
                     </footer>)
                 }
 
