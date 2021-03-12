@@ -121,23 +121,23 @@ class Shared extends Component {
                 <footer className={Styles.footer}>
                     <Flex>
                         <Flex.Item>
-                            <img src={hus} className={Styles.hus} alt="" onClick={() => {
-                                window.location.href = "https://www.hus.ac.jp/";
-                            }}/>
+                            <a href="https://www.hus.ac.jp/" target="_blank" rel="noopener noreferrer">
+                                <img src={hus} className={Styles.hus} alt="HUS" />
+                            </a>
                             {/*<WhiteSpace/>*/}
                             {/*<div className={Styles.husText}>北海道科学大学</div>*/}
                         </Flex.Item>
                         <Flex.Item>
-                            <img src={nine} className={Styles.nine} alt="" onClick={() => {
-                                window.location.href = "https://9nine-hakama.jp/";
-                            }}/>
+                            <a href="https://9nine-hakama.jp/" target="_blank" rel="noopener noreferrer">
+                                <img src={nine} className={Styles.nine} alt="nine" />
+                            </a>
                             {/*<WhiteSpace/>*/}
                             {/*<div className={Styles.nineText}>株式会社9</div>*/}
                         </Flex.Item>
                         <Flex.Item>
-                            <img src={vrc} className={Styles.vrc} alt="" onClick={() => {
-                                window.location.href = "https://www.vrcjp.com/";
-                            }}/>
+                            <a href="https://www.vrcjp.com/" target="_blank" rel="noopener noreferrer">
+                                <img src={vrc} className={Styles.vrc} alt="VRC" />
+                            </a>
                             {/*<WhiteSpace/>*/}
                             {/*<div className={Styles.vrcText}>株式会社VRC</div>*/}
                         </Flex.Item>
