@@ -55,7 +55,7 @@ class NameInput extends Component {
                             pollingFlag = false;
                             if (loadingFlag) {
                                 loadingFlag = false;
-                                fwLoading("動画作成中、しばらくしばらくお待ちください.");
+                                fwLoading("動画作成中、しばらくお待ちください.");
                             }
                         } else {
                             fwErrorMessage("動画作成失敗しました。");
