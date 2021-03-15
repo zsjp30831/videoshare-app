@@ -49,7 +49,7 @@ class NameInput extends Component {
                             pollingFlag = false;
                             if (loadingFlag) {
                                 loadingFlag = false;
-                                fwLoading("動画作成中、一分ほどお待ちください...");
+                                fwLoading("動画作成中、しばらくしばらくお待ちください.");
                             }
                         } else {
                             fwErrorMessage("動画作成失敗しました。");
@@ -134,17 +134,17 @@ class NameInput extends Component {
                                         handler.dataPolling(pstData);
                                     }
                                 },
-                                6000);
+                                5000);
 
                             //timeout check
-                            setTimeout(() => {
-                                // alert("timeout ");
-                                if (handler.pollingTimer) {
-                                    clearInterval(handler.pollingTimer);
-                                }
-                                fwErrorMessage("リトライしてください.");
-                                loadingFlag = true;
-                            }, 180 * 1000);
+                            // setTimeout(() => {
+                            //     // alert("timeout ");
+                            //     if (handler.pollingTimer) {
+                            //         clearInterval(handler.pollingTimer);
+                            //     }
+                            //     fwErrorMessage("リトライしてください.");
+                            //     loadingFlag = true;
+                            // }, 180 * 1000);
 
                         } else if (response && response.data && response.data.Status === "AwardNotExists") {
                             fwErrorMessage("授与する方を学長に選択してください.");
