@@ -45,13 +45,13 @@ class NameInput extends Component {
                             fwLoading("動画作成しました。");
                             timer && clearInterval(timer);
                             fwPush('/webview', {vrcId: getVrcId(), relationId: getRelationId()});
-                        } else if (status == 'Ready') {
+                        } else if (status === 'Ready') {
                             pollingFlag = false;
                             if (loadingFlag) {
                                 loadingFlag = false;
                                 fwLoading("動画作成準備中...");
                             }
-                        } else if (status == 'Pending') {
+                        } else if (status === 'Pending') {
                             pollingFlag = false;
                             if (loadingFlag) {
                                 loadingFlag = false;
